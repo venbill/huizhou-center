@@ -70,9 +70,9 @@ export default {
 
 <style scoped>
     .buy-content{
-        height:100%;
-        padding:0;
-        color: #666;
+      height:auto;
+      padding:0;
+      color: #666;
     }
 </style>
 
