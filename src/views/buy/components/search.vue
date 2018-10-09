@@ -16,7 +16,7 @@
               <div>{{item.keyWord}}</div>
             </template>
           </el-autocomplete>
-          <el-button icon="el-icon-search" class="button-b-search">搜索</el-button>
+          <el-button icon="el-icon-search" class="button-b-search" @click="search">搜索</el-button>
         </div>
         <div class="b-search-history">
           <span class="item" v-for="item in history" :key="item.id">
@@ -82,6 +82,9 @@ export default {
     }
   },
   methods: {
+    search() {
+      this.$router.push('/buy/search')
+    },
     getKeyWords(queryString, callback) {
       // let list = []
       // const url = 'kaili-basic/base/baseCustomer/queryCustomer'

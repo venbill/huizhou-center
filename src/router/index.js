@@ -47,12 +47,17 @@ export const constantRouterMap = [
             import('@/views/platform/homestay-search'),
     hidden: true
   },
-
   // 电商
   {
     path: '/buy',
     component: () =>
             import('@/views/buy/index'),
+    hidden: true
+  },
+  {
+    path: '/buy/search',
+    component: () =>
+            import('@/views/buy/search/index'),
     hidden: true
   },
   {
