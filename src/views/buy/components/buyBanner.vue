@@ -2,7 +2,7 @@
   <div class="b-banner">
     <div class="b-banner-main">
       <div class="b-banner-header">
-
+        导航
       </div>
       <div class="b-banner-content">
         <div class="b-content-nav">
