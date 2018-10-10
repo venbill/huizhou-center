@@ -47,6 +47,12 @@ export const constantRouterMap = [
             import('@/views/platform/homestay-search'),
     hidden: true
   },
+  {
+    path: '/homestay/detail',
+    component: () =>
+            import('@/views/platform/homestay-detail'),
+    hidden: true
+  },
   // 电商
   {
     path: '/buy',
@@ -61,12 +67,19 @@ export const constantRouterMap = [
     hidden: true
   },
   {
-    path: '/homestay/detail',
+    path: '/buy/detail',
     component: () =>
-            import('@/views/platform/homestay-detail'),
+            import('@/views/buy/buyDetail/index'),
+    hidden: true
+  },
+  {
+    path: '/buy/shoppingCart',
+    component: () =>
+            import('@/views/buy/shoppingCart/index'),
     hidden: true
   },
 
+  // 登录
   {
     path: '/login',
     component: () =>

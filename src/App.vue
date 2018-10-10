@@ -9,3 +9,11 @@
     name: 'App'
   }
 </script>
+
+<style>
+ #app {
+   width: 100%;
+   min-width: 1200px;
+ }
+</style>
+

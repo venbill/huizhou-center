@@ -26,6 +26,10 @@ html {
   height: 100%;
 }
 
+p{
+  margin: 4px 0;
+}
+
 *,
 *:before,
 *:after {
@@ -140,10 +144,6 @@ code {
   margin-top: 30px;
 }
 
-.text-center {
-  text-align: center
-}
-
 .sub-navbar {
   height: 50px;
   line-height: 50px;
@@ -192,7 +192,126 @@ code {
   z-index: 1000 !important;
 }
 
-// 红色字体
-.text-red {
-  color: red
+// 选中边框
+.focus-border {
+  border:1px solid #CD2426;
 }
+
+// 盒子类型
+.border-box {
+  box-sizing: border-box;
+}
+.content-box {
+  box-sizing: content-box;
+}
+// 弹性盒子
+.flex-box {
+  display: flex;
+}
+
+// 元素类型
+.inline-block {
+  display: inline-block;
+}
+.inline {
+  display: inline;
+}
+.block {
+  display: block;
+}
+
+// 浮动
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}
+.float-clear {
+  clear: both;
+}
+
+// 字体颜色
+.text-red {
+  color: red;
+}
+.text-white {
+  color: white;
+}
+.text-silver {
+  color: #666;
+}
+
+// 字体加粗
+.weight-normal {
+  font-weight: normal;
+}
+.weight-bold {
+  font-weight: bold;
+}
+.weight-bolder {
+  font-weight: bolder;
+}
+
+// 字体对齐
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+
+// 模拟文字超链接
+.text-link {
+  cursor: pointer;
+}
+.text-link:hover {
+  color: red;
+}
+
+
+// 浅红色背景
+.bg-paleRed {
+  background: #ee4644;
+}
+// 深红色背景
+.bg-deepRed {
+  background: #d1201e;
+}
+// 白色背景
+.bg-white {
+  background: #fff;
+}
+
+// 居中盒子，宽度1200px
+.center-content {
+  width: 1200px;
+  height: 100%;
+  overflow-x: hidden;
+  margin: 0 auto;
+}
+
+// 水平列表
+.horizontalList {
+  float: left;
+}
+
+// 鼠标移入手型
+.pointer {
+  cursor: pointer;
+}
+
+// 弹性盒子垂直居中
+.flex-middle {
+  display:flex;
+  align-items:center;
+}
+// 弹性盒子水平居中
+.flex-center {
+  display:flex;
+  justify-content: center;
+}
+
