@@ -1,6 +1,10 @@
 <template>
     <div class="car-content">
-      <div class="center-content"></div>
+      <div class="center-content goods-type">
+        <el-button class="btn-hover-red">全部商品</el-button>
+        <el-button class="btn-hover-red">限时优惠</el-button>
+        <el-button class="btn-hover-red">库存紧张</el-button>
+      </div>
       <div class="center-content border-box bg-white table-title">
         <div class="item" style="width:50px">
           <el-checkbox v-model="allCheck" style="margin-left:-8px"></el-checkbox>
@@ -107,6 +111,9 @@ export default {
 .car-content {
   width: 100%;
 }
+.goods-type {
+  padding: 20px 0;
+}
 .table-title {
   padding: 10px 10px;
 }
@@ -147,7 +154,4 @@ export default {
   margin: 40px auto;
   padding: 0 0 0 10px;
 }
-</style>
-
-<style>
 </style>

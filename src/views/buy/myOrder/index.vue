@@ -1,22 +1,22 @@
 <template>
-    <div class="buyDetail-content">
+    <div class="myOrder-content">
       <buy-header></buy-header>
       <buy-search></buy-search>
       <nav-title></nav-title>
       <crumbs></crumbs>
-      <buy-detail></buy-detail>
+      <my-order></my-order>
     </div>
 </template>
 
 <script>
 import BuyHeader from '../components/header'
 import BuySearch from '../components/search'
-import BuyDetail from './components/detail'
 import NavTitle from '../components/navTitle'
 import Crumbs from '../components/crumbs'
+import MyOrder from './components/order'
 export default {
   components: {
-    BuyHeader, BuySearch, BuyDetail, NavTitle, Crumbs
+    BuyHeader, BuySearch, MyOrder, NavTitle, Crumbs
   },
   data() {
     return {
@@ -29,9 +29,9 @@ export default {
 </script>
 
 <style scoped>
-    .buyDetail-content{
-      height:auto;
-      padding:0;
-      color: #666;
-    }
+  .myOrder-content{
+    height:auto;
+    padding:0;
+    color: #666;
+  }
 </style>

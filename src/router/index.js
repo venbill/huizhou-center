@@ -54,28 +54,46 @@ export const constantRouterMap = [
     hidden: true
   },
   // 电商
-  {
+  { // 首页
     path: '/buy',
     component: () =>
             import('@/views/buy/index'),
     hidden: true
   },
-  {
+  { // 搜索
     path: '/buy/search',
     component: () =>
             import('@/views/buy/search/index'),
     hidden: true
   },
-  {
+  { // 详情
     path: '/buy/detail',
     component: () =>
             import('@/views/buy/buyDetail/index'),
     hidden: true
   },
-  {
+  { // 购物车
     path: '/buy/shoppingCart',
     component: () =>
             import('@/views/buy/shoppingCart/index'),
+    hidden: true
+  },
+  { // 订单
+    path: '/buy/order',
+    component: () =>
+            import('@/views/buy/myOrder/index'),
+    hidden: true
+  },
+  { // 选商品付款
+    path: '/buy/pay',
+    component: () =>
+            import('@/views/buy/pay/index'),
+    hidden: true
+  },
+  { // 收货地址
+    path: '/buy/address',
+    component: () =>
+            import('@/views/buy/address/index'),
     hidden: true
   },
 

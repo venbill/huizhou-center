@@ -1,15 +1,5 @@
 <template>
     <div class="list-content">
-      <div class="list-title" style="background:#e6e6e6">
-        <div class="center-content border-box" style="font-size:12px;padding:0 20px;">
-          <el-breadcrumb separator=">">
-            <el-breadcrumb-item :to="{ path: '/buy' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-            <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-            <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-          </el-breadcrumb>
-        </div>
-      </div>
       <div class="detail-main center-content bg-white border-box">
         <div class="detail-img">
           <div class="detail-bigImg"></div>
@@ -302,12 +292,6 @@ export default {
 <style scoped>
 .list-content {
   width: 100%;
-}
-.list-title {
-  width: 100%;
-  height: 42px;
-  line-height: 42px;
-  margin: 0 auto;
 }
 .center-content .item{
   font-size: 14px;

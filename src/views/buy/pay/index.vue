@@ -1,22 +1,20 @@
 <template>
-    <div class="buyDetail-content">
+    <div class="pay-content">
       <buy-header></buy-header>
       <buy-search></buy-search>
       <nav-title></nav-title>
-      <crumbs></crumbs>
-      <buy-detail></buy-detail>
+      <goods></goods>
     </div>
 </template>
 
 <script>
 import BuyHeader from '../components/header'
 import BuySearch from '../components/search'
-import BuyDetail from './components/detail'
 import NavTitle from '../components/navTitle'
-import Crumbs from '../components/crumbs'
+import Goods from './components/goods'
 export default {
   components: {
-    BuyHeader, BuySearch, BuyDetail, NavTitle, Crumbs
+    BuyHeader, BuySearch, Goods, NavTitle
   },
   data() {
     return {
@@ -29,9 +27,9 @@ export default {
 </script>
 
 <style scoped>
-    .buyDetail-content{
-      height:auto;
-      padding:0;
-      color: #666;
-    }
+  .pay-content{
+    height:auto;
+    padding:0;
+    color: #666;
+  }
 </style>

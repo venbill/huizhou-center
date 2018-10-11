@@ -93,3 +93,30 @@
 .minier-input {
   width: 122px;
 }
+.medium-input {
+  width: 190px;
+}
+
+// 按钮样式
+/***移入时红色***/
+.el-button.btn-hover-red {
+  background: transparent;
+  color: #666;
+}
+.el-button.btn-hover-red:hover {
+  background: green;
+  color: #fff;
+}
+/***红色按钮***/
+.el-button.btn-red {
+  background: #ee4644;
+  color: #fff;
+}
+.el-button.btn-red:hover {
+  background: #d1201e;
+}
+
+// dialog弹窗
+.text-center .el-dialog__body {
+  text-align: center;
+}

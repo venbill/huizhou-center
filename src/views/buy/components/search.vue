@@ -16,7 +16,7 @@
               <div>{{item.keyWord}}</div>
             </template>
           </el-autocomplete>
-          <el-button icon="el-icon-search" class="button-b-search" @click="search">搜索</el-button>
+          <el-button icon="el-icon-search" class="btn-red" @click="search">搜索</el-button>
         </div>
         <div class="b-search-history">
           <span class="item" v-for="item in history" :key="item.id">
