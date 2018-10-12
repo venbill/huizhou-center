@@ -3,7 +3,6 @@
       <buy-header></buy-header>
       <buy-search></buy-search>
       <nav-title></nav-title>
-      <crumbs></crumbs>
       <buy-detail></buy-detail>
     </div>
 </template>
@@ -13,10 +12,9 @@ import BuyHeader from '../components/header'
 import BuySearch from '../components/search'
 import BuyDetail from './components/detail'
 import NavTitle from '../components/navTitle'
-import Crumbs from '../components/crumbs'
 export default {
   components: {
-    BuyHeader, BuySearch, BuyDetail, NavTitle, Crumbs
+    BuyHeader, BuySearch, BuyDetail, NavTitle
   },
   data() {
     return {
