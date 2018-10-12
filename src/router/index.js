@@ -117,6 +117,12 @@ export const constantRouterMap = [
     hidden: true
   },
   {
+    path: '/log',
+    component: () =>
+            import('@/views/login/login'),
+    hidden: true
+  },
+  {
     path: '/authredirect',
     component: () =>
             import('@/views/login/authredirect'),
