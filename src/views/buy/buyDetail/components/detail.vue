@@ -55,9 +55,8 @@
               </el-form-item>
             </el-form>
           </div>
-          <div class="search-type" style="padding-bottom:0">
-            <div class="search-title">店内分类</div>
-            <div class="type-item" v-for="item in 6" :key="item.index">电玩</div>
+          <div class="search-type">
+            <category></category>
           </div>
         </div>
         <el-tabs class="shop-comment" v-model="activeTab" type="border-card" @tab-click="handleClick">
@@ -206,7 +205,11 @@
 </template>
 
 <script>
+import Category from '@/views/buy/components/category'
 export default {
+  components: {
+    Category
+  },
   data() {
     return {
       buyRules: {
@@ -392,9 +395,11 @@ export default {
 }
 .search-input, .search-type {
   width: 190px;
-  border: 1px solid #ddd;
   margin: 0 auto 16px;
   padding: 0 0 10px;
+}
+.search-input {
+  border: 1px solid #ddd;
 }
 .search-title {
   height: 36px;
