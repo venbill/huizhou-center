@@ -90,10 +90,22 @@ export const constantRouterMap = [
             import('@/views/buy/pay/index'),
     hidden: true
   },
-  { // 收货地址
+  { // 付款确认
+    path: '/buy/pay/pay_confirm',
+    component: () =>
+            import('@/views/buy/pay/payConfirm/index'),
+    hidden: true
+  },
+  { // 管理收货地址
     path: '/buy/address',
     component: () =>
             import('@/views/buy/address/index'),
+    hidden: true
+  },
+  { // 消息提醒
+    path: '/buy/my_news',
+    component: () =>
+            import('@/views/buy/news/index'),
     hidden: true
   },
 

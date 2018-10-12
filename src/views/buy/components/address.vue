@@ -1,10 +1,14 @@
 <template>
   <div class="address-main">
-    <div class="address-item pointer" v-for="(item, index) in 4" :key="item.index"
+    <div class="address-item pointer" :class="{activeAddress: activeAddress === index}"
+     v-for="(item, index) in 4" :key="item.index"
+     @click="addressChoose(index)"
      @mouseenter="chengeIndex(index)" @mouseleave="chengeIndex(-1)">
       <div class="address-title">
         <span class="name">王京</span>
-        <el-tag class="float-right">家</el-tag>
+        <!--默认标签-->
+        <el-tag class="float-right">公司</el-tag>
+        <el-tag class="float-right" style="margin-right:20px" type="success" v-if="index === 0">默认收货地址</el-tag>
       </div>
       <div class="address-info">
         <p class="text-black">15869111464</p>
@@ -99,7 +103,8 @@ export default {
         chooose: false
       },
       popTitle: '新增地址',
-      addressIndex: -1,
+      addressIndex: -1, // 鼠标移入索引
+      activeAddress: -1, // 选中收货地址索引
       deletePop: false,
       popStatus: false,
       phoneType: '1'
@@ -108,6 +113,10 @@ export default {
   methods: {
     chengeIndex(index) {
       this.addressIndex = index
+    },
+    // 选择收货地址
+    addressChoose(index) {
+      this.activeAddress = index
     },
     // 新增
     addAddress() {
@@ -150,8 +159,6 @@ export default {
 </script>
 
 <style scoped>
-  .address-main {
-  }
   .address-item {
     position: relative;
     display: inline-block;
@@ -200,6 +207,9 @@ export default {
   }
   .new-address {
     margin-left: -4px;
+  }
+  .activeAddress {
+    box-shadow: 0 0 0 3px #ee4644;
   }
 </style>
 

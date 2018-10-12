@@ -16,7 +16,7 @@ function hasPermission(roles, permissionRoles) {
 
 const whiteList = [
   '/index', '/homestay', '/homestay/search', '/homestay/detail',
-  '/buy', '/buy/search', '/buy/detail', '/buy/shoppingCart', '/buy/order', '/buy/pay', '/buy/address',
+  '/buy', '/buy/search', '/buy/detail', '/buy/shoppingCart', '/buy/order', '/buy/pay', '/buy/address', '/buy/pay/pay_confirm', '/buy/my_news',
   '/login', '/authredirect', '/l2'
 ] // no redirect whitelist
 

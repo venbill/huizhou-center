@@ -10,63 +10,7 @@
             <rece-address></rece-address>
           </title-box>
           <!--选择按钮-->
-          <title-box>
-            <type-choose></type-choose>
-          </title-box>
         </template>
-        <div class="order-confirm">
-          <div class="confirm-title">确认订单信息</div>
-          <el-table :data="orderData" style="width: 100%" :header-cell-style="headerBg">
-            <el-table-column prop="goodsName" label="商品名称">
-              <template slot-scope="scope">
-                <div class="goods-box">
-                  <img src="" style="height:40px;width:40px;background:silver;margin-right:10px">
-                  <span class="text-link">商品名称</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column prop="piece" label="购买价格" width="120">
-            </el-table-column>
-            <el-table-column prop="number" label="购买数量" width="120">
-            </el-table-column>
-            <el-table-column prop="count" label="小计" width="120">
-            </el-table-column>
-          </el-table>
-        </div>
-        <div class="order-confirm" style="height: 220px">
-          <div class="message-main">
-            <div class="confirm-title">会员留言</div>
-            <div class="message-input">
-              <el-input type="textarea" v-model="message" :rows="6" resize="none"></el-input>
-            </div>
-          </div>
-          <div class="goods-count">
-            <p>
-              <span class="count-title">订单总额：</span>
-              <span class="count-piece">123</span>
-            </p>
-            <p>
-              <span class="count-title">活动优惠：</span>
-              <span class="count-piece">123</span>
-            </p>
-            <p>
-              <span class="count-title">优惠券抵扣：</span>
-              <span class="count-piece">123</span>
-            </p>
-            <p>
-              <span class="count-title">运费：</span>
-              <span class="count-piece">123</span>
-            </p>
-            <div class="should-pay">
-              <span class="count-title">应付金额：</span>
-              <span class="count-piece should-piece">500</span>
-            </div>
-          </div>
-        </div>
-        <div class="address-foot">
-          <el-button size="max" plain>返回购物车</el-button>
-          <el-button size="max" class="btn-red">立即下单</el-button>
-        </div>
       </div>
     </div>
 </template>
@@ -75,12 +19,11 @@
 import BuyHeader from '../components/header'
 import BuySearch from '../components/search'
 import NavTitle from '../components/navTitle'
-import ReceAddress from './components/address'
-import TitleBox from './components/titleBox'
-import TypeChoose from './components/typeChoose'
+import ReceAddress from '../components/address'
+import TitleBox from '../components/titleBox'
 export default {
   components: {
-    BuyHeader, BuySearch, ReceAddress, NavTitle, TitleBox, TypeChoose
+    BuyHeader, BuySearch, ReceAddress, NavTitle, TitleBox
   },
   data() {
     return {
