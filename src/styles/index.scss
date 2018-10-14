@@ -26,6 +26,10 @@ html {
   height: 100%;
 }
 
+.layout-main {
+  padding: 0 0 10px;
+}
+
 p{
   margin: 4px 0;
 }
@@ -274,6 +278,14 @@ code {
 .text-link:hover {
   color: red;
 }
+// 模拟正常超链接，蓝色字体，鼠标移入下划线
+.text-link-normal {
+  cursor: pointer;
+  color: blue;
+}
+.text-link-normal:hover {
+  text-decoration: underline;
+}
 
 
 // 浅红色背景
@@ -316,5 +328,12 @@ code {
 .flex-center {
   display:flex;
   justify-content: center;
+}
+
+// 文字省略号
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 

@@ -115,7 +115,7 @@ border-radius:5%;
                     </span>
                 </div>
 
-                <div v-for="item in homestays">
+                <div v-for="item in homestays" :key="item.index">
                     <el-row  style="margin:10px 0;border-style: solid;border-width:1px;border-radius:10px;
 border-color: #E4E7ED">
 
@@ -187,7 +187,7 @@ border-radius:5%;
 
 
              <div style="padding-top:10px;width:100%">
-             <div v-for="(item,index) in homestays">
+             <div v-for="item in homestays" :key="item.index">
 
                 <img  style="width:100%"  src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537686724&di=9162b4a97555ad0b1329a66b6d8c2e4b&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.mp.itc.cn%2Fq_mini%2Cc_zoom%2Cw_640%2Fupload%2F20170805%2F0a5087c2bb294ee3804d86f379558f2d_th.jpg"  />
                 <h3 style="color:#303133">

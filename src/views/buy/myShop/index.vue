@@ -1,9 +1,9 @@
 <template>
-    <div class="myNews-content">
+    <div class="myShop-content">
       <buy-header></buy-header>
       <buy-search></buy-search>
       <nav-title></nav-title>
-      <my-news></my-news>
+      <my-shop></my-shop>
     </div>
 </template>
 
@@ -11,10 +11,10 @@
 import BuyHeader from '../components/header'
 import BuySearch from '../components/search'
 import NavTitle from '../components/navTitle'
-import MyNews from './components/news'
+import myShop from './components/shop'
 export default {
   components: {
-    BuyHeader, BuySearch, MyNews, NavTitle
+    BuyHeader, BuySearch, myShop, NavTitle
   },
   data() {
     return {
@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style scoped>
-  .myNews-content{
+  .myShop-content{
     height:auto;
     padding:0;
     color: #666;

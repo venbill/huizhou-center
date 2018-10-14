@@ -31,6 +31,28 @@ export const constantRouterMap = [
     path: '/index',
     component: () =>
             import('@/views/platform/index'),
+    children: [
+      { // 首页
+        path: '/index/home',
+        component: () =>
+            import('@/views/platform/home')
+      },
+      { // 电商
+        path: '/index/shop',
+        component: () =>
+            import('@/views/platform/onlineRetailers')
+      },
+      { // 资讯
+        path: '/index/information',
+        component: () =>
+            import('@/views/platform/information')
+      },
+      { // 关于
+        path: '/index/us',
+        component: () =>
+            import('@/views/platform/us')
+      }
+    ],
     hidden: true
   },
 
@@ -108,16 +130,16 @@ export const constantRouterMap = [
             import('@/views/buy/news/index'),
     hidden: true
   },
+  { // 我的店铺
+    path: '/buy/my_shop',
+    component: () =>
+            import('@/views/buy/myShop/index'),
+    hidden: true
+  },
 
   // 登录
   {
     path: '/login',
-    component: () =>
-            import('@/views/login/index'),
-    hidden: true
-  },
-  {
-    path: '/log',
     component: () =>
             import('@/views/login/login'),
     hidden: true

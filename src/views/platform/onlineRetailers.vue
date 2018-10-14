@@ -1,7 +1,11 @@
 <template>
-  <div>
+  <div class="layout-main">
     <div class="center-content">
-      民宿
+      电商
     </div>
   </div>
 </template>
+
+<style scoped>
+
+</style>

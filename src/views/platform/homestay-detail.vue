@@ -220,7 +220,7 @@ border-radius:25px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9
 
      <div  >
          <div class="title"> 评价</div>
-         <div style="padding-top:20px" v-for="item in homestays">
+         <div style="padding-top:20px" v-for="item in homestays" :key="item.index">
 
              <div>
              <el-row style="text-align:center">
