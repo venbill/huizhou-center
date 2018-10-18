@@ -20,12 +20,24 @@
             <el-table-column prop="goodsName" label="商品名称">
               <template slot-scope="scope">
                 <div class="goods-box">
-                  <img src="" style="height:40px;width:40px;background:silver;margin-right:10px">
-                  <span class="text-link">商品名称</span>
+                  <router-link :to="{path:'/buy/detail',query:{id:shopId}}" target="_blank" style="height:40px;width:40px;margin-right:10px">
+                    <img :src="scope.row.imgUrl">
+                  </router-link>
+                  <router-link :to="{path:'/buy/detail',query:{id:shopId}}" target="_blank" class="text-link-normal">
+                    <span>{{scope.row.goodsName}}</span>
+                  </router-link>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="piece" label="购买价格" width="120">
+            <el-table-column prop="goodsAttr" label="商品属性" width="200">
+              <template slot-scope="scope">
+                <div v-for="item in scope.row.shopAttr" :key="item.index" style="font-size:12px">
+                  <span class="inline-block" style="width:50px">{{item.attrName}}：</span>
+                  <span>{{item.attrValue}}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="unitPrice" label="购买价格" width="120">
             </el-table-column>
             <el-table-column prop="number" label="购买数量" width="120">
             </el-table-column>
@@ -64,7 +76,6 @@
           </div>
         </div>
         <div class="address-foot">
-          <el-button size="max" plain>返回购物车</el-button>
           <el-button size="max" class="btn-red">立即下单</el-button>
         </div>
       </div>
@@ -78,35 +89,80 @@ import NavTitle from '../../components/navTitle'
 import ReceAddress from '../../components/address'
 import TitleBox from '../../components/titleBox'
 import TypeChoose from '../../components/typeChoose'
+import { goodDetail } from '@/api/buy/buy'
+import util from '@/utils/util'
 export default {
   components: {
     BuyHeader, BuySearch, ReceAddress, NavTitle, TitleBox, TypeChoose
   },
   data() {
     return {
-      orderData: [
-        {
-          goodsName: '',
-          piece: '39',
-          number: '5',
-          count: '195'
-        }
-      ],
-      message: ''
+      shopId: '', // 商品ID
+      shopInfo: {},
+      imgUrl: '',
+      totalPrice: '', // 订单总额
+      discount: '', // 优惠
+      coupon: '', // 优惠券抵扣
+      freight: '', // 运费
+      shouldPay: '', // 应付金额
+      orderData: [],
+      message: '' // 会员留言
     }
   },
   methods: {
     // 表头回调函数
     headerBg: function(row) {
       return { 'background': '#f5f7fa', 'color': '#1F2D3D' }
+    },
+    init() {
+      const this_ = this
+      this.shopId = this.$route.query.goodsId
+      // 获取商品详情
+      goodDetail(this.shopId).then(function(data) {
+        if (data.data.code === 200) {
+          this_.shopInfo = data.data.data
+          // 获取商品图片
+          if (this_.shopInfo.pictures.length > 0) {
+            this_.imgUrl = this_.shopInfo.pictures[0]
+          }
+          // 封装渲染数据
+          const params = {
+            imgUrl: this_.imgUrl,
+            goodsName: this_.shopInfo.goodsName,
+            unitPrice: this_.$route.query.unitPrice,
+            number: this_.$route.query.number,
+            count: this_.$route.query.totalPrice
+          }
+          params.shopAttr = JSON.parse(localStorage.getItem('shopInfo'))
+          this_.orderData.push(params)
+          this_.shouldPay = params.count
+        }
+      })
+
+      // 计算订单总额
+      this.count()
+    },
+    // 计算订单总额
+    count() {
+      const shouldPay = this.shouldPay // 应付金额
+      const discount = -this.discount // 优惠
+      const coupon = -this.coupon // 优惠券抵扣
+      const freight = -this.freight // 运费
+      this.totalPrice = util.numberAdd(shouldPay, discount, coupon, freight) // 订单总额
     }
   },
 
-  mounted() {}
+  mounted() {
+    this.init()
+  }
 }
 </script>
 
 <style scoped>
+  img {
+    width: 100%;
+    height: 100%;
+  }
   .address-content{
     height:auto;
     padding:0;
@@ -132,7 +188,6 @@ export default {
     height: 200px;
     width:260px;
     font-size: 14px;
-    background: silver
   }
   .goods-count p {
     padding-bottom: 10px;

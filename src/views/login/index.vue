@@ -83,12 +83,14 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
+          console.log(1)
           this.loading = true
           this.$store
             .dispatch('LoginByUsername', this.loginForm)
             .then(() => {
               this.loading = false
-              this.$router.push({ path: '/' })
+              this.$router.push('/buy')
+              console.log(this.$router)
             })
             .catch(() => {
               this.loading = false

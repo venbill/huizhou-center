@@ -2,20 +2,54 @@
     <div class="list-content">
       <div class="list-main center-content bg-white border-box">
         <div class="no-data text-silver">
-          抱歉，没有找到与<span class="text-red">“测试数据”</span>相关的商品
-        </div>
-        <div class="hotGoods">
-          <div class="hotGoods-title">
-            <span style="font-size:18px">热卖区</span>
-            <span class="text-link float-right" style="font-size:12px">换一换</span>
-          </div>
-          <div class="hotGoods-content">
-            <el-card class="r-card inline-block pointer" style="width:160px" v-for="child in 6" :key="child.index">
-              <img src="" class="image block" style="height:140px;width:140px;margin:0 auto;background:silver">
-              <div style="padding: 4px 10px;font-size:12px;">
-                <span class="r-card-text" :title="1">阿拉山口等拉开哈市的反撒立刻打飞机安居房多</span>
+          <template v-if="goodsList.body.length > 0">
+            <el-card class="r-card search-list inline-block" style="width:160px" v-for="child in goodsList.body" :key="child.index">
+              <router-link :to="{path:'/buy/detail', query:{id:child.id}}" target="_blank">
+                <img :src="child.picture" class="block" style="height:140px;width:140px;margin:0 auto;background:silver">
+              </router-link>
+              <div style="padding: 10px 10px 4px;font-size:12px;">
+                <router-link :to="{path:'/buy/detail', query:{id:child.id}}" target="_blank">
+                  <span class="r-card-text text-link-normal block" :title="child.name">{{child.name}}</span>
+                </router-link>
+                <span class="r-b-charge block">{{child.minPrice | pieceFormat}}</span>
               </div>
             </el-card>
+            <v-pageTable>
+              <template slot="pagination" slot-scope="props">
+                <el-pagination 
+                  background
+                  :total="goodsList.pageTotal"
+                  :current-page.sync="goodsList.pageNo"
+                  :page-size="goodsList.pageSize"
+                  @current-change="pageChange"
+                  layout="prev, pager, next, jumper"
+                  >
+                </el-pagination>
+              </template>
+            </v-pageTable>
+          </template>
+          <template v-else>
+           抱歉，没有找到与<span class="text-red">“{{searchText}}”</span>相关的商品
+          </template>
+        </div>
+        <div class="hotGoods" v-if="hotGoods.length > 0">
+          <div class="hotGoods-title">
+            <span style="font-size:18px">热卖区</span>
+            <span class="text-link float-right" style="font-size:12px" @click="hotChange">换一换</span>
+          </div>
+          <div class="hotGoods-content">
+            <card-link :body="hotGoods" :width="160" :imgHeight="140" :imgWidth="140"></card-link>
+            <!-- <el-card class="r-card goods-list inline-block" style="width:160px" v-for="child in hotGoods" :key="child.index">
+              <router-link :to="{path:'/buy/detail', query:{id:child.id}}" target="_blank">
+                <img :src="child.picture" class="block" style="height:140px;width:140px;margin:0 auto;background:silver">
+              </router-link>
+              <div style="padding: 4px 10px;font-size:12px;">
+                <router-link :to="{path:'/buy/detail', query:{id:child.id}}" target="_blank">
+                  <span class="r-card-text text-link-normal block" :title="child.name">{{child.name}}</span>
+                </router-link>
+                <span class="r-b-charge block">{{child.minPrice | pieceFormat}}</span>
+              </div>
+            </el-card> -->
           </div>
         </div>
       </div>
@@ -23,14 +57,88 @@
 </template>
 
 <script>
+import util from '@/utils/util'
+import CardLink from '@/views/buy/components/cardLink'
+import { searchGoods } from '@/api/buy/buy'
 export default {
+  components: { CardLink },
   data() {
     return {
+      searchText: '',
+      goodsList: {
+        pageTotal: 1000,
+        pageNo: 1,
+        pageSize: 50,
+        body: []
+      },
+      hotPage: 1,
+      hotTotal: 0,
+      hotGoods: []
     }
   },
-  methods: {},
+  filters: {
+    pieceFormat(value) {
+      return util.pieceFormat(value)
+    }
+  },
+  methods: {
+    init() {
+      this.getTable()
+      this.getHot(1)
+    },
 
-  mounted() {}
+    // 热卖切换
+    hotChange() {
+      this.hotPage++
+      let num = this.hotPage
+      if (num > this.hotTotal) {
+        num = 1
+      }
+      this.getHot(num)
+    },
+    // 热卖查询
+    getHot(pageNo) {
+      this.hotPage = pageNo
+      const this_ = this
+      const params = {
+        tagId: 1,
+        pageNo: pageNo,
+        pageSize: 6
+      }
+      searchGoods(params).then(function(data) {
+        if (data.data.code === 200) {
+          this_.hotTotal = Math.ceil(data.data.data.total / 6)
+          this_.hotGoods = data.data.data.results
+        }
+      })
+    },
+    // 分页查询
+    getTable() {
+      const this_ = this
+      const params = {
+        content: this.searchText,
+        pageNo: this.goodsList.pageNo,
+        pageSize: this.goodsList.pageSize
+      }
+      searchGoods(params).then(function(data) {
+        if (data.data.code === 200) {
+          this_.goodsList.pageTotal = data.data.data.total
+          this_.goodsList.body = data.data.data.results
+        }
+      })
+    },
+
+    // 当前页数变化
+    pageChange(val) {
+      this.goodsList.pageNo = val
+      this.getTable()
+    }
+  },
+
+  mounted() {
+    this.searchText = this.$route.query.keyword
+    this.init()
+  }
 }
 </script>
 
@@ -51,9 +159,14 @@ export default {
   border: 1px solid #ddd;
   margin-top: 10px;
   padding: 25px 30px;
-  text-align: center;
 }
-.hotGoods-content .r-card:not(:last-child) {
+.search-list {
+  margin: 0 33px 20px 0;
+}
+.goods-list {
+  margin-bottom: 20px;
+}
+.goods-list:not(:last-child) {
   margin-right: 20px;
 }
 .r-card-text {
@@ -62,10 +175,18 @@ export default {
   height: 32px;
   overflow: hidden;
 }
+.r-b-charge {
+  font-size: 16px;
+  font-weight: bold;
+  color: red;
+}
 </style>
 
 <style>
-.hotGoods-content .el-card__body {
-  padding: 0;
+.goods-list .el-card__body {
+  padding: 10px 0;
+}
+.search-list .el-card__body {
+  padding: 10px 0;
 }
 </style>

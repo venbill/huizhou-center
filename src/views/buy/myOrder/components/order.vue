@@ -54,6 +54,7 @@
                     <p style="margin-bottom:30px">剩余15分</p>
                     <p class="text-link">立即支付</p>
                     <p class="text-link">取消订单</p>
+                    <p>评价</p>
                   </div>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 <template>
     <div class="buy-content">
         <buy-header></buy-header>
-        <buy-search></buy-search>
+        <buy-search :is_blank='true'></buy-search>
         <buy-banner></buy-banner>
         <buy-list></buy-list>
     </div>
@@ -20,9 +20,10 @@ export default {
     return {
     }
   },
-  methods: {},
-
-  mounted() {}
+  methods: {
+  },
+  mounted() {
+  }
 }
 </script>
 

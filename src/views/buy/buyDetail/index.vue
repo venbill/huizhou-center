@@ -18,11 +18,14 @@ export default {
   },
   data() {
     return {
+      goodsId: -1
     }
   },
   methods: {},
 
-  mounted() {}
+  mounted() {
+    this.goodsId = this.$route.query.id
+  }
 }
 </script>
 

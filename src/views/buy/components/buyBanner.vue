@@ -15,41 +15,41 @@
       <div class="b-banner-content">
         <div class="b-content-nav">
           <div class="listContent" @mouseenter="contentShow" @mouseleave="contentHide">
-            <div class="item" v-for="(item, index) in navList" :key="item.index" @mouseenter="listShow(index)">
-              <i class="iconfont" v-html="item.icon" style="margin-right:4px;"></i>
-              <span class="item-type" v-for="child in item.child" :key="child.index">
-                <router-link to="child.path">
-                {{child.title}}
-                </router-link>
-              </span>
-            </div>
-            <div class="b-content-list" v-if="contentStatus">
-              <div class="item"  v-for="sub in 6" :key="sub.index">
-                <div class="b-list-title">
-                  <span class="b-list-text">静啊拉开纠纷</span>
-                </div>
-                <div class="b-list-sub">
-                  <span class="item" v-for="item in 30" :key="item.index">
-                    <router-link to="item.path">测试分类</router-link>
-                  </span>
-                </div>
+            <router-link v-for="(item, index) in navList" :key="item.index" :to="{path:'/buy/search',query: {id: item.id,keyword:item.bigTypeName}}" target="_blank">
+              <div class="type-item" :class="{active: typeIndex === index}" @mouseenter="typeIndexChange(index)">
+                <i class="iconfont" v-html="item.icon" style="margin-right:4px;"></i>
+                <span class="typeTitle">
+                  {{item.bigTypeName}}
+                </span>
+              </div>
+            </router-link>
+            <div class="b-content-list" v-if="contentStatus && typeIndex !== -1">
+              <div class="b-list-sub">
+                <span class="item" v-for="sub in navList[typeIndex].smallTypes" :key="sub.index">
+                  <router-link :to="{path:'/buy/search',query: {id: sub.id, keyword:sub.smallTypeName}}" target="_blank">{{sub.smallTypeName}}</router-link>
+                </span>
               </div>
             </div>
           </div>
         </div>
-        <div class="b-content-img">
-          <img src="">
-        </div>
-        <div class="b-imgList">
+        <el-carousel trigger="click" height="510px" class="b-content-img">
+          <el-carousel-item v-for="item in imgList" :key="item.index">
+            <a :href="'http://' + item.href" target="_blank">
+              <img :src="item.url">
+            </a>
+          </el-carousel-item>
+        </el-carousel>
+        <!-- <div class="b-imgList">
           <div  class="item"></div>
           <div  class="item"></div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getDetailTypes, getBanner } from '@/api/buy/buy'
 export default {
   data() {
     return {
@@ -59,118 +59,51 @@ export default {
           path: '/login'
         },
         {
-          title: '云购物',
+          title: '电商',
           path: '/login'
         },
         {
-          title: '限时购',
-          path: '/login'
-        },
-        {
-          title: '电器城',
+          title: '民宿',
           path: '/login'
         }
       ],
-      navList: [
-        {
-          icon: '&#xe666;',
-          child: [
-            {
-              title: '男装',
-              path: '/login'
-            },
-            {
-              title: '女装',
-              path: '/login'
-            },
-            {
-              title: '童装',
-              path: '/login'
-            }
-          ]
-        },
-        {
-          icon: '&#xe62a;',
-          child: [
-            {
-              title: '男装',
-              path: '/login'
-            },
-            {
-              title: '女装',
-              path: '/login'
-            },
-            {
-              title: '童装',
-              path: '/login'
-            }
-          ]
-        },
-        {
-          icon: '&#xe60a;',
-          child: [
-            {
-              title: '男装',
-              path: '/login'
-            },
-            {
-              title: '女装',
-              path: '/login'
-            },
-            {
-              title: '童装',
-              path: '/login'
-            }
-          ]
-        },
-        {
-          icon: '&#xe61a;',
-          child: [
-            {
-              title: '男装',
-              path: '/login'
-            },
-            {
-              title: '女装',
-              path: '/login'
-            },
-            {
-              title: '童装',
-              path: '/login'
-            }
-          ]
-        },
-        {
-          icon: '&#xe60d;',
-          child: [
-            {
-              title: '男装',
-              path: '/login'
-            },
-            {
-              title: '女装',
-              path: '/login'
-            },
-            {
-              title: '童装',
-              path: '/login'
-            }
-          ]
-        }
-      ],
+      navList: [],
+      imgList: [],
+      typeIndex: -1, // 商品大分类索引
       contentStatus: false
     }
   },
   methods: {
-    listShow(index) {
-      console.log(index)
+    init() {
+      const this_ = this
+      // 获取商品分类详情
+      getDetailTypes().then(function(data) {
+        if (data.data.code === 200) {
+          this_.navList = data.data.data
+        }
+      })
+
+      // 获取轮播图
+      getBanner(3).then(function(data) {
+        if (data.data.code === 200) {
+          this_.imgList = data.data.data
+        }
+      })
+    },
+
+    typeIndexChange(index) {
+      this.typeIndex = index
     },
     contentShow() {
       this.contentStatus = true
     },
     contentHide() {
       this.contentStatus = false
+      this.typeIndex = -1
     }
+  },
+  mounted() {
+    this.init()
   }
 }
 </script>
@@ -179,6 +112,9 @@ export default {
   .b-banner {
     width: 100%;
     background: #ee4644;
+  }
+  img {
+    width: 100%;
   }
   .b-banner-main {
     width: 1200px;
@@ -205,6 +141,9 @@ export default {
     padding: 0 10px;
     font-size: 14px;
   }
+  .b-banner-header .item:hover {
+    background: rgba(000, 000, 000, 0.3);
+  }
   .b-content-nav, .products {
     font-size: 16px;
     background: rgba(000, 000, 000, 0.3);
@@ -216,17 +155,17 @@ export default {
     float: left;
     background: rgba(000, 000, 000, 0.3);
   }
-  .b-content-nav .listContent > .item {
+  .b-content-nav .listContent .type-item {
     height: 34px;
     line-height: 34px;
     font-size: 13px;
     color: #fff;
-    padding: 0 15px;
+    padding: 0 36px;
   }
-  .b-content-nav .listContent > .item:hover {
+  .b-content-nav .listContent .type-item.active {
     background: #ee4644;
   }
-  .b-content-nav .item  .item-type:not(:last-child)::after{
+  .b-content-nav .type-item  .typeTitle:not(:last-child)::after{
     content: '/';
     margin: 0;
   }
@@ -236,7 +175,8 @@ export default {
   }
   .b-content-list {
     position: absolute;
-    width: 800px;
+    z-index: 999;
+    width: 1000px;
     height: 510px;
     top: 0;
     left: 200px;
@@ -244,7 +184,7 @@ export default {
     overflow: hidden;
     background: rgba(210,209,208, 0.9)
   }
-  .b-content-list > .item {
+  .b-content-list .type-item {
     box-sizing: border-box;
     width: 100%;
     clear: both;
@@ -262,20 +202,20 @@ export default {
     margin-left: 4px;
   }
   .b-list-sub {
-    float: left;
-    width: 640px;
+    width: 100%;
+    padding: 10px;
     word-break: break-all;
     overflow: hidden;
   }
   .b-content-list .b-list-sub .item {
     display: inline-block;
-    margin: 0 10px 4px;
+    margin: 0 10px 4px 0;
   }
   .b-content-list .b-list-sub .item:hover {
     color: red;
   }
   .b-content-img {
-    width: 800px;
+    width: 1000px;
     height: 510px;
     float: left;
   }

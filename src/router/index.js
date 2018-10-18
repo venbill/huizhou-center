@@ -106,6 +106,12 @@ export const constantRouterMap = [
             import('@/views/buy/myOrder/index'),
     hidden: true
   },
+  { // 订单评价
+    path: '/buy/comment',
+    component: () =>
+            import('@/views/buy/myOrder/components/comment'),
+    hidden: true
+  },
   { // 选商品付款
     path: '/buy/pay',
     component: () =>
@@ -116,6 +122,12 @@ export const constantRouterMap = [
     path: '/buy/pay/pay_confirm',
     component: () =>
             import('@/views/buy/pay/payConfirm/index'),
+    hidden: true
+  },
+  { // 支付
+    path: '/buy/pay/payment',
+    component: () =>
+            import('@/views/buy/pay/payment/index'),
     hidden: true
   },
   { // 管理收货地址
@@ -142,6 +154,20 @@ export const constantRouterMap = [
     path: '/login',
     component: () =>
             import('@/views/login/login'),
+    hidden: true
+  },
+  // 注册
+  {
+    path: '/regist',
+    component: () =>
+            import('@/views/regist/regist'),
+    hidden: true
+  },
+  // 忘记密码
+  {
+    path: '/forget',
+    component: () =>
+            import('@/views/forget/forget'),
     hidden: true
   },
   {

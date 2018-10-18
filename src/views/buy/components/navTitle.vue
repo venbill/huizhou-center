@@ -1,12 +1,38 @@
 <template>
   <div class="list-title bg-paleRed">
     <div class="center-content">
-      <div class="item horizontalList text-white" v-for="item in 7" :key="item.index">
-        云购首页
-      </div>
+      <router-link  v-for="item in navList" :key="item.index" :to="item.path">
+        <div class="item horizontalList text-white">
+          {{item.title}}
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      navList: [
+        {
+          path: '/login',
+          title: '首页'
+        },
+        {
+          path: '/login',
+          title: '电商'
+        },
+        {
+          path: '/login',
+          title: '民宿'
+        }
+      ]
+    }
+  }
+}
+</script>
+
 
 <style scoped>
 .list-title {

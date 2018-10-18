@@ -1,7 +1,7 @@
 <template>
     <div class="search-content">
       <buy-header></buy-header>
-      <buy-search></buy-search>
+      <buy-search :is_blank='false'></buy-search>
       <nav-title></nav-title>
       <search-list></search-list>
     </div>

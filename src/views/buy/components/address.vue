@@ -18,7 +18,7 @@
       <!--弹出层-->
       <div class="mask-box" v-if="addressIndex === index">
         <div class="mask-title">
-          <el-tag type="success" v-if="index === 0">默认收货地址</el-tag>
+          <!-- <el-tag type="success" v-if="index === 0">默认收货地址</el-tag> -->
           <i class="iconfont" title="设为默认收货地址" v-if="index !== 0">&#xe636;</i>
           <i class="iconfont" title="修改" @click="editAddress">&#xe7c9;</i>
           <i class="iconfont" title="删除" @click="deletePop = true">&#xe624;</i>

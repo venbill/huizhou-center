@@ -16,8 +16,8 @@ function hasPermission(roles, permissionRoles) {
 
 const whiteList = [
   '/index', '/index/home', '/index/shop', '/index/information', '/index/us', '/homestay', '/homestay/search', '/homestay/detail',
-  '/buy', '/buy/search', '/buy/detail', '/buy/shoppingCart', '/buy/order', '/buy/pay', '/buy/address', '/buy/pay/pay_confirm', '/buy/my_news', '/buy/my_shop',
-  '/login', '/authredirect', '/l2'
+  '/buy', '/buy/search', '/buy/detail', '/buy/shoppingCart', '/buy/order', '/buy/comment', '/buy/pay', '/buy/address', '/buy/pay/pay_confirm', '/buy/pay/payment', '/buy/my_news', '/buy/my_shop',
+  '/login', '/regist', '/forget', '/authredirect', '/l2'
 ] // no redirect whitelist
 
 router.beforeEach((to, from, next) => {

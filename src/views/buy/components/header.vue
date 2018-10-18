@@ -3,12 +3,17 @@
     <div class="b-header-content">
       <div class="b-header-link">
         <span class="b-header-welcome">您好！欢迎来云购物</span>
-        <span class="text-link">
-          <router-link to="/login">请登录</router-link>
-        </span>
-        <span class="text-link">
-          <router-link to="/register">免费注册</router-link>
-        </span>
+        <template v-if="!userInfo.status">
+          <span class="text-link">
+            <router-link to="/login">请登录</router-link>
+          </span>
+          <span class="text-link">
+            <router-link to="/regist">免费注册</router-link>
+          </span>
+        </template>
+        <template v-else>
+          <span class="text-link" @click="logout">退出</span>
+        </template>
       </div>
       <div class="b-header-list">
         <el-menu mode="horizontal">
@@ -41,10 +46,19 @@
 export default {
   data() {
     return {
-      active: ''
+      active: '',
+      userInfo: {}
     }
   },
   methods: {
+    // 退出
+    logout() {
+
+    }
+  },
+  mounted() {
+    this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
+    // console.log(this.userInfo)
   }
 }
 </script>

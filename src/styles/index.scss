@@ -281,9 +281,9 @@ code {
 // 模拟正常超链接，蓝色字体，鼠标移入下划线
 .text-link-normal {
   cursor: pointer;
-  color: blue;
 }
 .text-link-normal:hover {
+  color: blue;
   text-decoration: underline;
 }
 

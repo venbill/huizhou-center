@@ -1,5 +1,9 @@
 <template>
   <div class="login-container">
+    <el-row class="login-title">
+      欢迎使用徽州区电商中心平台后台管理系统
+    </el-row>
+
     <el-form id="form" class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
       <div class="title-container">
         <span class="title">登录</span>
@@ -28,8 +32,16 @@
         style="width:100%" class="btn-red" :loading="loading"
         @click.native.prevent="handleLogin">登录</el-button>
       <div class="form-foot">
-        <span class="text-link">忘记密码</span>
-        <span class="text-link" style="margin-left:10px">免费注册</span>
+        <span class="text-link">
+          <router-link to="/forget">
+            忘记密码
+          </router-link>
+        </span>
+        <span class="text-link" style="margin-left:10px">
+          <router-link to="/regist">
+            免费注册
+          </router-link>
+        </span>
       </div>
     </el-form>
     <el-row class="login-foot">
@@ -41,6 +53,7 @@
 <script>
 // import util from '@/utils/util'
 import { mapState } from 'vuex'
+import { login } from '@/api/common/login'
 
 export default {
   name: 'login',
@@ -48,11 +61,8 @@ export default {
     return {
       companyCodeNum: 5,
       loginForm: {
-        companycode: '10000',
         username: 'admin',
-        password: '123456',
-        yzm: '',
-        type: 0
+        password: '123456'
       },
       loginRules: {
         username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
@@ -85,18 +95,25 @@ export default {
     },
     // 登录
     handleLogin() {
+      const this_ = this
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store
-            .dispatch('LoginByUsername', this.loginForm)
-            .then(() => {
-              this.loading = false
-              this.$router.push({ path: '/' })
-            })
-            .catch(() => {
-              this.loading = false
-            })
+          login(this.loginForm.username, this.loginForm.password).then(function(data) {
+            if (data.data.code === 200) {
+              const userInfo = {
+                status: true,
+                userId: data.data.data.userId,
+                phone: data.data.data.phone,
+                roles: data.data.data.roles
+              }
+              localStorage.setItem('userInfo', JSON.stringify(userInfo)) // 存入缓存
+              this_.$router.push('/buy')
+            }
+          })
+          setTimeout(() => {
+            this_.loading = false
+          }, 5000)
         } else {
           console.log('error submit!!')
           return false
@@ -163,58 +180,13 @@ $light_gray:#1C5EB3;
   font-size:18px;
 }
 .login-title{
-  background:$title_bg;
+  background: rgba(0, 0, 0, .4);
   padding:24px 0;
-  border-bottom:1px solid rgba(28,94,179,0.15);
-  height:64px;
-  line-height:64px;
   box-sizing:content-box;
-  .login-title-content{
-    float:left;
-    margin:0 0 0 40px;
-    height:64px;
-  }
-  .login-title-cloud{
-    color:#1C5EB3;
-    .text-cloud{
-      font-size:18px;
-      font-weight:bold;
-    }
-    .icon-cloud{
-      float:left;
-      margin-right:16px;
-      i{
-        font-size:56px;
-      }
-    }
-  }
-  .login-title-link{
-    display:inline-block;
-    float:right;
-    font-size:14px;
-    height:20px;
-    line-height:20px;
-    margin:22px 40px 22px 0;
-    .website-logo{
-      display:inline-block;
-      height:14px;
-      width:14px;
-      background-size:100% 100%;
-      background-position:0px -1px; 
-      vertical-align:middle;
-    }
-    a{
-      color: #1C5EB3;
-    }
-    a:hover{
-      text-decoration:underline;
-    }
-    .set-language {
-      color: $light_gray;
-      padding-left: 10px;
-    }
-  }
-  
+  color: #fff;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
 }
 .login-foot{
   position: absolute;

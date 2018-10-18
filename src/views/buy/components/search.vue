@@ -6,7 +6,8 @@
       </div>
       <div class="b-search-main">
         <div class="b-search-input">
-          <el-autocomplete
+          <el-input v-model="formSearch.search" class="select-b-search"></el-input>
+          <!-- <el-autocomplete
             v-model="formSearch.search" :trigger-on-focus = "false"
             :fetch-suggestions="getKeyWords"
             placeholder=""
@@ -15,18 +16,18 @@
             <template slot-scope="{item}">
               <div>{{item.keyWord}}</div>
             </template>
-          </el-autocomplete>
+          </el-autocomplete> -->
           <el-button icon="el-icon-search" class="btn-red" @click="search">搜索</el-button>
         </div>
         <div class="b-search-history">
-          <span class="item" v-for="item in history" :key="item.id">
-            <router-link :to="item.path">{{item.name}}</router-link>
+          <span class="item" v-for="item in hotSearch" :key="item.id">
+            <router-link :to="{path:'/buy/search', query:{id:item.id,keyword:item.content}}" target="_blank">{{item.content}}</router-link>
           </span>
         </div>
       </div>
       <div class="b-search-shoppingCart">
         <i class="iconfont">&#xe600;</i>
-        <router-link to="/login">我的购物车</router-link>
+        <router-link to="/buy/pay" target="_blank">我的购物车</router-link>
         <span class="shoppingCat-count">10</span>
       </div>
     </div>
@@ -35,82 +36,67 @@
 
 <script>
 // import util from '@/utils/util'
+import { getHotSearchList } from '@/api/buy/buy'
 export default {
+  props: {
+    is_blank: {
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     return {
       formSearch: {
         search: ''
       },
-      history: [
-        {
-          name: '鞋子',
-          path: '/login'
-        },
-        {
-          name: '牛仔裤',
-          path: '/login'
-        },
-        {
-          name: '衬衫',
-          path: '/login'
-        },
-        {
-          name: '洗衣机',
-          path: '/login'
-        }
-      ],
+      hotSearch: [],
       logoUrl: '../../../../static/images/logo.png',
-      keyWordsOptions: [
-        {
-          keyWord: '鞋子',
-          path: '/login'
-        },
-        {
-          keyWord: '洗衣机',
-          path: '/login'
-        },
-        {
-          keyWord: '衬衫',
-          path: '/login'
-        },
-        {
-          keyWord: '羊毛衫',
-          path: '/login'
-        }
-      ],
       loading: false
     }
   },
   methods: {
-    search() {
-      this.$router.push('/buy/search')
-    },
-    getKeyWords(queryString, callback) {
-      // let list = []
-      // const url = 'kaili-basic/base/baseCustomer/queryCustomer'
-      // const params = {
-      //   keyWord: this.formSearch.search
-      // }
-      // util.httpJesen(url, params, function(data) {
-      //   if (data.data) {
-      //     list = data.data.map(item => {
-      //       return {
-      //       }
-      //     })
-      //     callback(list)
-      //   }
-      // })
-      const list = this.keyWordsOptions.map(item => {
-        return {
-          keyWord: item.keyWord,
-          path: item.path
+    init() {
+      const this_ = this
+      // 自动填充搜索框
+      this.formSearch.search = this.$route.query.keyword
+      // 获取热搜
+      getHotSearchList().then(function(data) {
+        if (data.data.code === 200) {
+          this_.hotSearch = data.data.data
         }
       })
-      callback(list)
     },
-    handleSelect(item) {
-      this.formSearch.search = item.keyWord
+    // 查询
+    search() {
+      const this_ = this
+      if (this_.formSearch.search.trim().length === 0) {
+        this.$message.info('请先输入关键字')
+        this.formSearch.search = ''
+      } else {
+        // 是否新窗口打开
+        if (this.is_blank) {
+          const routeData = this.$router.resolve({
+            path: '/buy/search',
+            query: {
+              keyword: this_.formSearch.search
+            }
+          })
+          window.open(routeData.href, '_blank')
+        } else {
+          this_.$router.push(
+            {
+              path: '/buy/search',
+              query: {
+                keyword: this_.formSearch.search
+              }
+            }
+          )
+        }
+      }
     }
+  },
+  mounted() {
+    this.init()
   }
 }
 </script>
