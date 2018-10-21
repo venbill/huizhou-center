@@ -53,7 +53,7 @@
 <script>
 // import util from '@/utils/util'
 import { mapState } from 'vuex'
-import { login } from '@/api/common/login'
+// import { login } from '@/api/common/login'
 
 export default {
   name: 'login',
@@ -95,30 +95,47 @@ export default {
     },
     // 登录
     handleLogin() {
-      const this_ = this
+      // const this_ = this
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          login(this.loginForm.username, this.loginForm.password).then(function(data) {
-            if (data.data.code === 200) {
-              const userInfo = {
-                status: true,
-                userId: data.data.data.userId,
-                phone: data.data.data.phone,
-                roles: data.data.data.roles
-              }
-              localStorage.setItem('userInfo', JSON.stringify(userInfo)) // 存入缓存
-              this_.$router.push('/buy')
-            }
-          })
-          setTimeout(() => {
-            this_.loading = false
-          }, 5000)
+          this.$store
+            .dispatch('LoginByUsername', this.loginForm)
+            .then(() => {
+              this.loading = false
+              this.$router.push('/buy')
+            })
+            .catch(() => {
+              this.loading = false
+            })
         } else {
           console.log('error submit!!')
           return false
         }
       })
+      // this.$refs.loginForm.validate(valid => {
+      //   if (valid) {
+      //     this.loading = true
+      //     login(this.loginForm.username, this.loginForm.password).then(function(data) {
+      //       if (data.data.code === 200) {
+      //         const userInfo = {
+      //           status: true,
+      //           userId: data.data.data.userId,
+      //           phone: data.data.data.phone,
+      //           roles: data.data.data.roles
+      //         }
+      //         localStorage.setItem('userInfo', JSON.stringify(userInfo)) // 存入缓存
+      //         this_.$router.push('/buy')
+      //       }
+      //     })
+      //     setTimeout(() => {
+      //       this_.loading = false
+      //     }, 5000)
+      //   } else {
+      //     console.log('error submit!!')
+      //     return false
+      //   }
+      // })
     }
   },
   watch: {

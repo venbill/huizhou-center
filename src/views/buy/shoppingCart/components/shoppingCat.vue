@@ -75,6 +75,7 @@
 </template>
 
 <script>
+import { getGoodsList } from '@/api/buy/buy'
 export default {
   data() {
     return {
@@ -94,18 +95,28 @@ export default {
     }
   },
   methods: {
+    getGoodsList() {
+      getGoodsList().then(function(data) {
+        if (data.data.code === 200) {
+          console.log(data.data)
+        }
+      })
+    },
     shoppingChange() {
 
     }
   },
 
-  mounted() {}
+  mounted() {
+    this.getGoodsList()
+  }
 }
 </script>
 
 <style scoped>
 .car-content {
   width: 100%;
+  margin-top: 20px;
 }
 .table-title {
   padding: 10px 10px;

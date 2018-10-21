@@ -1,9 +1,9 @@
 <template>
   <div class="category-main">
-    <el-collapse class="search-type">
-      <el-collapse-item title="店内分类" :name="index" v-for="(item, index) in 2" :key="item.id">
-        <div class="type-item" :name="index + '-' + sub" :class="{ bgColor: routeIndex === index + '-' + sub}"
-          v-for="(route, sub) in 6" :key="route.index" @click="routeFocus(item,  route, index, sub)">电玩</div>
+    <el-collapse class="search-type" v-model="activeName">
+      <el-collapse-item :title="title" :name="name">
+        <div class="type-item" :class="{ bgColor: routeIndex === index}"
+           v-for="(item, index) in data" :key="item.id" @click="routeFocus(item, index)">{{item.typeName}}</div>
       </el-collapse-item>
     </el-collapse>
   </div>
@@ -11,20 +11,86 @@
 
 <script>
 export default {
+  name: 'category',
+  props: {
+    title: '', // 标题
+    name: {
+      type: String,
+      default: '0'
+    },
+    data: {
+      tyep: Array,
+      default: function() {
+        return []
+      }
+    },
+    is_blank: {
+      type: Boolean,
+      default: true
+    } // 是否新窗口打开
+  },
   data() {
     return {
-      routeIndex: '' // 选中链接索引
+      activeName: ['0'],
+      routeIndex: -1
     }
   },
   methods: {
-    routeFocus(item, route, index, sub) {
-      this.routeIndex = index + '-' + sub
-      console.log(this.routeIndex)
-    }
+    routeFocus(item, index) {
+      this.routeIndex = index
+      const div = document.getElementsByClassName('type-item')
+      const nowIndex = this.$route.query.index
+      if (nowIndex !== undefined) {
+        div[nowIndex].classList.remove('bgColor')
+      }
+      // 是否新窗口打开
+      if (this.is_blank) {
+        // 店铺商品分类
+        localStorage.setItem('goodsClass', JSON.stringify(this.data)) // 存入缓存
+        const routeData = this.$router.resolve({
+          path: '/buy/my_shop',
+          query: {
+            index: index,
+            shopType: item.id,
+            shopId: item.shopId
+          }
+        })
+        window.open(routeData.href, '_blank')
+      } else {
+        this.setIndex(item.id, index)
+      }
+    },
+    // 列表选中
+    setIndex(id) {
+      this.$emit('setIndex', id)
+    },
+    // 获取商品分类
+    getGoodsClass() {
+      const arr = JSON.parse(localStorage.getItem('goodsClass'))
+      const item = {
+        data: arr,
+        title: '商品分类'
+      }
+      this.$emit('getGoodsClass', item)
 
+      // 列表选中
+      setTimeout(() => {
+        const div = document.getElementsByClassName('type-item')
+        const index = this.$route.query.index
+        this.routeIndex = index
+        if (index !== undefined) {
+          div[index].classList.add('bgColor')
+        }
+      }, 200)
+    }
   },
 
-  mounted() {}
+  mounted() {
+    if (this.data.length <= 0) {
+      // this.data = JSON.parse(localStorage.getItem('goodsClass'))
+      this.getGoodsClass()
+    }
+  }
 }
 </script>
 
@@ -61,6 +127,7 @@ export default {
   line-height: 36px;
   padding-left: 40px;
   font-size: 12px;
+  cursor: pointer;
 }
 .search-type .type-item:not(:last-child) {
   border-bottom: 1px solid #ddd

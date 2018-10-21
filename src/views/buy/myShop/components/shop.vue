@@ -7,21 +7,28 @@
       </div>
       <div class="detail-comment center-content border-box">
         <div class="shop-category">
-          <category></category>
+          <category v-on:getGoodsClass="getGoodsClass" v-on:setIndex="setIndex" :data="goodsClass" :title="goodsTitle" :is_blank="false"></category>
         </div>
         <div class="order-comment">
           <div class="goods-list">
-            <div class="list-item" v-for="item in 4" :key="item.index">
-              <img src="" class="block" style="height:220px;width:220px;">
-              <p class="text-link-normal" style="font-size:14px;margin:10px 0">商品名称</p>
-              <p class="text-red" style="font-size:16px;font-weight:bolder;">￥999</p>
+            <div class="list-item" v-for="item in goodsData.body" :key="item.index">
+              <router-link :to="{path:'/buy/detail', query:{id:item.id}}" target="_blank">
+                <img :src="item.picture" class="block" style="height:220px;width:220px;">
+              </router-link>
+              <p class="text-link-normal" style="font-size:14px;margin:10px 0">
+                <router-link :to="{path:'/buy/detail', query:{id:item.id}}" target="_blank">
+                  {{item.name}}
+                </router-link>
+              </p>
+              <p class="text-red" style="font-size:16px;font-weight:bolder;">{{item.minPrice | pieceFormat}}</p>
             </div>
           </div>
           <div class="info-page">
             <el-pagination
-              layout="prev, pager, next"
-              :page-size="10"
-              :total="100">
+              @current-change="pageChange"
+              layout="prev, pager, next, jumper"
+              :page-size="goodsData.pageSize"
+              :total="goodsData.total">
             </el-pagination>
           </div>
         </div>
@@ -30,6 +37,8 @@
 </template>
 
 <script>
+import util from '@/utils/util'
+import { goodsSearch } from '@/api/buy/buy'
 import Category from '../../components/category'
 export default {
   components: {
@@ -37,18 +46,82 @@ export default {
   },
   data() {
     return {
-      buyRules: {
-
+      goodsData: {
+        pageNo: 1,
+        pageSize: 50,
+        total: 0,
+        body: []
       },
+      searchParam: {},
       keywords: '',
-      tableLoading: false
+      tableLoading: false,
+      goodsClass: [],
+      goodsTitle: '',
+      routeIndex: '1'
+    }
+  },
+  filters: {
+    pieceFormat(value) {
+      return util.pieceFormat(value)
     }
   },
   methods: {
-    pageChange() {}
+    init() {
+      const shopId = this.$route.query.shopId
+      const content = this.$route.query.content
+      const minPrice = this.$route.query.minPrice
+      const maxPrice = this.$route.query.maxPrice
+      const shopType = this.$route.query.shopType
+
+      this.searchParam = {
+        content: content,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+        shopType: shopType,
+        shopId: shopId
+      }
+      this.goodsSearch(this.searchParam)
+    },
+    // 商品查询
+    goodsSearch(params) {
+      console.log(params)
+      const this_ = this
+      const newParams = util.arrDeepCopy(params)
+      newParams.pageNo = this.goodsData.pageNo
+      newParams.pageSize = this.goodsData.pageSize
+      if (newParams.shopType === undefined) {
+        delete newParams.shopType
+      }
+      if (newParams.minPrice === '') {
+        delete newParams.minPrice
+      }
+      if (newParams.maxPrice === '') {
+        delete newParams.maxPrice
+      }
+      goodsSearch(newParams).then(function(data) {
+        if (data.data.code === 200) {
+          this_.goodsData.body = data.data.data.results
+          this_.goodsData.total = data.data.data.total
+        }
+      })
+    },
+    pageChange(val) {
+      this.goodsData.pageNo = val
+      this.goodsSearch(this.searchParam)
+    },
+    getGoodsClass(item) {
+      this.goodsClass = item.data
+      this.goodsTitle = item.title
+    },
+    setIndex(id) {
+      this.searchParam.shopType = id
+      this.goodsSearch(this.searchParam)
+    }
   },
 
-  mounted() {}
+  mounted() {
+    this.init()
+  }
 }
 </script>
 
@@ -168,7 +241,9 @@ export default {
 }
 .order-comment {
   width: 980px;
+  padding: 10px;
   float: right;
+  background: #fff;
 }
 .list-item {
   width: 220px;
@@ -275,7 +350,6 @@ export default {
   margin-bottom: 10px;
 }
 .info-page {
-  background: #fff;
   border-top: 1px solid #ddd;
   padding: 15px 0;
 }

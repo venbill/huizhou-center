@@ -1,9 +1,9 @@
 <template>
     <div class="buyDetail-content">
       <buy-header></buy-header>
-      <buy-search></buy-search>
+      <buy-search ref="buySearch"></buy-search>
       <nav-title></nav-title>
-      <buy-detail></buy-detail>
+      <buy-detail v-on:goodsNumber="goodsNumber"></buy-detail>
     </div>
 </template>
 
@@ -21,7 +21,12 @@ export default {
       goodsId: -1
     }
   },
-  methods: {},
+  methods: {
+    goodsNumber(num) {
+      // 调用自路由方法
+      this.$refs.buySearch.getGoodsNum()
+    }
+  },
 
   mounted() {
     this.goodsId = this.$route.query.id

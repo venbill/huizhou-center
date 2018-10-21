@@ -1,22 +1,32 @@
 <template>
   <div class="choose-main">
-    <div class="choose-item" v-for="(item, index) in 6" :key="item.index"
-      :class="{active: boxIndex === index}" @click="boxChoose(index)">
-      <span class="text-item">在线支付</span>
+    <div class="choose-item" v-for="(item, index) in data.type" :key="item.index"
+      :class="{active: boxIndex === index}" @click="boxChoose(index, item)">
+      <span class="text-item">{{item.name}}</span>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    data: {
+      type: Object
+    },
+    boxIndex: {
+      type: Number,
+      default: -1
+    }
+  },
   data() {
     return {
-      boxIndex: -1
+
     }
   },
   methods: {
-    boxChoose(index) {
+    boxChoose(index, item) {
       this.boxIndex = index
+      this.$emit('boxChoose', item)
     }
   }
 }

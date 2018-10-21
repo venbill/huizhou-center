@@ -1,18 +1,21 @@
 <template>
   <div class="type-main">
     <div class="type-title">
-      收货地址
+      {{title}}
     </div>
     <slot></slot>
     <div class="type-bottom">
-      测试说明文字
+      {{foot}}
     </div>
   </div>
 </template>
 
 <script>
 export default {
-
+  props: {
+    title: '',
+    foot: ''
+  }
 }
 </script>
 

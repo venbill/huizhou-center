@@ -106,5 +106,10 @@ export default {
     }
     number = number / 10000 // 计算结果缩小10000倍
     return number // 返回计算结果
+  },
+  // 对象深拷贝
+  arrDeepCopy(arr) {
+    const newArr = JSON.parse(JSON.stringify(Object.assign({}, arr)))
+    return newArr
   }
 }

@@ -28,7 +28,7 @@
       <div class="b-search-shoppingCart">
         <i class="iconfont">&#xe600;</i>
         <router-link to="/buy/pay" target="_blank">我的购物车</router-link>
-        <span class="shoppingCat-count">10</span>
+        <span class="shoppingCat-count">{{goodsNum}}</span>
       </div>
     </div>
   </div>
@@ -36,7 +36,7 @@
 
 <script>
 // import util from '@/utils/util'
-import { getHotSearchList } from '@/api/buy/buy'
+import { getHotSearchList, getGoodsNum } from '@/api/buy/buy'
 export default {
   props: {
     is_blank: {
@@ -51,7 +51,7 @@ export default {
       },
       hotSearch: [],
       logoUrl: '../../../../static/images/logo.png',
-      loading: false
+      goodsNum: 0
     }
   },
   methods: {
@@ -63,6 +63,17 @@ export default {
       getHotSearchList().then(function(data) {
         if (data.data.code === 200) {
           this_.hotSearch = data.data.data
+        }
+      })
+      // 获取购物车数量
+      this.getGoodsNum()
+    },
+    // 获取购物车数量
+    getGoodsNum() {
+      const this_ = this
+      getGoodsNum().then(function(data) {
+        if (data.data.code === 200) {
+          this_.goodsNum = data.data.data
         }
       })
     },

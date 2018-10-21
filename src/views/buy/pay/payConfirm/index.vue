@@ -6,12 +6,12 @@
       <div class="bg-white center-content border-box" style="margin:20px auto;padding:0 20px;">
         <template>
           <!--收货地址-->
-          <title-box>
-            <rece-address></rece-address>
+          <title-box :title="'收货地址'">
+            <rece-address v-on:addressChoose="addressChoose" :is_check="true"></rece-address>
           </title-box>
-          <!--选择按钮-->
-          <title-box>
-            <type-choose></type-choose>
+          <!--支付方式-->
+          <title-box :title="'支付方式'">
+            <type-choose :data="payData" :boxIndex=0></type-choose>
           </title-box>
         </template>
         <div class="order-confirm">
@@ -52,7 +52,7 @@
               <el-input type="textarea" v-model="message" :rows="6" resize="none"></el-input>
             </div>
           </div>
-          <div class="goods-count">
+          <!-- <div class="goods-count">
             <p>
               <span class="count-title">订单总额：</span>
               <span class="count-piece">123</span>
@@ -73,10 +73,10 @@
               <span class="count-title">应付金额：</span>
               <span class="count-piece should-piece">500</span>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="address-foot">
-          <el-button size="max" class="btn-red">立即下单</el-button>
+          <el-button size="max" class="btn-red" @click="payMent">立即下单</el-button>
         </div>
       </div>
     </div>
@@ -99,14 +99,18 @@ export default {
     return {
       shopId: '', // 商品ID
       shopInfo: {},
+      addressInfo: '', // 选中地址信息
       imgUrl: '',
-      totalPrice: '', // 订单总额
-      discount: '', // 优惠
-      coupon: '', // 优惠券抵扣
-      freight: '', // 运费
-      shouldPay: '', // 应付金额
       orderData: [],
-      message: '' // 会员留言
+      message: '', // 会员留言
+      payData: {
+        type: [
+          {
+            name: '微信支付'
+          }
+        ], // 类型数组
+        explainText: '' // 说明文字
+      }
     }
   },
   methods: {
@@ -149,6 +153,14 @@ export default {
       const coupon = -this.coupon // 优惠券抵扣
       const freight = -this.freight // 运费
       this.totalPrice = util.numberAdd(shouldPay, discount, coupon, freight) // 订单总额
+    },
+    // 获取子组件地址id
+    addressChoose(item) {
+      this.addressInfo = item
+    },
+    // 支付
+    payMent() {
+      // this.$router.push('/buy/pay/payment')
     }
   },
 
@@ -181,7 +193,7 @@ export default {
   .message-main {
     float: left;
     height: 200px;
-    width: 700px;
+    width: 100%;
   }
   .goods-count {
     float: right;

@@ -41,6 +41,7 @@
               <el-input-number v-model="shopNumber" :min="1" class="mini-number"></el-input-number>
             </el-form-item>
             <el-form-item label="">
+              <el-button size="max" :loading="addGoodsLoading" @click="addShoppingCart">加入购物车</el-button>
               <el-button size="max" class="btn-red" @click="Buy">立即购买</el-button>
             </el-form-item>
           </el-form>
@@ -50,23 +51,26 @@
       <div class="detail-comment center-content border-box">
         <div class="shop-search">
           <div class="search-input">
+            <div class="shop-info">
+              {{shopDetail.shopName}}
+            </div>
             <div class="search-title">店内搜索</div>
             <el-form class="search-form" :model="searchForm" label-width="50px" label-position="left">
-              <el-form-item prop="keywords" label="关键词:">
-                <el-input size="mini" v-model="searchForm.keywords" class="minier-input"></el-input>
+              <el-form-item prop="content" label="关键词:">
+                <el-input size="mini" v-model="searchForm.content" class="minier-input"></el-input>
               </el-form-item>
               <el-form-item prop="number" label="价  格:">
-                <el-input size="mini" v-model="searchForm.minPiece" class="mini-input"></el-input>
+                <el-input size="mini" v-model="searchForm.minPrice" class="mini-input"></el-input>
                 到
-                <el-input size="mini" v-model="searchForm.maxPiece" class="mini-input"></el-input>
+                <el-input size="mini" v-model="searchForm.maxPrice" class="mini-input"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button size="mini">搜索</el-button>
+                <el-button size="mini" @click="goodsSearch">搜索</el-button>
               </el-form-item>
             </el-form>
           </div>
           <div class="search-type">
-            <category></category>
+            <category :title="'商品分类'" :data="shopList" :is_blank="true"></category>
           </div>
         </div>
         <el-tabs class="shop-comment" v-model="activeTab" type="border-card" @tab-click="handleClick">
@@ -82,135 +86,67 @@
             <div class="shop-assessment">
               <el-tabs style="width:100%;" v-model="commentTab" type="card" @tab-click="commentClick">
                 <el-tab-pane label="全部评价" name="first">
-                  <v-pageTable pagination :pageChange="pageChange" :page-size="50" :paginationTotal="allData.paginationTotal">
-                    <el-table :data="allData.table" style="width: 100%" v-loading="tableLoading" :header-cell-style="headerBg">
-                      <el-table-column prop="comment" label="评价心得" width="400px">
-                      </el-table-column>
-                      <el-table-column prop="score" label="顾客满意度" width="178px">
-                        <template slot-scope="scope">
-                          <el-rate v-model="scope.row.score" text-color="#ff9900" show-text disabled score-template="{value}">
-                          </el-rate>
-                        </template>
-                      </el-table-column>
-                      <el-table-column prop="attributesValuesContent" label="购买信息" width="200px">
-                      </el-table-column>
-                      <el-table-column prop="replyUser" label="评论者" width="180px">
-                      </el-table-column>
-                    </el-table>
-                  </v-pageTable>
                 </el-tab-pane>
                 <el-tab-pane label="好评" name="second">
-                  <v-pageTable pagination :pageChange="pageChange" :page-size="1" :paginationTotal="goodData.paginationTotal">
-                    <el-table :data="goodData.table" style="width: 100%" v-loading="tableLoading" :header-cell-style="headerBg">
-                      <el-table-column prop="appraisal" label="评价心得" width="400px">
-                      </el-table-column>
-                      <el-table-column prop="satisfaction" label="顾客满意度" width="178px">
-                      </el-table-column>
-                      <el-table-column prop="information" label="购买信息" width="200px">
-                      </el-table-column>
-                      <el-table-column prop="commentator" label="评论者" width="180px">
-                      </el-table-column>
-                    </el-table>
-                  </v-pageTable>
                 </el-tab-pane>
                 <el-tab-pane label="中评" name="third">
-                  <v-pageTable pagination :pageChange="pageChange" :page-size="1" :paginationTotal="middleData.paginationTotal">
-                    <el-table :data="middleData.table" style="width: 100%" v-loading="tableLoading" :header-cell-style="headerBg">
-                      <el-table-column prop="appraisal" label="评价心得" width="400px">
-                      </el-table-column>
-                      <el-table-column prop="satisfaction" label="顾客满意度" width="178px">
-                      </el-table-column>
-                      <el-table-column prop="information" label="购买信息" width="200px">
-                      </el-table-column>
-                      <el-table-column prop="commentator" label="评论者" width="180px">
-                      </el-table-column>
-                    </el-table>
-                  </v-pageTable>
                 </el-tab-pane>
                 <el-tab-pane label="差评" name="fourth">
-                  <v-pageTable pagination :pageChange="pageChange" :page-size="1" :paginationTotal="badData.paginationTotal">
-                    <el-table :data="badData.table" style="width: 100%" v-loading="tableLoading" :header-cell-style="headerBg">
-                      <el-table-column prop="appraisal" label="评价心得" width="400px">
-                      </el-table-column>
-                      <el-table-column prop="satisfaction" label="顾客满意度" width="178px">
-                      </el-table-column>
-                      <el-table-column prop="information" label="购买信息" width="200px">
-                      </el-table-column>
-                      <el-table-column prop="commentator" label="评论者" width="180px">
-                      </el-table-column>
-                    </el-table>
-                  </v-pageTable>
                 </el-tab-pane>
               </el-tabs>
+              <div>
+                <v-pageTable pagination :pageChange="pageChange" :page-size="commentsData.pageSize" :paginationTotal="commentsData.paginationTotal">
+                  <el-table :data="commentsData.table" style="width: 100%" v-loading="tableLoading" :header-cell-style="headerBg">
+                    <el-table-column prop="comment" label="评价心得">
+                    </el-table-column>
+                    <el-table-column prop="score" label="顾客满意度" width="178px">
+                      <template slot-scope="scope">
+                        <el-rate v-model="scope.row.score" text-color="#ff9900" show-text disabled score-template="{value}">
+                        </el-rate>
+                      </template>
+                    </el-table-column>
+                    <el-table-column prop="attributesValuesContent" label="购买信息" width="200px">
+                    </el-table-column>
+                    <el-table-column prop="replyUser" label="评论者" width="180px">
+                    </el-table-column>
+                  </el-table>
+                </v-pageTable>
+              </div>
             </div>
           </el-tab-pane>
           <el-tab-pane class="" label="商品评价" name="second">
             <el-tabs style="width:100%;" v-model="commentTab" type="card" @tab-click="commentClick">
-                <el-tab-pane label="全部评价" name="first">
-                  <v-pageTable pagination :pageChange="pageChange" :page-size="50" :paginationTotal="allData.paginationTotal">
-                    <el-table :data="allData.table" style="width: 100%" v-loading="tableLoading" :header-cell-style="headerBg">
-                      <el-table-column prop="comment" label="评价心得" width="400px">
-                      </el-table-column>
-                      <el-table-column prop="score" label="顾客满意度" width="178px">
-                        <template slot-scope="scope">
-                          <el-rate v-model="scope.row.score" text-color="#ff9900" show-text disabled score-template="{value}">
-                          </el-rate>
-                        </template>
-                      </el-table-column>
-                      <el-table-column prop="attributesValuesContent" label="购买信息" width="200px">
-                      </el-table-column>
-                      <el-table-column prop="replyUser" label="评论者" width="180px">
-                      </el-table-column>
-                    </el-table>
-                  </v-pageTable>
-                </el-tab-pane>
-                <el-tab-pane label="好评" name="second">
-                  <v-pageTable pagination :pageChange="pageChange" :page-size="1" :paginationTotal="goodData.paginationTotal">
-                    <el-table :data="goodData.table" style="width: 100%" v-loading="tableLoading" :header-cell-style="headerBg">
-                      <el-table-column prop="appraisal" label="评价心得" width="400px">
-                      </el-table-column>
-                      <el-table-column prop="satisfaction" label="顾客满意度" width="178px">
-                      </el-table-column>
-                      <el-table-column prop="information" label="购买信息" width="200px">
-                      </el-table-column>
-                      <el-table-column prop="commentator" label="评论者" width="180px">
-                      </el-table-column>
-                    </el-table>
-                  </v-pageTable>
-                </el-tab-pane>
-                <el-tab-pane label="中评" name="third">
-                  <v-pageTable pagination :pageChange="pageChange" :page-size="1" :paginationTotal="middleData.paginationTotal">
-                    <el-table :data="middleData.table" style="width: 100%" v-loading="tableLoading" :header-cell-style="headerBg">
-                      <el-table-column prop="appraisal" label="评价心得" width="400px">
-                      </el-table-column>
-                      <el-table-column prop="satisfaction" label="顾客满意度" width="178px">
-                      </el-table-column>
-                      <el-table-column prop="information" label="购买信息" width="200px">
-                      </el-table-column>
-                      <el-table-column prop="commentator" label="评论者" width="180px">
-                      </el-table-column>
-                    </el-table>
-                  </v-pageTable>
-                </el-tab-pane>
-                <el-tab-pane label="差评" name="fourth">
-                  <v-pageTable pagination :pageChange="pageChange" :page-size="1" :paginationTotal="badData.paginationTotal">
-                    <el-table :data="badData.table" style="width: 100%" v-loading="tableLoading" :header-cell-style="headerBg">
-                      <el-table-column prop="appraisal" label="评价心得" width="400px">
-                      </el-table-column>
-                      <el-table-column prop="satisfaction" label="顾客满意度" width="178px">
-                      </el-table-column>
-                      <el-table-column prop="information" label="购买信息" width="200px">
-                      </el-table-column>
-                      <el-table-column prop="commentator" label="评论者" width="180px">
-                      </el-table-column>
-                    </el-table>
-                  </v-pageTable>
-                </el-tab-pane>
-              </el-tabs>
+              <el-tab-pane label="全部评价" name="first">
+              </el-tab-pane>
+              <el-tab-pane label="好评" name="second">
+              </el-tab-pane>
+              <el-tab-pane label="中评" name="third">
+              </el-tab-pane>
+              <el-tab-pane label="差评" name="fourth">
+              </el-tab-pane>
+            </el-tabs>
+            <div>
+              <v-pageTable pagination :pageChange="pageChange" :page-size="commentsData.pageSize" :paginationTotal="commentsData.paginationTotal">
+                <el-table :data="commentsData.table" style="width: 100%" v-loading="tableLoading" :header-cell-style="headerBg">
+                  <el-table-column prop="comment" label="评价心得">
+                  </el-table-column>
+                  <el-table-column prop="score" label="顾客满意度" width="178px">
+                    <template slot-scope="scope">
+                      <el-rate v-model="scope.row.score" text-color="#ff9900" show-text disabled score-template="{value}">
+                      </el-rate>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="attributesValuesContent" label="购买信息" width="200px">
+                  </el-table-column>
+                  <el-table-column prop="replyUser" label="评论者" width="180px">
+                  </el-table-column>
+                </el-table>
+              </v-pageTable>
+            </div>
           </el-tab-pane>
-          <el-tab-pane label="售后保障" name="third">
+          <!-- <el-tab-pane label="售后保障" name="third">
             
-          </el-tab-pane>
+          </el-tab-pane> -->
         </el-tabs>
       </div>
     </div>
@@ -218,7 +154,7 @@
 
 <script>
 import Category from '@/views/buy/components/category'
-import { goodDetail, goodComments } from '@/api/buy/buy'
+import { goodDetail, goodComments, getShopTypeList, getShop, addGoods, getGoodsNum } from '@/api/buy/buy'
 export default {
   components: {
     Category
@@ -230,11 +166,13 @@ export default {
       },
       buyForm: {},
       searchForm: {
-        keywords: '1',
-        minPiece: '1',
-        maxPiece: '1'
+        content: '',
+        minPrice: '',
+        maxPrice: ''
       },
+      goodId: '', // 商品Id
       shopInfo: {}, // 商品详情
+      shopDetail: {}, // 店铺信息
       imgIndex: -1, // 商品缩略图索引
       imgUrl: '', // 商品大图路径
       attrIndex: [], // 商品属性索引-鼠标移入移除
@@ -246,51 +184,19 @@ export default {
       shopPrice: '', // 商品总价
       shopNumber: 1, // 商品数量
       shopAttr: [], // 商品选中属性
+      shopList: {}, // 店铺分类
       activeTab: 'first',
       commentTab: 'first',
-      allData: {
+      commentsData: {
         paginationTotal: 100,
         pageNo: 1,
-        star: 4,
+        pageSize: 50,
+        commentType: '0',
+        score: 4,
         table: []
       },
-      goodData: {
-        paginationTotal: 100,
-        pageNo: 1,
-        table: [
-          {
-            appraisal: '好评心得',
-            satisfaction: '好评满意程度',
-            information: '好评购买信息',
-            commentator: '好评评论者'
-          }
-        ]
-      },
-      middleData: {
-        paginationTotal: 100,
-        pageNo: 1,
-        table: [
-          {
-            appraisal: '中评心得',
-            satisfaction: '中评满意程度',
-            information: '中评购买信息',
-            commentator: '中评评论者'
-          }
-        ]
-      },
-      badData: {
-        paginationTotal: 100,
-        pageNo: 1,
-        table: [
-          {
-            appraisal: '差评心得',
-            satisfaction: '差评满意程度',
-            information: '差评购买信息',
-            commentator: '差评评论者'
-          }
-        ]
-      },
-      tableLoading: false
+      tableLoading: false,
+      addGoodsLoading: false
     }
   },
   methods: {
@@ -300,9 +206,9 @@ export default {
     },
     init() {
       const this_ = this
-      const goodId = this.$route.query.id
+      this.goodId = this.$route.query.id
       // 获取商品详情
-      goodDetail(goodId).then(function(data) {
+      goodDetail(this.goodId).then(function(data) {
         if (data.data.code === 200) {
           this_.shopInfo = data.data.data
           // 图片处理
@@ -325,27 +231,74 @@ export default {
 
           // 获取商品价格
           this_.getPrice()
+          // 获取店铺信息
+          this_.getShop()
+          // 获取店铺分类
+          this_.getShopTypeList()
         }
       })
+
       // 获取商品评论
-      const params = {
-        pageNo: this.allData.pageNo,
-        pageSize: 50,
-        goodsId: goodId
+      this.getComments()
+    },
+    // 获取店铺信息
+    getShop() {
+      const this_ = this
+      getShop(this.shopInfo.shopId).then(function(data) {
+        if (data.data.code === 200) {
+          this_.shopDetail = data.data.data
+        }
+      })
+    },
+    // 获取店铺分类
+    getShopTypeList() {
+      const this_ = this
+      getShopTypeList(this.shopInfo.shopId).then(function(data) {
+        if (data.data.code === 200) {
+          this_.shopList = data.data.data
+        }
+      })
+    },
+    // 搜索商品
+    goodsSearch() {
+      if (this.searchForm.content.trim().length === 0) {
+        this.$message.info('请先输入关键词')
+        this.searchForm.content = ''
+        return
       }
-      this.getComments(params, 'all')
+      // const this_ = this
+      // 定义参数
+      const params = {
+        pageNo: 1,
+        pageSize: 50,
+        content: this.searchForm.content,
+        minPrice: this.searchForm.minPrice,
+        maxPrice: this.searchForm.maxPrice,
+        shopId: this.shopInfo.shopId,
+        shopName: this.shopDetail.shopName
+      }
+      // 跳转路由
+      this.$router.push(
+        {
+          path: '/buy/my_shop',
+          query: params
+        }
+      )
     },
     // 获取商品评论
-    getComments(params, string) {
+    getComments() {
       const this_ = this
       this.tableLoading = true
+      const params = {
+        pageNo: this.commentsData.pageNo,
+        pageSize: this.commentsData.pageSize,
+        goodsId: this.goodId,
+        commentType: this.commentsData.commentType
+      }
       goodComments(params).then(function(data) {
         if (data.data.code === 200) {
-          this_.allData.paginationTotal = data.data.data.data.total
-          this_.allData.table = data.data.data.data.results
-          this_.goodData.table = data.data.data.data.results
-          this_.middleData.table = data.data.data.data.results
-          this_.badData.table = data.data.data.data.results
+          this_.commentsData.paginationTotal = data.data.data.data.total
+          this_.commentsData.table = data.data.data.data.results
         }
         this_.tableLoading = false
       })
@@ -398,13 +351,103 @@ export default {
         }
       }
     },
-    handleClick() {
-      console.log(this.activeTab)
-    },
-    commentClick() {
+    // 加入购物车
+    addShoppingCart() {
+      const this_ = this
+      this.addGoodsLoading = true
+      // 获取属性名称
+      const arr = []
+      this.shopInfo.selectAttributeDetailList.forEach(function(e) {
+        arr.push(e.keyName)
+      })
+      // 判断属性值是否都选中，选中的值存入商品属性数组中
+      this.shopAttr = []
+      for (let i = 0; i < this.chooseItem.length; i++) {
+        if (this.chooseItem[i] <= 0) {
+          const message = '请选择' + arr[i]
+          this.$message(message)
+          return
+        } else {
+          const attrParam = this.shopInfo.selectAttributeDetailList[i] // 商品可选属性
+          const attrName = arr[i] // 商品属性名
+          let attrValue = '' // 商品选中属性值
+          const attrChild = attrParam.attributeValues // 商品属性数组
 
+          for (let k = 0; k < attrChild.length; k++) {
+            if (this.chooseItem[i] === attrChild[k].id) {
+              attrValue = attrChild[k].value
+            }
+          }
+
+          const attrInfo = {
+            attrName: attrName,
+            attrValue: attrValue
+          }
+          this.shopAttr.push(attrInfo)
+        }
+      }
+      // 判断是否选择数量
+      if (!this.shopNumber) {
+        return
+      }
+      const params = {
+        goodsId: this.$route.query.id,
+        selectAttributeValues: this.chooseItem.join(','),
+        num: this.shopNumber
+      }
+      addGoods(params).then(function(data) {
+        if (data.data.code === 200) {
+          this_.$message.success('购物车添加成功！')
+          this_.addGoodsLoading = false
+          this_.getGoodsNum()
+        }
+      })
+      setTimeout(() => {
+        this.addGoodsLoading = false
+      })
     },
-    pageChange() {},
+    // 获取购物车数量
+    getGoodsNum() {
+      const this_ = this
+      getGoodsNum().then(function(data) {
+        if (data.data.code === 200) {
+          this_.goodsNum = data.data.data
+          this_.goodsNumber()
+        }
+      })
+    },
+    goodsNumber() {
+      const num = this.goodsNum
+      this.$emit('goodsNumber', num)
+    },
+    handleClick() {
+      // console.log(this.activeTab)
+      // const activeTab = this.activeTab
+      // if (activeTab === 'first') {
+      //   this.commentsData.commentType = '0'
+      // } else if (activeTab === 'second') {
+      //   this.commentsData.commentType = '0'
+      // }
+    },
+    // 全部、好评、中评、差评
+    commentClick() {
+      const commentTab = this.commentTab
+      if (commentTab === 'first') {
+        this.commentsData.commentType = '0'
+      } else if (commentTab === 'second') {
+        this.commentsData.commentType = '1'
+      } else if (commentTab === 'third') {
+        this.commentsData.commentType = '2'
+      } else if (commentTab === 'fourth') {
+        this.commentsData.commentType = '3'
+      }
+      this.pageChange(1)
+    },
+    // 翻页
+    pageChange(val) {
+      this.commentsData.pageNo = val
+      this.getComments()
+    },
     // 购买
     Buy() {
       // 获取属性名称
@@ -612,6 +655,14 @@ img {
   width: 200px;
   min-height: 400px;
   float: left;
+}
+.shop-search .shop-info {
+  font-size: 16px;
+  padding: 10px 5px;
+  width: 188px;
+  background: #ee4644;
+  color: #fff;
+  box-sizing: border-box;
 }
 .search-input, .search-type {
   width: 190px;
