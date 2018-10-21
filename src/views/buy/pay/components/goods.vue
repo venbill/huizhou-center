@@ -168,13 +168,7 @@ export default {
     numChange(item) {
       // const this_ = this
       this.$nextTick(function() {
-        console.log(item)
-        const params = {
-          buyCarId: item.buyCarId,
-          num: item.buyNo
-        }
-        console.log(params)
-        numChenge(params)
+        numChenge(item.buyCarId, item.buyNo)
       })
     },
     // 是否全选

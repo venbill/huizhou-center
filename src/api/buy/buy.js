@@ -158,10 +158,9 @@ export function someDelete(params) {
   })
 }
 
-export function numChenge(params) {
+export function numChenge(buyCarId, num) {
   return request({
-    url: '/buyCar/user/updateGoodsNum',
-    params,
+    url: '/buyCar/user/updateGoodsNum/' + buyCarId + '/' + num,
     method: 'put'
   })
 }
