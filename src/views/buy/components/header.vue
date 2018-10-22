@@ -3,7 +3,7 @@
     <div class="b-header-content">
       <div class="b-header-link">
         <span class="b-header-welcome">您好！欢迎来云购物</span>
-        <template v-if="!userInfo.status">
+        <template>
           <span class="text-link">
             <router-link to="/login">请登录</router-link>
           </span>
@@ -11,9 +11,9 @@
             <router-link to="/regist">免费注册</router-link>
           </span>
         </template>
-        <template v-else>
+        <!-- <template v-else>
           <span class="text-link" @click="logout">退出</span>
-        </template>
+        </template> -->
       </div>
       <div class="b-header-list">
         <el-menu mode="horizontal">
@@ -57,7 +57,7 @@ export default {
     }
   },
   mounted() {
-    this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
+    // this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
     // console.log(this.userInfo)
   }
 }
