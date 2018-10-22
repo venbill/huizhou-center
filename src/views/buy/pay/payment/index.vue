@@ -5,22 +5,28 @@
       <nav-title></nav-title>
       <div class="payment-main center-content border-box">
         <div class="payment-title">收银台</div>
-        <div class="payment-info flex-box">
+        <div class="payment-info">
           <div class="info-item">
-            <p>订单编号：<span>123456789</span></p>
-            <p>订单编号：<span>123456789</span></p>
+            <p>订单编号：<span>{{orderId}}</span></p>
           </div>
           <div class="info-item" style="display:flex;align-items:center;">
             <p>
               <span>应付金额：</span>
-              <span class="text-red weight-bold" style="font-size:24px">123</span>
+              <span class="text-red weight-bold" style="font-size:24px">{{shouldPay | pieceFormat}}</span>
             </p>
           </div>
         </div>
         <el-tabs type="card">
           <el-tab-pane label="微信支付">
-            <div class="QR_Code"></div>
-            <div class="text-foot"></div>
+            <div>
+              <div class="styleLogo">
+                <div class="logoImg"></div>
+              </div>
+              <div style="float:left">
+                <div class="QR_Code" id="QR_Code"></div>
+                <div class="text-foot"></div>
+              </div>
+            </div>
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -31,17 +37,69 @@
 import BuyHeader from '@/views/buy/components/header'
 import BuySearch from '@/views/buy/components/search'
 import NavTitle from '@/views/buy/components/navTitle'
+import { orderDetail, doWechatPay, getOrderStatus } from '@/api/buy/buy'
+import util from '@/utils/util'
+import QRCode from 'qrcodejs2'
 export default {
   components: {
     BuyHeader, BuySearch, NavTitle
   },
   data() {
     return {
+      orderId: '', // 订单Id
+      shouldPay: 0, // 应付金额
+      codeUrl: '' // 支付链接
     }
   },
-  methods: {},
+  filters: {
+    pieceFormat(value) {
+      return util.pieceFormat(value)
+    }
+  },
+  methods: {
+    init() {
+      const this_ = this
+      this.orderId = this.$route.query.id
+      // 获取订单详情
+      orderDetail(this.orderId).then(function(data) {
+        if (data.data.code === 200) {
+          this_.shouldPay = data.data.data.totalMoney
+        }
+      })
+      // 生成微信支付二维码
+      doWechatPay(this.orderId).then(function(data) {
+        if (data.data.code === 200) {
+          this_.codeUrl = data.data.code_url
+          this_.qrcode(this_.codeUrl)
+        }
+      })
+      // 查询订单支付状态
+      // setInterval(() => {
+      //   this.getOrderStatus()
+      // }, 3000)
+    },
+    // 生成二维码
+    qrcode(url) {
+      const canvas = document.getElementById('QR_Code')
+      // QRCode.toCanvas(canvas, url, function() {})
+      const qrcode = new QRCode(canvas, {
+        height: 260,
+        width: 260,
+        text: url
+      })
+      return qrcode
+    },
+    // 查询订单支付状态
+    getOrderStatus() {
+      getOrderStatus(this.orderId).then(function(data) {
+        console.log(data)
+      })
+    }
+  },
 
-  mounted() {}
+  mounted() {
+    this.init()
+  }
 }
 </script>
 
@@ -65,16 +123,25 @@ export default {
   .info-item {
     flex: 1;
   }
+  .styleLogo {
+    height: 370px;
+    float: left;
+    margin-right: 50px
+  }
+  .logoImg {
+    width: 200px;
+    height: 60px;
+    background: url('/static/images/WePayLogo.png') no-repeat;
+  }
   .QR_Code {
-    height: 260px;
     width: 260px;
-    margin-bottom: 10px;
-    background: silver;
+    height: 260px;
+    margin-bottom: 20px;
   }
   .text-foot {
     width:260px;
     height: 86px;
-    background: url('/static/images/pay_text.png')
+    background: url('/static/images/pay_text.png') no-repeat;
   }
 </style>
 

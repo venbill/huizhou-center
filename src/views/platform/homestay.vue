@@ -39,19 +39,19 @@
             </el-row>
          </div>
          <div style="margin: 0;height:450px;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font-family: inherit;
-    vertical-align: baseline;
-    zoom: 1;">
-            <el-row style="
- padding-top:120px;
- height:100%;
- background-size:  bottom;  
-background-image:url(https://static.zzkcdn.com/o_1cjv6uma41nbl1jkcg761op11hvpm.jpg);  
-background-repeat:no-repeat;  
-background-position:center; ">
+          padding: 0;
+          border: 0;
+          font-size: 100%;
+          font-family: inherit;
+          vertical-align: baseline;
+          zoom: 1;">
+                  <el-row style="
+      padding-top:120px;
+      height:100%;
+      background-size:  bottom;  
+      background-image:url(https://static.zzkcdn.com/o_1cjv6uma41nbl1jkcg761op11hvpm.jpg);  
+      background-repeat:no-repeat;  
+      background-position:center; ">
                  <el-col :offset=4 :span=12>
                      <el-autocomplete style="width:100%;" v-model="state4" size="medium" allowCreate=true :fetch-suggestions="querySearchAsync" placeholder="请输入景区、地名、民宿名称或店铺名称" @select="handleSelect"></el-autocomplete>
                  </el-col>
@@ -204,37 +204,37 @@ background-position:center; ">
                 <el-col :offset=2 :span=4>
                      <h2>关于我们</h2>
                     <a class="grey">徽州电子商务中心</a>
-                    </br>
-                    </br>
+                    <br/>
+                    <br/>
                     <a class="grey">黄山超新星互联网科技公司</a>
-                    </br>
-                    </br>
+                    <br/>
+                    <br/>
                     <a class="grey">人才招聘</a>
-                    </br>
-                    </br>
+                    <br/>
+                    <br/>
                     <a class="grey">隐私与法律申明</a>
                  </el-col>
                 <el-col :offset=2 :span=4>
                     <h2>产品介绍</h2>
                     <a class="grey"> 民宿系统</a>
-                    </br>
-                    </br>
+                    <br/>
+                    <br/>
                     <a class="grey">电商系统</a>
-                    </br>
-                    </br>
+                    <br/>
+                    <br/>
                     <a class="grey">广告活动</a>
-                    </br>
-                    </br>
+                    <br/>
+                    <br/>
                     <a class="grey">供应链</a>
                 </el-col>
                  <el-col :offset=2 :span=4>
                     <h2>商务合作</h2>
                     <a class="grey">投资理财</a>
-                    </br>
-                    </br>
+                    <br/>
+                    <br/>
                     <a class="grey">企业入驻</a>
-                    </br>
-                    </br>
+                    <br/>
+                    <br/>
                     <a class="grey">消费者建议</a>
                  </el-col>
                 <el-col :offset=2 :span=4>

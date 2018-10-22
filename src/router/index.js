@@ -4,7 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 /* Layout */
-import Layout from '@/views/buy/index'
+import Layout from '@/views/login/login'
 import Layout2 from '@/views/layout/Layout2'
 
 /** note: submenu only apppear when children.length>=1
@@ -191,7 +191,7 @@ export const constantRouterMap = [
   {
     path: '',
     component: Layout,
-    redirect: 'buy'
+    redirect: 'login'
   },
   {
     path: '/l2',

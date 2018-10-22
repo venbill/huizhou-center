@@ -165,3 +165,32 @@ export function numChenge(buyCarId, num) {
   })
 }
 
+// 订单
+export function createOrder(params) {
+  return request({
+    url: '/order/createOrder',
+    data: params,
+    method: 'post'
+  })
+}
+
+export function orderDetail(id) {
+  return request({
+    url: '/order/detail/' + id,
+    method: 'get'
+  })
+}
+
+export function doWechatPay(id) {
+  return request({
+    url: '/order/doWechatPay/' + id,
+    method: 'post'
+  })
+}
+
+export function getOrderStatus(id) {
+  return request({
+    url: '/order/checkPayStatus/' + id,
+    method: 'get'
+  })
+}

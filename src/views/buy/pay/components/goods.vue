@@ -68,7 +68,8 @@
           全选
           <el-button type="text" style="margin-left: 40px" @click="confirmDelete('all')">删除</el-button>
           
-          <el-button class="btn-red" style="float:right;height:100%;width:200px;margin-left:20px;font-size:18px">去付款</el-button>
+          <el-button class="btn-red" @click="toPayConfirm"
+           style="float:right;height:100%;width:200px;margin-left:20px;font-size:18px">去付款</el-button>
           <span style="float:right">
             共有
             <span class="text-red" style="font-size:18px">{{goodsNum}}</span>
@@ -110,8 +111,9 @@ export default {
       }, // 购物车商品列表
       totalCount: '', // 所有选中商品总价
       goodsNum: 0, // 选中商品数量
+      shoppingCartNum: '', // 购物车数量
       checkGoods: [], // 所有商品是否选中的状态列表
-      deleteGoods: [], // 要删除的商品id数组
+      deleteGoods: [], // 要删除的商品数组
       allCheck: false,
       num1: 1
     }
@@ -155,7 +157,7 @@ export default {
         let totalPrice = 0
         this_.goodsInfo.goodsList.forEach(function(e) {
           this_.deleteGoods.forEach(function(m) {
-            if (e.buyCarId === m) {
+            if (e.buyCarId === m.buyCarId) {
               const price = e.price * 100 * e.buyNo
               totalPrice = totalPrice + price
             }
@@ -197,7 +199,7 @@ export default {
       this.deleteGoods = []
       for (let i = 0; i < this.checkGoods.length; i++) {
         if (this.checkGoods[i]) {
-          this.deleteGoods.push(this.goodsInfo.goodsList[i].buyCarId)
+          this.deleteGoods.push(this.goodsInfo.goodsList[i])
         }
       }
       this.goodsNum = this.deleteGoods.length
@@ -209,7 +211,6 @@ export default {
       if (string === 'single') {
         message = '确认删除当前商品？'
       } else if (string === 'all') {
-        console.log(this.deleteGoods)
         if (this.deleteGoods.length <= 0) {
           this.$message.info('请先选中商品')
           return
@@ -237,6 +238,7 @@ export default {
       singleDelete(id).then(function(data) {
         if (data.data.code === 200) {
           this_.getGoodsList()
+          this_.goodsNumber()
           this_.$message.success('删除成功')
         }
       })
@@ -244,15 +246,42 @@ export default {
     // 多个删除
     someDelete() {
       const this_ = this
+      const deleteArr = []
+      this.deleteGoods.forEach(function(e) {
+        deleteArr.push(e.buyCarId)
+      })
       const params = {
-        buyCarIdList: this.deleteGoods
+        buyCarIdList: deleteArr
       }
       someDelete(params).then(function(data) {
         if (data.data.code === 200) {
           this_.getGoodsList()
+          this_.goodsNumber()
           this_.$message.success('删除成功')
         }
       })
+    },
+    // 重新获取购物车数量
+    goodsNumber() {
+      this.$emit('goodsNumber')
+    },
+    // 跳转支付确认
+    toPayConfirm() {
+      if (this.deleteGoods.length > 0) {
+        // 选中商品添加到缓存
+        localStorage.setItem('shopInfo', JSON.stringify(this.deleteGoods)) // 存入缓存
+        // 跳转路由
+        this.$router.push(
+          {
+            path: '/buy/pay/pay_confirm',
+            query: {
+              type: 2
+            }
+          }
+        )
+      } else {
+        this.$message.info('请先勾选商品')
+      }
     }
   },
 

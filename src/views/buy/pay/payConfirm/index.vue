@@ -20,39 +20,42 @@
             <el-table-column prop="goodsName" label="商品名称">
               <template slot-scope="scope">
                 <div class="goods-box">
-                  <router-link :to="{path:'/buy/detail',query:{id:shopId}}" target="_blank" style="height:40px;width:40px;margin-right:10px">
-                    <img :src="scope.row.imgUrl">
+                  <router-link :to="{path:'/buy/detail',query:{id:scope.row.goodsId}}" target="_blank" style="height:40px;width:40px;margin-right:10px">
+                    <img :src="scope.row.picture">
                   </router-link>
-                  <router-link :to="{path:'/buy/detail',query:{id:shopId}}" target="_blank" class="text-link-normal">
+                  <router-link :to="{path:'/buy/detail',query:{id:scope.row.goodsId}}" target="_blank" class="text-link-normal">
                     <span>{{scope.row.goodsName}}</span>
                   </router-link>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="goodsAttr" label="商品属性" width="200">
-              <template slot-scope="scope">
+            <el-table-column prop="goodsAttributesValuesContent" label="商品属性" width="200">
+              <!-- <template slot-scope="scope">
                 <div v-for="item in scope.row.shopAttr" :key="item.index" style="font-size:12px">
-                  <span class="inline-block" style="width:50px">{{item.attrName}}：</span>
+                  <span class="inline-block" style="width:50px">{{item.goodsAttributesValuesContent}}：</span>
                   <span>{{item.attrValue}}</span>
                 </div>
-              </template>
+              </template> -->
             </el-table-column>
-            <el-table-column prop="unitPrice" label="购买价格" width="120">
+            <el-table-column prop="price" label="购买价格" width="120">
             </el-table-column>
-            <el-table-column prop="number" label="购买数量" width="120">
+            <el-table-column prop="buyNo" label="购买数量" width="120">
             </el-table-column>
-            <el-table-column prop="count" label="小计" width="120">
+            <el-table-column prop="totalPrice" label="小计" width="120">
             </el-table-column>
           </el-table>
+          <div class="price-count" style="padding:20px 70px 0 0;text-align:right;font-size:14px">
+            总计：<span style="color:red;font-size:20px;margin-left:10px;">{{countPrice}}</span>
+          </div>
         </div>
-        <div class="order-confirm" style="height: 220px">
+        <!-- <div class="order-confirm" style="height: 220px">
           <div class="message-main">
             <div class="confirm-title">会员留言</div>
             <div class="message-input">
               <el-input type="textarea" v-model="message" :rows="6" resize="none"></el-input>
             </div>
           </div>
-          <!-- <div class="goods-count">
+          <div class="goods-count">
             <p>
               <span class="count-title">订单总额：</span>
               <span class="count-piece">123</span>
@@ -73,10 +76,11 @@
               <span class="count-title">应付金额：</span>
               <span class="count-piece should-piece">500</span>
             </div>
-          </div> -->
-        </div>
+          </div>
+        </div> -->
         <div class="address-foot">
-          <el-button size="max" class="btn-red" @click="payMent">立即下单</el-button>
+          <el-button size="max" @click="toShoppingCart">返回购物车</el-button>
+          <el-button size="max" class="btn-red" :loading="loading" @click="payMent">立即下单</el-button>
         </div>
       </div>
     </div>
@@ -89,28 +93,27 @@ import NavTitle from '../../components/navTitle'
 import ReceAddress from '../../components/address'
 import TitleBox from '../../components/titleBox'
 import TypeChoose from '../../components/typeChoose'
-import { goodDetail } from '@/api/buy/buy'
-import util from '@/utils/util'
+import { createOrder } from '@/api/buy/buy'
 export default {
   components: {
     BuyHeader, BuySearch, ReceAddress, NavTitle, TitleBox, TypeChoose
   },
   data() {
     return {
-      shopId: '', // 商品ID
-      shopInfo: {},
       addressInfo: '', // 选中地址信息
-      imgUrl: '',
-      orderData: [],
+      orderData: [], // 商品数组
+      typeStatus: '', // 直接购买(1)或者购物车购买(2)
+      countPrice: 0, // 所有商品总价
       message: '', // 会员留言
       payData: {
         type: [
           {
             name: '微信支付'
           }
-        ], // 类型数组
+        ], // 支付方式数组
         explainText: '' // 说明文字
-      }
+      },
+      loading: false
     }
   },
   methods: {
@@ -119,40 +122,25 @@ export default {
       return { 'background': '#f5f7fa', 'color': '#1F2D3D' }
     },
     init() {
-      const this_ = this
-      this.shopId = this.$route.query.goodsId
-      // 获取商品详情
-      goodDetail(this.shopId).then(function(data) {
-        if (data.data.code === 200) {
-          this_.shopInfo = data.data.data
-          // 获取商品图片
-          if (this_.shopInfo.pictures.length > 0) {
-            this_.imgUrl = this_.shopInfo.pictures[0]
-          }
-          // 封装渲染数据
-          const params = {
-            imgUrl: this_.imgUrl,
-            goodsName: this_.shopInfo.goodsName,
-            unitPrice: this_.$route.query.unitPrice,
-            number: this_.$route.query.number,
-            count: this_.$route.query.totalPrice
-          }
-          params.shopAttr = JSON.parse(localStorage.getItem('shopInfo'))
-          this_.orderData.push(params)
-          this_.shouldPay = params.count
-        }
+      this.typeStatus = this.$route.query.type
+      this.orderData = JSON.parse(localStorage.getItem('shopInfo'))
+      // 计算单个商品总价
+      this.orderData.forEach(function(e) {
+        const price = e.price * 100
+        const num = e.buyNo
+        e.totalPrice = (price * num) / 100
+        e.remark = ''
       })
-
-      // 计算订单总额
-      this.count()
+      // 计算所有商品总价
+      this.priceCount()
     },
-    // 计算订单总额
-    count() {
-      const shouldPay = this.shouldPay // 应付金额
-      const discount = -this.discount // 优惠
-      const coupon = -this.coupon // 优惠券抵扣
-      const freight = -this.freight // 运费
-      this.totalPrice = util.numberAdd(shouldPay, discount, coupon, freight) // 订单总额
+    // 计算所有商品总价
+    priceCount() {
+      let count = 0
+      this.orderData.forEach(function(e) {
+        count += e.totalPrice
+      })
+      this.countPrice = '￥' + count
     },
     // 获取子组件地址id
     addressChoose(item) {
@@ -160,7 +148,50 @@ export default {
     },
     // 支付
     payMent() {
+      const this_ = this
+      if (this.addressInfo.id === undefined) {
+        this.$message.info('请选择收货地址')
+        return
+      }
+      this.loading = true
+      const goodsDetailList = []
+      this.orderData.forEach(function(e) {
+        const obj = {
+          buyCarId: e.buyCarId,
+          buyNo: e.buyNo,
+          goodsAttributeValues: e.goodsAttributesValues,
+          goodsId: e.goodsId,
+          remark: e.remark
+        }
+        goodsDetailList.push(obj)
+      })
+      const params = {
+        deliveryAddress: this.addressInfo.id,
+        goodsDetailList: goodsDetailList,
+        type: this.typeStatus
+      }
+      createOrder(params).then(function(data) {
+        if (data.data.code === 200) {
+          this_.loading = false
+          this_.$router.replace(
+            {
+              path: '/buy/pay/payment',
+              query: {
+                id: data.data.data
+              },
+              replace: true
+            }
+          )
+        }
+      })
+      setTimeout(() => {
+        this.loading = false
+      }, 2000)
       // this.$router.push('/buy/pay/payment')
+    },
+    // 返回购物
+    toShoppingCart() {
+      this.$router.push('/buy/pay')
     }
   },
 

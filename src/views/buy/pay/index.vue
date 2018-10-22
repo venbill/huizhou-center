@@ -1,9 +1,9 @@
 <template>
     <div class="pay-content">
       <buy-header></buy-header>
-      <buy-search></buy-search>
+      <buy-search ref="buySearch"></buy-search>
       <nav-title></nav-title>
-      <goods></goods>
+      <goods v-on:goodsNumber="goodsNumber"></goods>
     </div>
 </template>
 
@@ -20,7 +20,12 @@ export default {
     return {
     }
   },
-  methods: {},
+  methods: {
+    goodsNumber(num) {
+      // 调用自路由方法
+      this.$refs.buySearch.getGoodsNum()
+    }
+  },
 
   mounted() {}
 }
