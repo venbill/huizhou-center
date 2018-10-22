@@ -60,7 +60,7 @@ export default {
         },
         {
           title: '电商',
-          path: '/index/shop'
+          path: '/buy'
         },
         {
           title: '民宿',

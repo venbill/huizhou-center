@@ -51,7 +51,7 @@
                     <router-link to="/index/homestay">民宿</router-link>
                 </el-menu-item>
                 <el-menu-item index="3">
-                    <router-link to="/index/shop">电商</router-link></el-menu-item>
+                    <router-link to="/buy">电商</router-link></el-menu-item>
                 <el-menu-item index="4">
                     <router-link to="/index/information">资讯</router-link></el-menu-item>
                 <el-menu-item index="5">

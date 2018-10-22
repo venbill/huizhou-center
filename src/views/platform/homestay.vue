@@ -163,6 +163,25 @@
      </div>
  </div>
 </template>
+
+<script>
+// import { homestayList } from '@/api/platform/homestay.js'
+export default {
+  data() {
+    return {
+      homestayData: {} // 民宿
+    }
+  },
+  methods: {
+
+  },
+  mounted() {
+
+  }
+}
+</script>
+
+
  <style scoped>
 a.hover:hover {
     color: #f56960;
