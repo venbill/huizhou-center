@@ -1,6 +1,6 @@
 <template>
   <div class="layout-main">
-    <div class="center-content">
+    <div>
       <el-carousel style="padding:0; width:100%;height:100%" indicator-position="outside" height="400px">
         <el-carousel-item>
           <img style="padding:0; width:100%;height:100%"   src="http://pic.cifnews.com/upload/201508/16/201508161802374333.jpg"/>

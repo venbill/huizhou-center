@@ -56,15 +56,15 @@ export default {
       bannerTitle: [
         {
           title: '首页',
-          path: '/login'
+          path: '/index/home'
         },
         {
           title: '电商',
-          path: '/login'
+          path: '/index/shop'
         },
         {
           title: '民宿',
-          path: '/login'
+          path: '/index/homestay'
         }
       ],
       navList: [],

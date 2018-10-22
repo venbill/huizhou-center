@@ -30,6 +30,7 @@ export const constantRouterMap = [
 
   {
     path: '/index',
+    redirect: '/index/home',
     component: () =>
             import('@/views/platform/index'),
     children: [
@@ -37,6 +38,25 @@ export const constantRouterMap = [
         path: '/index/home',
         component: () =>
             import('@/views/platform/home')
+      },
+      // 民宿
+      {
+        path: '/index/homestay',
+        component: () =>
+                import('@/views/platform/homestay'),
+        hidden: true
+      },
+      {
+        path: '/index/homestay/search',
+        component: () =>
+                import('@/views/platform/homestay-search'),
+        hidden: true
+      },
+      {
+        path: '/index/homestay/detail',
+        component: () =>
+                import('@/views/platform/homestay-detail'),
+        hidden: true
       },
       { // 电商
         path: '/index/shop',
@@ -57,25 +77,6 @@ export const constantRouterMap = [
     hidden: true
   },
 
-  // 民宿
-  {
-    path: '/homestay',
-    component: () =>
-            import('@/views/platform/homestay'),
-    hidden: true
-  },
-  {
-    path: '/homestay/search',
-    component: () =>
-            import('@/views/platform/homestay-search'),
-    hidden: true
-  },
-  {
-    path: '/homestay/detail',
-    component: () =>
-            import('@/views/platform/homestay-detail'),
-    hidden: true
-  },
   // 电商
   { // 首页
     path: '/buy',
