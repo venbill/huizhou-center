@@ -4,7 +4,8 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 /* Layout */
-import Layout from '@/views/login/login'
+// import Layout from '@/views/login/login'
+import Layout from '@/views/layout/Layout'
 import Layout2 from '@/views/layout/Layout2'
 
 /** note: submenu only apppear when children.length>=1
@@ -188,10 +189,21 @@ export const constantRouterMap = [
             import('@/views/errorPage/401'),
     hidden: true
   },
+  // {
+  //   path: '',
+  //   component: Layout,
+  //   redirect: 'login'
+  // },
   {
     path: '',
     component: Layout,
-    redirect: 'login'
+    redirect: 'dashboard',
+    children: [{
+      path: 'dashboard',
+      component: import('@/views/dashboard/index'),
+      name: 'dashboard',
+      meta: { title: 'dashboard', icon: 'home', noCache: true }
+    }]
   },
   {
     path: '/l2',

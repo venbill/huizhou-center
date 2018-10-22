@@ -3,5 +3,5 @@ module.exports = {
   ENV_CONFIG: '"dev"',
   // BASE_API: '"https://api-dev"'
   // BASE_API: '"http://localhost:8080"'
-  BASE_API: '"http://14201967.ngrok.io"'
+  BASE_API: '"http://c6eec606.ngrok.io"'
 }
