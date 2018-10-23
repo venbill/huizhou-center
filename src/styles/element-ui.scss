@@ -88,13 +88,16 @@
 
 // 输入框宽度
 .mini-input {
-  width: 50px;
+  width: 50px!important;
 }
 .minier-input {
-  width: 122px;
+  width: 122px!important;
 }
 .medium-input {
-  width: 190px;
+  width: 190px!important;
+}
+.mediumer-input {
+  width: 260px!important;
 }
 
 // 按钮样式

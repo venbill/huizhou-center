@@ -55,6 +55,7 @@
  .foot-main {
     background: #333;
     color: #fff;
+    margin-top: 20px;
  }
 </style>
 

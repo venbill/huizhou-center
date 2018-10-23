@@ -15,7 +15,7 @@ function hasPermission(roles, permissionRoles) {
 }
 
 const whiteList = [
-  '/index', '/index/home', '/index/shop', '/index/information', '/index/us', '/index/homestay', '/index/homestay/search', 'index/homestay/detail',
+  '/index', '/index/home', '/index/shop', '/index/information', '/index/us', '/index/homestay', '/index/homestay/search', '/index/homestay/detail',
   '/buy', '/buy/search', '/buy/detail', '/buy/shoppingCart', '/buy/order', '/buy/comment', '/buy/pay', '/buy/address', '/buy/pay/pay_confirm', '/buy/pay/payment', '/buy/my_news', '/buy/my_shop',
   '/login', '/regist', '/forget', '/authredirect', '/l2',
   '/dashboard'

@@ -1,28 +1,29 @@
 <template>
 <div>
+    <div v-for="item in homeInfo" :key="item.index">
     <!-- 顶部图片 -->
     <div>
 
-        <el-row>
+        <el-row class="center-content">
             <el-col :span=12>
-                <img  style="width:100%;height:300px;" src="https://z1.muscache.cn/im/pictures/e192b7c7-edab-4694-9734-7afc7e8cb0cb.jpg?aki_policy=xx_large" />
+                <img  style="width:100%;height:300px;" :src="item.homestay.picture" />
 
                </el-col>
                 <el-col style="padding:0px;margin:0px;" :span=12>
                     <el-row>
                         <el-col :span=12 style="height:150px">
-                            <img  style="width:100%;height:150px;"  src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537092005827&di=0bb6ff58054dc6cad4bbb71adf2f9689&imgtype=0&src=http%3A%2F%2Fmmbiz.qpic.cn%2Fmmbiz_jpg%2FJTfbfbSIYnZdogdicVnAdlWicWUia8f6XWsRVSO6ic38pOy1b02X45Oia3AmxxsfsdrNuvJjVu3CADqkbdebHzKrkjA%2F640%3Fwx_fmt%3Djpeg" />
+                            <img  style="width:100%;height:150px;"  :src="item.homestay.picture1" />
                        </el-col>
                             <el-col :span=12 style="height:150px">
-                                <img style="width:100%;height:150px;"  src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537093938522&di=4f1b86d5c7da2b17c4330de07768cc7e&imgtype=jpg&src=http%3A%2F%2Fimg1.imgtn.bdimg.com%2Fit%2Fu%3D4268696401%2C3846631671%26fm%3D214%26gp%3D0.jpg" />
+                                <img style="width:100%;height:150px;"  :src="item.homestay.picture2" />
                        </el-col>
                     </el-row>
                     <el-row>
                         <el-col :span=12>
-                            <img style="width:100%;height:150px;"  src="https://z1.muscache.cn/im/pictures/443f1c7b-8650-411f-8a96-ef07feff0e86.jpg?aki_policy=large" />
+                            <img style="width:100%;height:150px;"  :src="item.homestay.picture3" />
                        </el-col>
                             <el-col :span=12>
-                                <img style="width:100%;height:150px;"  src="https://z1.muscache.cn/im/pictures/dc84d423-82f3-4928-8c22-de5211323a87.jpg?aki_policy=large" />
+                                <img style="width:100%;height:150px;"  :src="item.homestay.picture4" />
                        </el-col>
 
                     </el-row>
@@ -32,26 +33,24 @@
         </el-row>
     </div>
 
-    <div style="padding:20px 5%;   ">
+    <div class="center-content" style="padding: 20px 0">
         <el-row>
             <el-col :span=18>
                 <h2 style="font-size:25px;color:#474747">
-
-                    独立城(INDEPENDENCE) · 整套独户房里的独立房间
+                    {{item.homestay.name}}
                 </h2>
                 <div>
-                    地址：安徽省黄山市岩寺镇钓鱼台大酒店
-
+                    地址：{{item.homestay.provinceName}}{{item.homestay.cityName}}{{item.homestay.countyName}}{{item.homestay.deailAddress}}
                 </div>
                 <div style="line-height:20px;font-size:16px; margin-top:20px;
    ">
-                    <span ><img style=" vertical-align: middle;width:20px;height:20px" src="../../assets/custom-theme/icons/room.png"/>1间房间</span>
+                    <span ><img style=" vertical-align: middle;width:20px;height:20px" src="../../assets/custom-theme/icons/room.png"/>{{item.homestay.roomNum}}间房间</span>
 
-                    <span style="padding:0 10px;"><img style=" vertical-align: middle;width:20px;height:20px" src="../../assets/custom-theme/icons/bed.png"/>1张床</span>
+                    <span style="padding:0 10px;"><img style=" vertical-align: middle;width:20px;height:20px" src="../../assets/custom-theme/icons/bed.png"/>{{item.homestay.bedNum}}张床</span>
 
-                    <span><img style=" vertical-align: middle;width:20px;height:20px" src="../../assets/custom-theme/icons/toilet.png"/>1个独立卫生间</span>
+                    <span><img style=" vertical-align: middle;width:20px;height:20px" src="../../assets/custom-theme/icons/toilet.png"/>{{item.homestay.toiletNum}}个独立卫生间</span>
 
-                    <span style="padding:0 10px;"><img style=" vertical-align: middle;width:20px;height:20px" src="../../assets/custom-theme/icons/person.png"/>最多2人入住</span>
+                    <span style="padding:0 10px;"><img style=" vertical-align: middle;width:20px;height:20px" src="../../assets/custom-theme/icons/person.png"/>最多{{item.homestay.maxPersonNum}}人入住</span>
 
                 </div>
 
@@ -67,29 +66,29 @@
                         <el-col style="text-align:center" :span=4>
 
                             <img style="margin-top:10px;width:50px;height:50px;border:2px solid;
-border-radius:25px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537089309530&di=9ae8e4e812a9baa2802b4af948bc5519&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201501%2F23%2F20150123095036_GCWVx.jpeg" />
+border-radius:25px;" :src="item.houseKeeper.picture" />
 
                         </el-col>
 
                         <el-col style="text-align:left;font-size:14px;" :span=6 >
                                 <div style="float:right">
 
-                                    <p>房东：张大伟 <span style="color:#F5695F ;padding:0 20px;"> <img style="vertical-align:middle;width:20px;height:20px" src="../../assets/custom-theme/icons/tel.png" />联系房东</span></p>
-                                    <p> 共成交25个订单. 已实名验证</p>
+                                    <p>房东：{{item.houseKeeper.username}} <span style="color:#F5695F ;padding:0 20px;"> <img style="vertical-align:middle;width:20px;height:20px" src="../../assets/custom-theme/icons/tel.png" />{{item.houseKeeper.phone}}</span></p>
+                                    <p> 共成交{{item.homestay.saleNum}}个订单. 已实名验证</p>
                                 </div>
                         </el-col>
 
                     </el-row>
 
                     <div style="font-size:16px;letter-spacing:1px; backgroundColor:#F7F8F8;padding:20px 20px;">
-                        这间客房位于乡村俱乐部的一栋漂亮的砖房内。附近很安静，邻居友好。靠近高尔夫球场，方便前往历史悠久的市中心。享受几个街区外的美丽当地公园。十月份我们的Neewollah庆祝活动和四月的威廉节是一个完美的住宿地点。
+                        {{item.homestay.description}}
                     </div>
 
                 </div>
 
 
 
-                <div >
+                <div v-if="item.homestay.wholeHouse" >
                     <div class="grey-line">
                     </div>
                    <span style="line-height:20px;font-size:18px; margin-top:20px;"> 独立房间</span>
@@ -108,35 +107,17 @@ border-radius:25px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9
 
 
 
-<div>
+<div v-if="item.configration.length > 0">
     <div class="grey-line"></div>
 <div class="title">
                 附加配置
             </div>
         <el-row style="padding-top:20px;text-align:center">
             
-            <el-col :span=3>
-                <img style="width:60px;height:60px" src="../../assets/custom-theme/icons/wifi.png"/>
+            <el-col :span=3 v-for="child in item.configration" :key="child.index">
+                <img style="width:60px;height:60px" :src="child.picture"/>
                             <div >
-                                无线网络
-                            </div>
-            </el-col>
-            <el-col :span=3>
-                <img style="width:60px;height:60px" src="../../assets/custom-theme/icons/tv.png"/>
-                            <div >
-                                电视
-                            </div>
-            </el-col>
-            <el-col :span=3>
-                <img style="width:60px;height:60px" src="../../assets/custom-theme/icons/air-conditioner.png"/>
-                            <div >
-                                空调
-                            </div>
-            </el-col>
-            <el-col :span=3>
-                <img style="width:60px;height:60px" src="../../assets/custom-theme/icons/sofa.png"/>
-                            <div >
-                                沙发
+                                {{child.name}}
                             </div>
             </el-col>
         </el-row>
@@ -159,11 +140,11 @@ border-radius:25px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9
              
 
              <el-col :span=4>
-                 <el-rate style="float:left" v-model=value disabled show-score text-color="#ff9900" score-template="{value}">
+                 <el-rate style="float:left" v-model="item.homestay.score" disabled show-score text-color="#ff9900" score-template="{value}">
                                         </el-rate>  
              </el-col>
              <el-col :span=6>
-                 255条评价
+                 {{item.homestay.commentNo}}条评价
              </el-col>
 
 
@@ -172,7 +153,7 @@ border-radius:25px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9
 
 
 
-         <el-row style="padding-top:20px;font-size:14px">
+         <!-- <el-row style="padding-top:20px;font-size:14px">
              <el-col :span=4>
                  如实描述
              </el-col>
@@ -208,7 +189,7 @@ border-radius:25px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9
             
 
              
-         </el-row>
+         </el-row> -->
 
 
 
@@ -217,49 +198,7 @@ border-radius:25px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9
 
 
 <div class="grey-line"></div>
-
-     <div  >
-         <div class="title"> 评价</div>
-         <div style="padding-top:20px" v-for="item in homestays" :key="item.index">
-
-             <div>
-             <el-row style="text-align:center">
-                 <el-col :span=1>
-        <img style="margin-top:10px;width:50px;height:50px;border:2px solid;
-border-radius:25px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537100310922&di=ab6c4e161545ee77f5cd4e8417f46c87&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201508%2F01%2F20150801180219_PhFjk.thumb.700_0.png" />
-
-                 </el-col>
-
-                 
-                 <el-col :span=4>
-                     <p style="font-size:15px"> 王涛</p>
-                     <p>2018-09-10 </p>
-                 </el-col>
-
-                 
-
-             </el-row>
-              <p style="padding:0 20px;color:#909399;font-size:16px;">住得非常舒服啦，体验很给力,早餐也很好吃
-              </p>
-             </div>
-              <div class="small-line">
-         </div>
-         
-         </div>
-        
-
- <el-pagination
-  background
-  layout="prev, pager, next"
-  :total="100">
-</el-pagination>
-
-
-
-
-
-        </div>
-
+    
 
 
 
@@ -277,42 +216,6 @@ border-radius:25px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9
 
 
 
-
-            </el-col>
-
-            <el-col   :span=6 style="position:fixed;  right:0px; padding:20px;border-radius:10px;border-color:#f56960; border-style: solid;border-width:1.5px;">
-                <div class="title">预定</div>
-
-                <div style="width:100%">
-                    <div >
-                        <p> 入住日期</p>
-                         <el-date-picker style="width:100%" focus v-model="daterange" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期">
-                                    </el-date-picker>
-                        
-                    </div>
-                    <div>
-                        <p>入住人数</p>
-                         <el-input-number style=" width:100%"  v-model="num1" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
-
-
-                    </div>
-                    <p style="font-size:15px;color:#909399">
-                        ¥277 x 2晚
-                    </p>
-                    <p style="font-size:16px; color:#606266">
-                       总价 ¥554
-                    </p>
-                     <div style="width:100%;color:#FFFF; text-align:center ">
-                         <span style=" width:100%; padding:5px 40px;font-size:17px;;
-border-radius:5%;      
-  backgroundColor:#F56C6C ;">
-                        预定房间
-                         </span>
-                    </div>
-                    
-
-
-                </div>
 
             </el-col>
            
@@ -320,118 +223,242 @@ border-radius:5%;
         </el-row>
 
     </div>
-
+    </div>
+    <!--评价-->
+    <div class="center-content bg-white">
+        <v-pageTable pagination :pageChange="pageChange" :page-size="comments.pageSize" :paginationTotal="comments.paginationTotal">
+            <el-table :data="comments.body" style="width: 100%" v-loading="loading" :header-cell-style="headerBg">
+            <el-table-column prop="cusPicture" label="顾客信息" width="300px">
+                <template slot-scope="scope">
+                    <div style="width:50px;height:50px;border:1px solid #ddd;border-radius:25px;float:left;margin-right:20px">
+                    <img :src="scope.row.cusPicture" style="width:100%;height:100%"/>
+                    </div>
+                    <p style="width:80%">{{scope.row.nick}}</p>
+                    <p style="width:80%">{{getName_date(scope.row.createTime)}}</p>
+                </template>
+            </el-table-column>
+            <el-table-column prop="score" label="顾客满意度" width="300px">
+                <template slot-scope="scope">
+                <el-rate v-model="scope.row.score" text-color="#ff9900" show-text disabled score-template="{value}">
+                </el-rate>
+                </template>
+            </el-table-column>
+            <el-table-column prop="comment" label="评价信息">
+            </el-table-column>
+            </el-table>
+        </v-pageTable>
+    </div>
+    <!--预定信息-->
+    <div class="book-box">
+        <p class="book-title">预定</p>
+        <el-form class="book-form" :model="bookForm" :rules="bookRules" ref="bookForm" label-position="top">
+            <el-form-item prop="time" label="入住日期">
+                <el-date-picker focus v-model="bookForm.time" type="daterange" style="width:100%"
+                    range-separator="-" 
+                    start-placeholder="开始日期" 
+                    end-placeholder="结束日期"
+                    :picker-options="pickerOptions"
+                    @change="timeChange">
+                </el-date-picker>
+            </el-form-item>
+            <el-form-item prop="personNum" label="入住人数">
+                <el-input-number v-model="bookForm.personNum" :min="1" :max="maxPersonNum" @change="handleChange"></el-input-number>
+            </el-form-item>
+            <p style="margin-bottom:20px">
+                <span style="font-size:15px;color:#909399;margin-right:20px"> ¥{{price}} x {{dayNumber}}晚</span>
+                <span style="font-size:16px; color:#606266">总价 ¥{{totalPrice()}}</span>
+            </p>
+            <el-form-item label="" style="text-align:center">
+                <el-button size="max" class="btn-red" @click="Book">预定房间</el-button>
+            </el-form-item>
+        </el-form>
+    </div>
 </div>
 </template>
 
-   
-
-<style>
-
-.grey-line{
-margin:20px 0;border-style: solid;border-width:0.5px;border-radius:10px;
-border-color: #EAEBEA;
-}
-
-.small-line{
-margin:20px 0;border-style: solid;border-width:0.5px;border-radius:10px;
-border-color: #EAEBEA;
-}
-.title{
-line-height:20px;font-size:18px; margin-top:20px;
-}
-
-
-   </style>
-    
-    
-
 <script>
+import util from '@/utils/util'
+import { homestayDetai, homestayComments } from '@/api/platform/homestay.js'
 export default {
   data() {
+    var timeCheck = (rule, value, callback) => {
+      if (value === '' || value === null) {
+        callback(new Error('请输入入住日期'))
+      } else {
+        callback()
+        // if (this.order.appointDate !== '' && this.order.appointSendTime !== null) {
+        //   const appointDate = (new Date(this.order.appointDate)).getTime() // 棰勭害鏃ユ湡
+        //   const appointSendTime = (new Date(this.order.appointSendTime)).getTime() // 棰勭害鍙戣揣鏃ユ湡
+        //   if (appointSendTime > appointDate) {
+        //     callback()
+        //   } else {
+        //     callback(new Error(this.$t('i18nView_businessWork.reservationDeliveryTimeError')))
+        //   }
+        // } else {
+        //   callback()
+        // }
+      }
+    }
     return {
+      pickerOptions: { // 日期为当前时间前一天
+        disabledDate(time) {
+          return time.getTime() < Date.now() - 1000 * 60 * 60 * 24
+        }
+      },
+      bookRules: {
+        time: [
+          { type: 'date', required: true, validator: timeCheck, trigger: 'change' }
+        ],
+        personNum: [
+          { required: true, message: '请选择入住人数', trigger: 'change' }
+        ]
+      },
+      bookForm: {
+        time: [new Date(), new Date().setDate(new Date().getDate() + 1)],
+        personNum: 1
+      },
       num: 1,
       value: 1,
-      homestays: [{
-        id: 1,
-        name: '黄山脚下超级民宿中诺厄我认为哦期望和期望',
-        price: 91,
-        value: 4.5,
-        orderNum: 1090,
-        picture: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536993397857&di=f7b0a04ea792f1c7191928ec59a4d6eb&imgtype=0&src=http%3A%2F%2Fimage.qmango.com%2Fhotelimg%2Fc3%2F520608%2Fd4c46fbf-ba05-9bdd-2992-2f15bababdcb_big.jpg'
-      },
-      {
-        id: 2,
-        name: '江边海景房',
-        price: 101,
-        value: 4.5,
-        orderNum: 1090,
-        picture: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536993397857&di=f7b0a04ea792f1c7191928ec59a4d6eb&imgtype=0&src=http%3A%2F%2Fimage.qmango.com%2Fhotelimg%2Fc3%2F520608%2Fd4c46fbf-ba05-9bdd-2992-2f15bababdcb_big.jpg'
-      },
-      {
-        id: 3,
-        name: '江边海景房',
-        price: 101,
-        value: 4.5,
-        orderNum: 1090,
-        picture: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536993397857&di=f7b0a04ea792f1c7191928ec59a4d6eb&imgtype=0&src=http%3A%2F%2Fimage.qmango.com%2Fhotelimg%2Fc3%2F520608%2Fd4c46fbf-ba05-9bdd-2992-2f15bababdcb_big.jpg'
-      },
-      {
-        id: 4,
-        name: '江边海景房',
-        price: 101,
-        value: 4.5,
-        orderNum: 1090,
-        picture: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536993397857&di=f7b0a04ea792f1c7191928ec59a4d6eb&imgtype=0&src=http%3A%2F%2Fimage.qmango.com%2Fhotelimg%2Fc3%2F520608%2Fd4c46fbf-ba05-9bdd-2992-2f15bababdcb_big.jpg'
-      },
-      {
-        id: 5,
-        name: '江边海景房',
-        price: 101,
-        value: 4.5,
-        orderNum: 1090,
-        picture: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536993397857&di=f7b0a04ea792f1c7191928ec59a4d6eb&imgtype=0&src=http%3A%2F%2Fimage.qmango.com%2Fhotelimg%2Fc3%2F520608%2Fd4c46fbf-ba05-9bdd-2992-2f15bababdcb_big.jpg'
-      },
-      {
-        id: 6,
-        name: '江边海景房',
-        price: 101,
-        value: 4.5,
-        orderNum: 1090,
-        picture: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536993397857&di=f7b0a04ea792f1c7191928ec59a4d6eb&imgtype=0&src=http%3A%2F%2Fimage.qmango.com%2Fhotelimg%2Fc3%2F520608%2Fd4c46fbf-ba05-9bdd-2992-2f15bababdcb_big.jpg'
-      },
-      {
-        id: 7,
-        name: '江边海景房',
-        price: 101,
-        value: 4.5,
-        orderNum: 1090,
-        picture: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536993397857&di=f7b0a04ea792f1c7191928ec59a4d6eb&imgtype=0&src=http%3A%2F%2Fimage.qmango.com%2Fhotelimg%2Fc3%2F520608%2Fd4c46fbf-ba05-9bdd-2992-2f15bababdcb_big.jpg'
-      },
-      {
-        id: 8,
-        name: '江边海景房',
-        price: 101,
-        value: 4.5,
-        orderNum: 1090,
-        picture: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536993397857&di=f7b0a04ea792f1c7191928ec59a4d6eb&imgtype=0&src=http%3A%2F%2Fimage.qmango.com%2Fhotelimg%2Fc3%2F520608%2Fd4c46fbf-ba05-9bdd-2992-2f15bababdcb_big.jpg'
-      },
-      {
-        id: 9,
-        name: '江边海景房',
-        price: 101,
-        value: 3.5,
-        orderNum: 1099,
-        picture: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536993397857&di=f7b0a04ea792f1c7191928ec59a4d6eb&imgtype=0&src=http%3A%2F%2Fimage.qmango.com%2Fhotelimg%2Fc3%2F520608%2Fd4c46fbf-ba05-9bdd-2992-2f15bababdcb_big.jpg'
-      }
-      ]
+      daterange: '',
+      num1: '',
+      homeId: 0, // 民宿Id
+      price: 0, // 民宿价格
+      dayNumber: 1, // 预定天数
+      maxPersonNum: 1, // 最大人数
+      homeInfo: [], // 民宿详情
+      comments: {
+        pageNo: 1,
+        pageSize: 50,
+        paginationTotal: 0,
+        body: []
+      }, // 评价
+      loading: false
 
     }
   },
   methods: {
+    // 表头回调函数
+    headerBg: function(row) {
+      return { 'background': '#f5f7fa', 'color': '#1F2D3D' }
+    },
+    init() {
+      const this_ = this
+      this.homeId = this.$route.query.id
+      homestayDetai(this.homeId).then(function(data) {
+        if (data.data.code === 200) {
+          this_.$nextTick(function() {
+            this_.homeInfo = [data.data.data]
+            this_.price = data.data.data.homestay.price
+            this_.maxPersonNum = data.data.data.homestay.maxPersonNum
+          })
+        }
+      })
+      this.getComments()
+    },
+    // 分页查询评论
+    getComments() {
+      this.loading = true
+      const this_ = this
+      const params = {
+        pageNo: this.comments.pageNo,
+        pageSize: this.comments.pageSize,
+        hoemstayId: this.homeId
+      }
+      homestayComments(params).then(function(data) {
+        if (data.data.code === 200) {
+          this_.loading = false
+          this_.comments.body = data.data.data.data.results
+          this_.comments.paginationTotal = data.data.data.data.total
+        }
+      })
+      setTimeout(() => {
+        this.loading = false
+      }, 5000)
+    },
+    // 翻页
+    pageChange(val) {
+      this.comments.pageNo = val
+      this.getComments()
+    },
+    // 日期时间处理
+    getName_date(date) {
+      if (date) {
+        return util.formatDate.format(new Date(date), 'yyyy.MM.dd hh:mm:ss')
+      }
+    },
+    // 时间日期变化
+    timeChange(val) {
+      this.dayNum(this.bookForm.time)
+    },
+    // 预定
+    Book() {
+      this.dayNum(this.bookForm.time)
+    },
+    // 计算日期相差天数
+    dayNum(time) {
+      if (time === null) {
+        this.dayNumber = 0
+        return
+      }
+      let start = time[0]
+      let end = time[1]
+      if (typeof (start) === 'object') {
+        start = start.getTime()
+      }
+      if (typeof (end) === 'object') {
+        end = end.getTime()
+      }
+      const seconds = end - start
+      let days = parseInt(seconds / (1000 * 60 * 60 * 24))
+      if (days < 1) {
+        days = 1
+      }
+      this.dayNumber = days
+      this.totalPrice()
+    },
+    // 计算总价
+    totalPrice() {
+      const price = this.price * 100
+      const num = this.dayNumber
+      return (price * num) / 100
+    },
     handleChange(value) {
-      console.log(value)
+      this.$nextTick(function() {
+        console.log(value)
+      })
     }
+  },
+  mounted() {
+    this.init()
   }
 }
 </script>
+
+<style>
+    .grey-line{
+    margin:20px 0;border-style: solid;border-width:0.5px;border-radius:10px;
+    border-color: #EAEBEA;
+    }
+
+    .small-line{
+    margin:20px 0;border-style: solid;border-width:0.5px;border-radius:10px;
+    border-color: #EAEBEA;
+    }
+    .title{
+    line-height:20px;font-size:18px; margin-top:20px;
+    }
+    .book-box {
+        background: #fff;
+        border: 2px solid #ee4644;
+        border-radius: 10px;
+        position: fixed;
+        bottom: 20%;
+        right: 0;
+        padding: 10px 20px;
+        width: 260px;
+    }
+    .book-title {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+</style>
