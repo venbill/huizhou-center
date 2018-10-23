@@ -3,7 +3,7 @@
     <div class="b-header-content">
       <div class="b-header-link">
         <span class="b-header-welcome">您好！欢迎来云购物</span>
-        <template>
+        <template v-if="!loginStatus">
           <span class="text-link">
             <router-link to="/login">请登录</router-link>
           </span>
@@ -11,31 +11,32 @@
             <router-link to="/regist">免费注册</router-link>
           </span>
         </template>
-        <!-- <template v-else>
+        <template v-else>
           <span class="text-link" @click="logout">退出</span>
-        </template> -->
+        </template>
       </div>
-      <div class="b-header-list">
+      <div class="b-header-list" v-if="loginStatus">
         <el-menu mode="horizontal">
-          <el-submenu index="1">
+          <el-menu-item index="3"><router-link to="/buy/order">我的订单</router-link></el-menu-item>
+          <!-- <el-submenu index="1">
             <template slot="title">我的订单</template>
             <el-menu-item index="1-1"><router-link to="/login">批发进货</router-link></el-menu-item>
             <el-menu-item index="1-2"><router-link to="/login">已买到的货品</router-link></el-menu-item>
             <el-menu-item index="1-3"><router-link to="/login">优惠券</router-link></el-menu-item>
             <el-menu-item index="1-4"><router-link to="/login">店铺动态</router-link></el-menu-item>
-          </el-submenu>
-          <el-submenu index="2">
+          </el-submenu> -->
+          <!-- <el-submenu index="2">
             <template slot="title">我的商城</template>
             <el-menu-item index="2-1"><router-link to="/login">批发进货</router-link></el-menu-item>
             <el-menu-item index="2-2"><router-link to="/login">已买到的货品</router-link></el-menu-item>
             <el-menu-item index="2-3"><router-link to="/login">优惠券</router-link></el-menu-item>
             <el-menu-item index="2-4"><router-link to="/login">店铺动态</router-link></el-menu-item>
           </el-submenu>
-          <el-menu-item index="3"><router-link to="/login">我的云购</router-link></el-menu-item>
-          <el-menu-item index="3"><router-link to="/login">我的收藏</router-link></el-menu-item>
-          <el-menu-item index="3"><router-link to="/login">会员中心</router-link></el-menu-item>
-          <el-menu-item index="3"><router-link to="/login">客户服务</router-link></el-menu-item>
-          <el-menu-item index="3"><router-link to="/login">帮助中心</router-link></el-menu-item>
+          <el-menu-item index="3"><router-link to="/login">我的云购</router-link></el-menu-item> -->
+          <!-- <el-menu-item index="3"><router-link to="/login">我的收藏</router-link></el-menu-item>
+          <el-menu-item index="3"><router-link to="/login">会员中心</router-link></el-menu-item> -->
+          <!-- <el-menu-item index="3"><router-link to="/login">客户服务</router-link></el-menu-item> -->
+          <!-- <el-menu-item index="3"><router-link to="/login">帮助中心</router-link></el-menu-item> -->
         </el-menu>
       </div>
     </div>
@@ -43,20 +44,40 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
       active: '',
+      loginStatus: false, // 登录状态
       userInfo: {}
     }
   },
+  computed: {
+    ...mapGetters([
+      'token'
+    ])
+  },
   methods: {
+    init() {
+      console.log(this.token)
+      // 没有登录信息，终止函数
+      if (this.token === undefined) {
+        this.loginStatus = false
+      } else {
+        this.loginStatus = true
+      }
+      console.log(this.loginStatus)
+    },
     // 退出
     logout() {
-
+      this.$store.dispatch('LogOut').then(() => {
+        location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+      })
     }
   },
   mounted() {
+    this.init()
     // this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
     // console.log(this.userInfo)
   }

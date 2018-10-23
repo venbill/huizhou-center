@@ -3,7 +3,6 @@
       <buy-header></buy-header>
       <buy-search></buy-search>
       <nav-title></nav-title>
-      <crumbs></crumbs>
       <my-order></my-order>
     </div>
 </template>

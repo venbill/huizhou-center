@@ -36,6 +36,7 @@
 
 <script>
 // import util from '@/utils/util'
+import { mapGetters } from 'vuex'
 import { getHotSearchList, getGoodsNum } from '@/api/buy/buy'
 export default {
   props: {
@@ -54,6 +55,11 @@ export default {
       goodsNum: 0
     }
   },
+  computed: {
+    ...mapGetters([
+      'token'
+    ])
+  },
   methods: {
     init() {
       const this_ = this
@@ -70,6 +76,10 @@ export default {
     },
     // 获取购物车数量
     getGoodsNum() {
+      // 没有登录信息，终止函数
+      if (this.token === undefined) {
+        return
+      }
       const this_ = this
       getGoodsNum().then(function(data) {
         if (data.data.code === 200) {

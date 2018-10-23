@@ -18,7 +18,7 @@
         </div>
         <el-tabs type="card">
           <el-tab-pane label="微信支付">
-            <div>
+            <div style="height:410px" v-if="!yzmStatus">
               <div class="styleLogo">
                 <div class="logoImg"></div>
               </div>
@@ -26,6 +26,10 @@
                 <div class="QR_Code" id="QR_Code"></div>
                 <div class="text-foot"></div>
               </div>
+            </div>
+            <div v-else style="display:flex;height:410px;align-items:center;justify-content: center">
+              <span style="margin:0 4px">{{yzmText}}</span>
+              <router-link to="/buy" style="color:red" class="text-link-normal">我的订单</router-link>
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -48,7 +52,10 @@ export default {
     return {
       orderId: '', // 订单Id
       shouldPay: 0, // 应付金额
-      codeUrl: '' // 支付链接
+      codeUrl: '', // 支付链接
+      time: 4,
+      yzmText: '3秒后返回',
+      yzmStatus: false
     }
   },
   filters: {
@@ -74,9 +81,9 @@ export default {
         }
       })
       // 查询订单支付状态
-      // setInterval(() => {
-      //   this.getOrderStatus()
-      // }, 3000)
+      setInterval(() => {
+        this.getOrderStatus()
+      }, 3000)
     },
     // 生成二维码
     qrcode(url) {
@@ -90,10 +97,39 @@ export default {
       return qrcode
     },
     // 查询订单支付状态
-    getOrderStatus() {
+    getOrderStatus() { // 订单状态 1;订单取消 2待支付 3待发货 4待收货 5待评价 6订单完成 7退货
+      const this_ = this
       getOrderStatus(this.orderId).then(function(data) {
-        console.log(data)
+        if (data.data.code === 200) {
+          if (data.data.data.status === 3 || data.data.data.status === 1) {
+            this_.countDown(data.data.data.status)
+          }
+        }
       })
+    },
+    // 倒计时
+    countDown(val) {
+      let message = ''
+      if (val === 3) {
+        message = '支付完成'
+      } else if (val === 1) {
+        message = '订单超时'
+      }
+      this.time -= 1
+      if (this.time > 0) {
+        this.yzmText = message + ' ' + this.time + '秒后回到'
+        this.yzmStatus = true
+        setTimeout(this.countDown, 1000)
+      } else {
+        this.time = 4
+        this.yzmStatus = false
+        this.$router.replace(
+          {
+            path: '/buy/order',
+            replace: true
+          }
+        )
+      }
     }
   },
 

@@ -194,3 +194,11 @@ export function getOrderStatus(id) {
     method: 'get'
   })
 }
+
+export function getOrderList(params) {
+  return request({
+    url: '/order/getUserOrderGoodsByStatus',
+    params,
+    method: 'get'
+  })
+}

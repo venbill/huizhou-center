@@ -1,9 +1,9 @@
 <template>
     <div class="list-content">
       <div class="detail-comment center-content border-box">
-        <div class="shop-category">
+        <!-- <div class="shop-category">
           <category></category>
-        </div>
+        </div> -->
         <div class="order-comment">
           <div class="order-search bg-paleRed">
             <h3 class="weight-normal inline-block" style="color:#fff;margin:0">我的订单</h3>
@@ -281,8 +281,8 @@ export default {
   background: #f7f7f7;
 }
 .order-comment {
-  width: 980px;
-  float: right;
+  /* width: 980px;
+  float: right; */
 }
 .search-form {
   font-size: 12px;
