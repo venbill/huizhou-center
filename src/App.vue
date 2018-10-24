@@ -12,7 +12,7 @@
 
 <style>
  #app {
-   width: 100%;
+   width: auto;
    min-width: 1200px;
  }
 </style>

@@ -1,52 +1,61 @@
 <template>
     <div class="foot-main">
-        <div class="center-content">
-            <el-row>
-                <el-col :span=4>
-                    <h2>关于我们</h2>
-                    <a class="grey">徽州电子商务中心</a>
-                    <br/>
-                    <br/>
-                    <a class="grey">黄山超新星互联网科技公司</a>
-                    <br/>
-                    <br/>
-                    <a class="grey">人才招聘</a>
-                    <br/>
-                    <br/>
-                    <a class="grey">隐私与法律申明</a>
-                </el-col>
-                <el-col :offset=2 :span=4>
-                    <h2>产品介绍</h2>
-                    <a class="grey"> 民宿系统</a>
-                    <br/>
-                    <br/>
-                    <a class="grey">电商系统</a>
-                    <br/>
-                    <br/>
-                    <a class="grey">广告活动</a>
-                    <br/>
-                    <br/>
-                    <a class="grey">供应链</a>
-                </el-col>
-
-                <el-col :offset=2 :span=4>
-                    <h2>商务合作</h2>
-                    <a class="grey">投资理财</a>
-                    <br/>
-                    <br/>
-                    <a class="grey">企业入驻</a>
-                    <br/>
-                    <br/>
-                    <a class="grey">消费者建议</a>
-                </el-col>
-                <el-col :offset=2 :span=4>
-                    <h2>服务咨询</h2>
-                    <a class="grey">咨询电话：<span style="font-size:30px;font-weight:700;color:#FFF">9081212</span></a>
-                </el-col>
-            </el-row>
-            <el-row style="text-align:center;padding:40px">
-                <a class="grey">版权所有 © 2018 黄山超新星互联万技术有限公司 皖ICP备17007362号-1</a>
-            </el-row>
+        <div class="index-center-content foot-content">
+            <div class="list-content">
+                <div class="list-item">
+                    <p class="list-item-title">热门资讯</p>
+                    <ul class="list-item-list list-type-none">
+                        <li><span>热门资讯</span></li>
+                        <li><span>公告</span></li>
+                        <li><span>热门新闻</span></li>
+                        <li><span>热门企业</span></li>
+                        <li><span>讲师资料</span></li>
+                        <li><span>培训资讯</span></li>
+                    </ul>
+                </div>
+                <div class="list-item">
+                    <p class="list-item-title">农特商城</p>
+                    <ul class="list-item-list list-type-none">
+                        <li><span>商城分类</span></span></li>
+                    </ul>
+                </div>
+                <div class="list-item">
+                    <p class="list-item-title">精品民宿</p>
+                    <ul class="list-item-list list-type-none">
+                        <li><span>莫干山民宿</span></li>
+                        <li><span>黄山太平水镇民宿</span></li>
+                    </ul>
+                </div>
+                <div class="list-item">
+                    <p class="list-item-title">电商培训</p>
+                    <ul class="list-item-list list-type-none">
+                        <li><span>在线学习</span></li>
+                        <li><span>学习规划</span></li>
+                        <li><span>培训资讯</span></li>
+                        <li><span>讲师资料</span></li>
+                        <li><span>电商人才</span></li>
+                        <li><span>电商企业</span></li>
+                    </ul>
+                </div>
+                <div class="list-item">
+                    <p class="list-item-title">招商引资</p>
+                    <ul class="list-item-list list-type-none">
+                        <li><span>项目名称</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="friendship-link">
+                <p class="list-item-title">友情链接</p>
+                <ul class="list-item-list list-type-none">
+                    <li><span>徽州门户网</span></li>
+                    <li><span>徽州门户网</span></li>
+                    <li><span>徽州门户网</span></li>
+                </ul>
+            </div>
+            <div class="foot-copyright">
+                <span style="margin-right: 20px">版权所有&copy; 徽州电子商务公共服务中心 All Rights Reserved 2017 jsnx.net</span>
+                <span>苏ICP备09016726号</span>
+            </div>
         </div>
     </div>
 </template>
@@ -55,7 +64,47 @@
  .foot-main {
     background: #333;
     color: #fff;
-    margin-top: 20px;
+ }
+ .foot-content {
+     padding: 40px 0 30px 150px;
+ }
+ .list-content {
+    display: flex;
+    margin-bottom: 40px;
+ }
+ .list-item {
+     flex: 1;
+ }
+ .list-item-title {
+     font-size: 20px;
+     color: #e0e0e0;
+     margin-bottom: 15px;
+ }
+ .list-item-list li {
+     font-size: 16px;
+     line-height: 1.5;
+     color: #c6c6c6;
+ }
+ .list-item-list li span {
+     cursor: pointer;
+ }
+ .list-item-list li span:hover{
+     color: #3b6713;
+ }
+ .friendship-link {
+     margin-bottom: 30px;
+ }
+ .friendship-link .list-item-list {
+     width: 100%;
+ }
+ .friendship-link .list-item-list li {
+     display: inline-block;
+     margin-right: 50px;
+     font-size: 14px;
+ }
+ .foot-copyright {
+     font-size: 12px;
+     color: rgba(153, 153, 153, .6)
  }
 </style>
 

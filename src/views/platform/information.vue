@@ -1,6 +1,9 @@
 <template>
   <div class="layout-main">
-    <div class="center-content" style="overflow:hidden">
+    <div class="bg-white">
+      热门资讯
+    </div>
+    <!-- <div class="center-content" style="overflow:hidden">
       <div class="info-title">
         <div class="info-nav">
           <el-menu :default-active="infoIndex" mode="horizontal" active-text-color="red">
@@ -28,7 +31,7 @@
         <el-pagination background layout="prev, pager, next" :total="1000">
         </el-pagination>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

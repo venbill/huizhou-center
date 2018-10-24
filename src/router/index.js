@@ -6,7 +6,7 @@ Vue.use(Router)
 /* Layout */
 // import Layout from '@/views/login/login'
 import Layout from '@/views/layout/Layout'
-import Layout2 from '@/views/layout/Layout2'
+// import Layout2 from '@/views/layout/Layout2'
 
 /** note: submenu only apppear when children.length>=1
  *   detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -67,6 +67,16 @@ export const constantRouterMap = [
         path: '/index/information',
         component: () =>
             import('@/views/platform/information')
+      },
+      { // 资讯详情
+        path: '/index/information/detail',
+        component: () =>
+            import('@/views/platform/informationDetail')
+      },
+      { // 招商引资
+        path: '/index/cooperation',
+        component: () =>
+            import('@/views/platform/cooperation')
       },
       { // 关于
         path: '/index/us',
@@ -195,6 +205,8 @@ export const constantRouterMap = [
   //   component: Layout,
   //   redirect: 'login'
   // },
+
+  // 后台管理
   {
     path: '',
     component: Layout,
@@ -205,23 +217,33 @@ export const constantRouterMap = [
       name: 'dashboard',
       meta: { title: 'dashboard', icon: 'home', noCache: true }
     }]
-  },
-  {
-    path: '/l2',
-    component: Layout2,
-    children: [{
-      path: 'index',
-      component: () =>
-                import('@/views/svg-icons/index'),
-      name: 'icons',
-      meta: { title: 'icons', icon: 'icon', noCache: true }
-    }],
-    meta: {
-      title: 'icon',
-      icon: 'lock'
-      // roles: ['admin'] // you can set roles in root nav
-    }
   }
+  // {
+  //   path: '/businessWork',
+  //   component: Layout,
+  //   children: [{
+  //     path: 'business',
+  //     component: import('@/views/dashboard/businessWork/business'),
+  //     name: 'business',
+  //     meta: { title: 'business', icon: 'icon', noCache: true }
+  //   }]
+  // }
+  // {
+  //   path: '/l2',
+  //   component: Layout2,
+  //   children: [{
+  //     path: 'index',
+  //     component: () =>
+  //               import('@/views/svg-icons/index'),
+  //     name: 'icons',
+  //     meta: { title: 'icons', icon: 'icon', noCache: true }
+  //   }],
+  //   meta: {
+  //     title: 'icon',
+  //     icon: 'lock'
+  //     // roles: ['admin'] // you can set roles in root nav
+  //   }
+  // }
 
 ]
 

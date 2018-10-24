@@ -24,8 +24,11 @@ export default {
 <style scoped>
   .home-main {
     height:auto;
-      padding:0;
-      color: #666;
+    width: auto;
+    min-width: 1366px;
+    padding:0;
+    color: #666;
+    background: #333;
   }
 </style>
 

@@ -1,62 +1,27 @@
 <template>
-    <div class="header-main">
-        <!-- <div class="bg-deepRed">
-            <div class="header-title center-content">
-                <span style="font-size:25px">徽州电子商务中心</span>
-                <div class="header-login">
-                    <span>登录</span>
+    <div class="main-content">
+        <div class="outside-box" style="background:#fff">
+            <div class="index-center-content header-main">
+                <div class="header-title">
+                    <div class="logo"></div>
+                    <span class="title-text">徽州区电子商务公共服务中心</span>
+                </div>
+                <div class="header-handle">
+                    <span>您好！</span>
+                    <span>请</span>
+                    <router-link to="/login" class="link-text">登录</router-link>
                     /
-                    <span>注册</span>
+                    <router-link to="/regist" class="link-text">注册</router-link>
+                    <router-link class="link-text">退出</router-link>
                 </div>
             </div>
-        </div> -->
-        <div class="b-header">
-            <div class="b-header-content">
-            <div class="b-header-link">
-                <span class="b-header-welcome">您好！</span>
-                <template>
-                    <span class="text-link">
-                        <router-link to="/login">请登录</router-link>
-                    </span>
-                    <span class="text-link">
-                        <router-link to="/regist">免费注册</router-link>
-                    </span>
-                </template>
-                <!-- <template v-else>
-                <span class="text-link" @click="logout">退出</span>
-                </template> -->
-            </div>
-            <div class="b-header-list">
-                <el-menu mode="horizontal">
-                <el-submenu index="1">
-                    <template slot="title">我的订单</template>
-                    <el-menu-item index="1-1"><router-link to="/login">批发进货</router-link></el-menu-item>
-                    <el-menu-item index="1-2"><router-link to="/login">已买到的货品</router-link></el-menu-item>
-                    <el-menu-item index="1-3"><router-link to="/login">优惠券</router-link></el-menu-item>
-                    <el-menu-item index="1-4"><router-link to="/login">店铺动态</router-link></el-menu-item>
-                </el-submenu>
-                <el-menu-item index="3"><router-link to="/login">我的收藏</router-link></el-menu-item>
-                <el-menu-item index="3"><router-link to="/login">会员中心</router-link></el-menu-item>
-                <el-menu-item index="3"><router-link to="/login">帮助中心</router-link></el-menu-item>
-                </el-menu>
-            </div>
-            </div>
         </div>
-        <div class="header-nav center-content">
-            <el-menu :default-active="activeIndex" mode="horizontal" active-text-color="#F56960">
-                <el-menu-item index="1">
-                    <router-link to="/index/home">主页</router-link>
-                </el-menu-item>
-                <el-menu-item index="2">
-                    <router-link to="/index/homestay">民宿</router-link>
-                </el-menu-item>
-                <el-menu-item index="3">
-                    <router-link to="/buy">电商</router-link></el-menu-item>
-                <el-menu-item index="4">
-                    <router-link to="/index/information">资讯</router-link></el-menu-item>
-                <el-menu-item index="5">
-                    <router-link to="/index/us">关于</router-link></el-menu-item>
-            </el-menu>
+        <div class="outside-box" style="background:#1D1F21">
+            <div class="index-center-content header-nav">
+                <router-link v-for="(item, index) in navList" :key="item.index" :to="item.path">
+                    <div class="nav-item" :class="{active:activeIndex === index}" @click="navChange(index)">{{item.title}}</div>
+                </router-link>
+            </div>
         </div>
     </div>
 </template>
@@ -65,8 +30,56 @@
 export default {
   data() {
     return {
-      activeIndex: '1'
+      navList: [
+        {
+          title: '首页',
+          path: '/index/home'
+        },
+        {
+          title: '热门资讯',
+          path: '/index/information'
+        },
+        {
+          title: '农特商城',
+          path: '/buy'
+        },
+        {
+          title: '精品民宿',
+          path: '/index/homestay'
+        },
+        {
+          title: '电商培训',
+          path: '/index/shop'
+        },
+        {
+          title: '招商引资',
+          path: '/index/cooperation'
+        },
+        {
+          title: '关于我们',
+          path: '/index/us'
+        }
+      ],
+      activeIndex: 0
     }
+  },
+  methods: {
+    init() {
+      // 判断是否路由选中
+      const path = this.$route.path
+      for (let i = 0; i < this.navList.length; i++) {
+        if (this.navList[i].path === path) {
+          this.activeIndex = i
+          return
+        }
+      }
+    },
+    navChange(index) {
+      this.activeIndex = index
+    }
+  },
+  mounted() {
+    this.init()
   }
 }
 </script>
@@ -74,93 +87,57 @@ export default {
 
 <style scoped>
     .header-main {
-        width: 100%;
-        background: #fff;
-        border-bottom: 1px solid #ddd;
+        height: 48px;
+        line-height: 48px;
+        padding: 16px 0;
+        box-sizing: content-box;
     }
     .header-title {
-        height: 60px;
-        line-height: 60px;
-        overflow: hidden;
-        color: #fff;
+        float: left;
+        margin-left: 100px;
+        font-size: 32px;
+        font-weight: bold;
+        color: #3b6713;
     }
-    .header-login {
+    .header-title .logo {
+        float: left;
+        height: 48px;
+        width: 48px;
+        border-radius: 50%;
+        margin-right: 10px;
+        background: url('/static/images/index/logo.png') no-repeat;
+    }
+    .header-handle {
         float: right;
-        height: 30px;
-        line-height: 30px;
-        padding: 0 10px;
-        margin: 14px 0;
-        border: 2px solid #fff;
-        border-radius: 4px;
-        font-size: 12px;
+        margin-right: 70px;
+        font-size: 14px;
+        color: #666;
+    }
+    .link-text {
+        color: #0a5f9b;
     }
     .header-nav {
-        background: #fff;
+        height: 48px;
+        line-height: 48px;
+        font-size: 18px;
+        color: #fff;
+        padding-left: 250px;
     }
-    .b-header{
-        height: 35px;
-        line-height: 34px;
-        width: 100%;
-        font-size: 12px;
-        background: #F3F2F0;
-        border-bottom: 1px solid #E7E6E3;
-    }
-    .b-header-content {
-        width: 1200px;
-        margin: 0 auto;
-        clear: both;
-    }
-    .b-header-link {
+    .nav-item {
         float: left;
+        margin-right: 25px;
+        padding: 0 20px;
     }
-    .b-header-welcome {
-        margin-right: 6px;
+    .nav-item:hover {
+        background: #3b6713;
     }
-    .text-link {
-        padding:0 4px;
-    }
-    .b-header-link .text-link a:hover {
-        color:red;
-    }
-    .b-header-list {
-        float: right;
-        background:green;
-    }
-    .b-header-list .is-opened {
-        background: #fff;
+    .nav-item.active {
+        background: #3b6713;
     }
 </style>
 
 <style>
- .header-nav .el-menu--horizontal {
-     border-bottom: none;
- }
- .header-nav .el-menu-item{
-     padding: 0;
- }
- .header-nav .el-menu--horizontal>.el-menu-item a {
-     height: 100%;
-     width: 100%;
-     padding: 0 20px;
-     display: inline-block;
- }
- .b-header-list .el-menu--horizontal > .el-submenu .el-submenu__title, .b-header-list .el-menu--horizontal > .el-menu-item {
-    font-size: 12px;
-    height: 34px;
-    line-height: 34px;
-  }
-  .b-header-list .el-menu--horizontal {
-    background: #F3F2F0;
-  }
-  .b-header-list .el-menu--collapse .el-menu .el-submenu, .el-menu--popup {
-    min-width: 150px;
-  }
-  .el-menu--horizontal {
-    border-bottom: none;
-  }
-  .el-menu--horizontal .el-menu .el-menu-item {
-    padding: 0 20px;
-  }
+ 
 </style>
 
 

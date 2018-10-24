@@ -278,6 +278,18 @@ code {
 .text-link:hover {
   color: red;
 }
+.link-underline:hover {
+  text-decoration: underline;
+}
+.text-more {
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+}
+.text-more:hover {
+  color: red;
+  text-decoration: underline;
+}
 // 模拟正常超链接，蓝色字体，鼠标移入下划线
 .text-link-normal {
   cursor: pointer;
@@ -300,6 +312,10 @@ code {
 .bg-white {
   background: #fff;
 }
+// 黑色背景
+.bg-black {
+  background: #000;
+}
 
 // 居中盒子，宽度1200px
 .center-content {
@@ -309,10 +325,7 @@ code {
   margin: 0 auto;
 }
 
-// 水平列表
-.horizontalList {
-  float: left;
-}
+
 
 // 鼠标移入手型
 .pointer {
@@ -335,5 +348,44 @@ code {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+// 外部盒子，只起到包裹作用
+.outside-box {
+  width: 100%;
+  height: auto;
+}
+
+
+// 首页
+.main-content {
+  width: auto;
+}
+.index-center-content {
+  width: 1366px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+// ul 没有圆点
+.list-type-none {
+  list-style: none;
+}
+
+/***水平列表***/
+.horizontalList {
+  float: left;
+}
+
+ul.horizontalList {
+  clear: both;
+}
+ul.horizontalList li {
+  float: left;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
 }
 
