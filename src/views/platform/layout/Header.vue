@@ -12,7 +12,7 @@
                     <router-link to="/login" class="link-text">登录</router-link>
                     /
                     <router-link to="/regist" class="link-text">注册</router-link>
-                    <router-link class="link-text">退出</router-link>
+                    <!-- <span class="link-text">退出</span> -->
                 </div>
             </div>
         </div>
@@ -68,7 +68,7 @@ export default {
       // 判断是否路由选中
       const path = this.$route.path
       for (let i = 0; i < this.navList.length; i++) {
-        if (this.navList[i].path === path) {
+        if (path.indexOf(this.navList[i].path) !== -1) {
           this.activeIndex = i
           return
         }

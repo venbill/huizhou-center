@@ -53,38 +53,48 @@
             </div>
             <div class="information-list">
               <template v-if="newsIndex === 0">
-                <ul class="infor-list-item">
-                  <li v-for="item in informationList" :key="item.index">
-                    <span>
-                      <router-link to="/index/information/detail" target="_blank" class="link-underline">
-                        {{item.title}}
-                      </router-link>
-                    </span>
-                    <span class="float-right">{{item.time}}</span>
-                  </li>
-                </ul>
-                <div class="information-img">
-                  <router-link to="/index/information/detail" target="_blank">
-                    <img :src="informationImg">
-                  </router-link>
-                </div>
+                <template v-if="informationList.length > 0">
+                  <ul class="infor-list-item">
+                    <li v-for="item in informationList" :key="item.index">
+                      <span class="text-ellipsis inline-block" style="width: 400px;" :title="item.title">
+                        <router-link :to="{path:'/index/information/detail', query:{id: item.id}}" target="_blank" class="link-underline">
+                          {{item.title}}
+                        </router-link>
+                      </span>
+                      <span class="float-right">{{getName_date(item.createTime)}}</span>
+                    </li>
+                  </ul>
+                  <div class="information-img">
+                    <router-link :to="{path:'/index/information/detail', query:{id: informationList[0].id}}" target="_blank">
+                      <img :src="informationList[0].headerPicture">
+                    </router-link>
+                  </div>
+                </template>
+                <template v-else>
+                  <div class="no-data">暂无数据</div>
+                </template>
               </template>
               <template v-else-if="newsIndex === 1">
-                <ul class="infor-list-item">
-                  <li v-for="item in newsList" :key="item.index">
-                    <span>
-                      <router-link to="/index/information/detail" target="_blank" class="link-underline">
-                        {{item.title}}
-                      </router-link>
-                    </span>
-                    <span class="float-right">{{item.time}}</span>
-                  </li>
-                </ul>
-                <div class="information-img">
-                  <router-link to="/index/information/detail" target="_blank">
-                    <img :src="newsImg">
-                  </router-link>
-                </div>
+                <template v-if="newsList.length > 0">
+                  <ul class="infor-list-item">
+                    <li v-for="item in newsList" :key="item.index">
+                      <span class="text-ellipsis inline-block" style="width: 400px;" :title="item.title">
+                        <router-link :to="{path:'/index/information/detail', query:{id: item.id}}" target="_blank" class="link-underline">
+                          {{item.title}}
+                        </router-link>
+                      </span>
+                      <span class="float-right">{{getName_date(item.createTime)}}</span>
+                    </li>
+                  </ul>
+                  <div class="information-img">
+                    <router-link :to="{path:'/index/information/detail', query:{id: item.id}}" target="_blank">
+                      <img :src="newsList[0].headerPicture">
+                    </router-link>
+                  </div>
+                </template>
+                <template v-else>
+                  <div class="no-data">暂无数据</div>
+                </template>
               </template>
             </div>
           </div>
@@ -93,8 +103,8 @@
               <span class="module-title-item">电商服务</span>
             </div>
             <div class="service-img">
-              <router-link to="/index/information/detail">
-                <img src="/static/images/index/enterprise.png" style="margin-right:2px">
+              <router-link :to="{path:'/index/information/detail', query:{id: 1}}" target="_blank" style="margin-right:2px">
+                <img src="/static/images/index/enterprise.png">
               </router-link>
               <router-link to="/index/shop">
                 <img src="/static/images/index/online_retailers.png">
@@ -111,16 +121,21 @@
               </div>
             </div>
             <div class="information-list">
-              <ul class="notice-list-item">
-                <li v-for="item in noticeList" :key="item.index">
-                  <span>
-                    <router-link to="/index/information/detail" target="_blank" class="link-underline">
-                      {{item.title}}
-                    </router-link>
-                  </span>
-                  <span class="float-right">{{item.time}}</span>
-                </li>
-              </ul>
+              <template v-if="noticeList.length > 0">
+                <ul class="notice-list-item">
+                  <li v-for="item in noticeList" :key="item.index">
+                    <span class="text-ellipsis inline-block" style="width: 400px;" :title="item.title">
+                      <router-link :to="{path:'/index/information/detail', query:{id: item.id}}" target="_blank" class="link-underline">
+                        {{item.title}}
+                      </router-link>
+                    </span>
+                    <span class="float-right">{{getName_date(item.createTime)}}</span>
+                  </li>
+                </ul>
+              </template>
+              <template v-else>
+                <div class="no-data">暂无数据</div>
+              </template>
             </div>
           </div>
         </div>
@@ -171,6 +186,8 @@
 </template>
 
 <script>
+import util from '@/utils/util'
+import { getNews } from '@/api/index/index'
 export default {
   data() {
     return {
@@ -183,86 +200,9 @@ export default {
         }
       ], // 资讯、新闻标题
       newsIndex: 0,
-      informationList: [
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-10'
-        },
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-10'
-        },
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-10'
-        },
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-10'
-        },
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-10'
-        },
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-10'
-        }
-      ], // 资讯列表
-      informationImg: '', // 资讯缩略图片
-      newsList: [
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-17'
-        },
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-17'
-        },
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-17'
-        },
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-17'
-        },
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-17'
-        },
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-17'
-        }
-      ], // 新闻列表
-      newsImg: '', // 新闻缩略图片
-      noticeList: [
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-17'
-        },
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-17'
-        },
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-17'
-        },
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-17'
-        },
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-17'
-        },
-        {
-          title: '徽州区“百名电商能手促百村振兴”人才培养工程',
-          time: '07-17'
-        }
-      ], // 公告列表
+      informationList: [], // 资讯列表
+      newsList: [], // 新闻列表
+      noticeList: [], // 公告列表
       mienList: [
         {
           url: '/static/images/index/1.png'
@@ -317,6 +257,38 @@ export default {
     }
   },
   methods: {
+    init() {
+      this.getNews(1)
+      this.getNews(2)
+      this.getNews(3)
+    },
+    // 资讯获取 1 热门资讯 2 公告 3 热门新闻 4 热门企业 5 讲师资料 6 培训资讯
+    getNews(type) {
+      const this_ = this
+      getNews(type).then(function(data) {
+        if (data.data.code === 200) {
+          let arr = []
+          if (data.data.data.results.length > 6) {
+            arr = data.data.data.results.slice(0, 6)
+          } else {
+            arr = data.data.data.results
+          }
+          if (type === 1) {
+            this_.informationList = arr
+          } else if (type === 2) {
+            this_.noticeList = arr
+          } else if (type === 3) {
+            this_.newsList = arr
+          }
+        }
+      })
+    },
+    // 日期时间处理
+    getName_date(date) {
+      if (date) {
+        return util.formatDate.format(new Date(date), 'yyyy-MM-dd')
+      }
+    },
     // 新闻、资讯切换
     newsIndexChange(index) {
       this.newsIndex = index
@@ -325,6 +297,9 @@ export default {
     subTitleChange(index) {
       this.subIndex = index
     }
+  },
+  mounted() {
+    this.init()
   }
 }
 </script>
@@ -339,6 +314,10 @@ export default {
   }
   .layout-content {
     background: #f5f5f5;
+  }
+  .no-data {
+    padding: 200px;
+    text-align: center;
   }
   .news-box {
     margin-bottom: 30px;
@@ -440,9 +419,14 @@ export default {
     margin-bottom: 30px;
     height: 260px;
   }
+  .service-img a {
+    display: block;
+    width: 240px;
+    height: 190px;
+    float: left;
+  }
   .service-img img {
     width: 240px;
-    float: left;
   }
   .notice {
     height: 342px;
