@@ -28,7 +28,6 @@ export default {
     min-width: 1366px;
     padding:0;
     color: #666;
-    background: #333;
   }
 </style>
 

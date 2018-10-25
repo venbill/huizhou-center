@@ -87,7 +87,7 @@
                     </li>
                   </ul>
                   <div class="information-img">
-                    <router-link :to="{path:'/index/information/detail', query:{id: item.id}}" target="_blank">
+                    <router-link :to="{path:'/index/information/detail', query:{id: newsList[0].id}}" target="_blank">
                       <img :src="newsList[0].headerPicture">
                     </router-link>
                   </div>
@@ -103,12 +103,18 @@
               <span class="module-title-item">电商服务</span>
             </div>
             <div class="service-img">
-              <router-link :to="{path:'/index/information/detail', query:{id: 1}}" target="_blank" style="margin-right:2px">
-                <img src="/static/images/index/enterprise.png">
-              </router-link>
-              <router-link to="/index/shop">
-                <img src="/static/images/index/online_retailers.png">
-              </router-link>
+              <div class="img-item" style="margin-right: 2px;">
+                <!-- <router-link :to="{path:'/index/information/detail', query:{id: 1}}" target="_blank"> -->
+                  <img src="/static/images/index/enterprise.png">
+                  <p class="img-title">企业孵化</p>
+                <!-- </router-link> -->
+              </div>
+              <div class="img-item">
+                <router-link to="/index/shop">
+                  <img src="/static/images/index/online_retailers.png">
+                  <p class="img-title">电商培训</p>
+                </router-link>
+              </div>
             </div>
           </div>
           <div class="notice">
@@ -265,7 +271,12 @@ export default {
     // 资讯获取 1 热门资讯 2 公告 3 热门新闻 4 热门企业 5 讲师资料 6 培训资讯
     getNews(type) {
       const this_ = this
-      getNews(type).then(function(data) {
+      const params = {
+        pageNo: 1,
+        pageSize: 10,
+        type: type
+      }
+      getNews(params).then(function(data) {
         if (data.data.code === 200) {
           let arr = []
           if (data.data.data.results.length > 6) {
@@ -419,11 +430,25 @@ export default {
     margin-bottom: 30px;
     height: 260px;
   }
+  .service-img .img-item {
+    width: 240px;
+    height: 190px;
+    float: left;
+    position: relative;
+  }
+  .service-img .img-item .img-title {
+    position: absolute;
+    bottom: 25px;
+    width: 240px;
+    text-align: center;
+    z-index: 10;
+    color: #fff;
+    font-size: 24px;
+  }
   .service-img a {
     display: block;
     width: 240px;
     height: 190px;
-    float: left;
   }
   .service-img img {
     width: 240px;

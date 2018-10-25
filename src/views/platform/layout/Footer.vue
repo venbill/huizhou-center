@@ -54,7 +54,7 @@
             </div>
             <div class="foot-copyright">
                 <span style="margin-right: 20px">版权所有&copy; 徽州电子商务公共服务中心 All Rights Reserved 2017 jsnx.net</span>
-                <span>苏ICP备09016726号</span>
+                <span>皖ICP备18011329号-1</span>
             </div>
         </div>
     </div>

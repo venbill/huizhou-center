@@ -1,18 +1,22 @@
 <template>
     <div class="main-content">
         <div class="outside-box" style="background:#fff">
-            <div class="index-center-content header-main">
+            <div class="index-inner-content header-main">
                 <div class="header-title">
                     <div class="logo"></div>
                     <span class="title-text">徽州区电子商务公共服务中心</span>
                 </div>
                 <div class="header-handle">
-                    <span>您好！</span>
-                    <span>请</span>
-                    <router-link to="/login" class="link-text">登录</router-link>
-                    /
-                    <router-link to="/regist" class="link-text">注册</router-link>
-                    <!-- <span class="link-text">退出</span> -->
+                    <template v-if="!loginStatus">
+                        <span>您好！</span>
+                        <span>请</span>
+                        <router-link to="/login" class="link-text">登录</router-link>
+                        /
+                        <router-link to="/regist" class="link-text">注册</router-link>
+                    </template>
+                    <template v-else>
+                        <span class="link-text" @click="logout">退出</span>
+                    </template>
                 </div>
             </div>
         </div>
@@ -27,9 +31,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
+      loginStatus: false, // 登录状态
       navList: [
         {
           title: '首页',
@@ -63,8 +69,19 @@ export default {
       activeIndex: 0
     }
   },
+  computed: {
+    ...mapGetters([
+      'token'
+    ])
+  },
   methods: {
     init() {
+      // 没有登录信息，终止函数
+      if (this.token === undefined) {
+        this.loginStatus = false
+      } else {
+        this.loginStatus = true
+      }
       // 判断是否路由选中
       const path = this.$route.path
       for (let i = 0; i < this.navList.length; i++) {
@@ -76,6 +93,12 @@ export default {
     },
     navChange(index) {
       this.activeIndex = index
+    },
+    // 退出
+    logout() {
+      this.$store.dispatch('LogOut').then(() => {
+        location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+      })
     }
   },
   mounted() {
@@ -94,7 +117,7 @@ export default {
     }
     .header-title {
         float: left;
-        margin-left: 100px;
+        margin-left: 20px;
         font-size: 32px;
         font-weight: bold;
         color: #3b6713;
@@ -109,12 +132,13 @@ export default {
     }
     .header-handle {
         float: right;
-        margin-right: 70px;
+        margin-right: 20px;
         font-size: 14px;
         color: #666;
     }
     .link-text {
         color: #0a5f9b;
+        cursor: pointer;
     }
     .header-nav {
         height: 48px;

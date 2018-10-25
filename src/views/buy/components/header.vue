@@ -1,43 +1,49 @@
 <template>
   <div class="b-header">
-    <div class="b-header-content">
-      <div class="b-header-link">
-        <span class="b-header-welcome">您好！欢迎来云购物</span>
+    <div class="outside-box" style="background:#fff">
+      <div class="index-inner-content header-main">
+        <div class="header-title">
+          <div class="logo"></div>
+          <span class="title-text">徽州区电子商务公共服务中心</span>
+        </div>
         <template v-if="!loginStatus">
-          <span class="text-link">
-            <router-link to="/login">请登录</router-link>
-          </span>
-          <span class="text-link">
-            <router-link to="/regist">免费注册</router-link>
-          </span>
+          <div class="header-handle">
+              <span>您好！</span>
+              <span>请</span>
+              <router-link to="/login" class="link-text">登录</router-link>
+              /
+              <router-link to="/regist" class="link-text">注册</router-link>
+              <router-link to="/index" class="link-text">回到首页</router-link>
+          </div>
         </template>
         <template v-else>
-          <span class="text-link" @click="logout">退出</span>
+          <div class="header-menu">
+            <el-menu mode="horizontal">
+              <el-menu-item index="3"><router-link to="/buy/order">我的订单</router-link></el-menu-item>
+              <!-- <el-submenu index="1">
+                <template slot="title">我的订单</template>
+                <el-menu-item index="1-1"><router-link to="/login">批发进货</router-link></el-menu-item>
+                <el-menu-item index="1-2"><router-link to="/login">已买到的货品</router-link></el-menu-item>
+                <el-menu-item index="1-3"><router-link to="/login">优惠券</router-link></el-menu-item>
+                <el-menu-item index="1-4"><router-link to="/login">店铺动态</router-link></el-menu-item>
+              </el-submenu> -->
+              <!-- <el-submenu index="2">
+                <template slot="title">我的商城</template>
+                <el-menu-item index="2-1"><router-link to="/login">批发进货</router-link></el-menu-item>
+                <el-menu-item index="2-2"><router-link to="/login">已买到的货品</router-link></el-menu-item>
+                <el-menu-item index="2-3"><router-link to="/login">优惠券</router-link></el-menu-item>
+                <el-menu-item index="2-4"><router-link to="/login">店铺动态</router-link></el-menu-item>
+              </el-submenu>
+              <el-menu-item index="3"><router-link to="/login">我的云购</router-link></el-menu-item> -->
+              <!-- <el-menu-item index="3"><router-link to="/login">我的收藏</router-link></el-menu-item>
+              <el-menu-item index="3"><router-link to="/login">会员中心</router-link></el-menu-item> -->
+              <!-- <el-menu-item index="3"><router-link to="/login">客户服务</router-link></el-menu-item> -->
+              <!-- <el-menu-item index="3"><router-link to="/login">帮助中心</router-link></el-menu-item> -->
+            </el-menu>
+            <router-link to="/index" class="link-text">回到首页</router-link>
+            <span class="link-text" style="margin-left: 10px;" @click="logout">退出</span>
+          </div>
         </template>
-      </div>
-      <div class="b-header-list" v-if="loginStatus">
-        <el-menu mode="horizontal">
-          <el-menu-item index="3"><router-link to="/buy/order">我的订单</router-link></el-menu-item>
-          <!-- <el-submenu index="1">
-            <template slot="title">我的订单</template>
-            <el-menu-item index="1-1"><router-link to="/login">批发进货</router-link></el-menu-item>
-            <el-menu-item index="1-2"><router-link to="/login">已买到的货品</router-link></el-menu-item>
-            <el-menu-item index="1-3"><router-link to="/login">优惠券</router-link></el-menu-item>
-            <el-menu-item index="1-4"><router-link to="/login">店铺动态</router-link></el-menu-item>
-          </el-submenu> -->
-          <!-- <el-submenu index="2">
-            <template slot="title">我的商城</template>
-            <el-menu-item index="2-1"><router-link to="/login">批发进货</router-link></el-menu-item>
-            <el-menu-item index="2-2"><router-link to="/login">已买到的货品</router-link></el-menu-item>
-            <el-menu-item index="2-3"><router-link to="/login">优惠券</router-link></el-menu-item>
-            <el-menu-item index="2-4"><router-link to="/login">店铺动态</router-link></el-menu-item>
-          </el-submenu>
-          <el-menu-item index="3"><router-link to="/login">我的云购</router-link></el-menu-item> -->
-          <!-- <el-menu-item index="3"><router-link to="/login">我的收藏</router-link></el-menu-item>
-          <el-menu-item index="3"><router-link to="/login">会员中心</router-link></el-menu-item> -->
-          <!-- <el-menu-item index="3"><router-link to="/login">客户服务</router-link></el-menu-item> -->
-          <!-- <el-menu-item index="3"><router-link to="/login">帮助中心</router-link></el-menu-item> -->
-        </el-menu>
       </div>
     </div>
   </div>
@@ -117,6 +123,60 @@ export default {
   .b-header-list .is-opened {
     background: #fff;
   }
+
+  .header-main {
+        height: 48px;
+        line-height: 48px;
+        padding: 16px 0;
+        box-sizing: content-box;
+    }
+    .header-title {
+        float: left;
+        margin-left: 20px;
+        font-size: 32px;
+        font-weight: bold;
+        color: #3b6713;
+    }
+    .header-title .logo {
+        float: left;
+        height: 48px;
+        width: 48px;
+        border-radius: 50%;
+        margin-right: 10px;
+        background: url('/static/images/index/logo.png') no-repeat;
+    }
+    .header-handle {
+        float: right;
+        margin-right: 20px;
+        font-size: 14px;
+        color: #666;
+    }
+    .link-text {
+        color: #0a5f9b;
+        cursor: pointer;
+    }
+    .header-nav {
+        height: 48px;
+        line-height: 48px;
+        font-size: 18px;
+        color: #fff;
+        padding-left: 250px;
+    }
+    .nav-item {
+        float: left;
+        margin-right: 25px;
+        padding: 0 20px;
+    }
+    .nav-item:hover {
+        background: #3b6713;
+    }
+    .nav-item.active {
+        background: #3b6713;
+    }
+    .header-menu {
+      float: right;
+      margin-right: 40px;
+    }
 </style>
 
 <style>
@@ -134,8 +194,13 @@ export default {
   .el-menu--horizontal {
     border-bottom: none;
   }
-  .el-menu--horizontal .el-menu .el-menu-item {
+  .header-menu .el-menu--horizontal .el-menu-item {
+    height: 48px;
+    line-height: 44px;
     padding: 0 20px;
+  }
+  .header-menu .el-menu {
+    float: left;
   }
 </style>
 

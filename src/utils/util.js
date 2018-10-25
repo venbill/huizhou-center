@@ -144,5 +144,9 @@ export default {
         }
       })
     }
+  },
+  // 字符串截取
+  stringSlice(string, length) {
+    return string.slice(0, length)
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <el-row class="login-title">
-      欢迎使用徽州区电商中心平台后台管理系统
+      欢迎使用徽州区电商中心平台
     </el-row>
 
     <el-form id="form" class="login-form" autoComplete="on" :model="registForm" :rules="registRules" ref="registForm" label-position="left">
@@ -310,7 +310,7 @@ $light_gray:#1C5EB3;
   width: 100%;
   min-width: 1024px;
   font-family:PingFangSC-Medium;
-  background: url(../../assets/custom-theme/images/login_bg.jpg) 100% 100% no-repeat;
+  background: url('/static/images/bg.png') 100% 100% no-repeat;
   background-size: cover;
   background-position: left;
   .login-form {
