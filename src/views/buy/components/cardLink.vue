@@ -1,6 +1,6 @@
 <template>
-  <div class="card-body" :style="{width:width + 'px', height:height + 'px'}">
-    <el-card class="r-card goods-list inline-block" v-for="child in body" :key="child.index">
+  <div class="card-body">
+    <el-card class="r-card goods-list inline-block" v-for="child in body" :key="child.index" :style="{width:width + 'px', height:height + 'px'}">
       <router-link :to="{path:'/buy/detail', query:{id:child.id}}" target="_blank">
         <img :src="child.picture" class="block" :style="{width:imgWidth + 'px', height:imgHeight + 'px'}">
       </router-link>
@@ -44,13 +44,13 @@ export default {
 
 <style scoped>
 .card-body{
-  display: inline-block;
 }
 img{
   margin: 0 auto;
 }
 .goods-list {
   margin-bottom: 20px;
+  display: inline-block;
 }
 .goods-list:not(:last-child) {
   margin-right: 20px;

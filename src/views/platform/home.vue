@@ -31,12 +31,12 @@
               <span>民宿</span>
             </div>
           </router-link>
-          <router-link to="/index/shop">
+          <a href="https://xueyuan.maijia.com/m/search/37" target="_blank">
             <div class="module-item">
               <img src="/static/images/index/train.png"/>
               <span>培训</span>
             </div>
-          </router-link>
+          </a>
           <router-link to="/index/cooperation">
             <div class="module-item" style="margin-right:0;">
               <img src="/static/images/index/cooperation.png"/>
@@ -110,7 +110,7 @@
                 <!-- </router-link> -->
               </div>
               <div class="img-item">
-                <router-link to="/index/shop">
+                <router-link to="https://xueyuan.maijia.com/m/search/37" target="_blank">
                   <img src="/static/images/index/online_retailers.png">
                   <p class="img-title">电商培训</p>
                 </router-link>

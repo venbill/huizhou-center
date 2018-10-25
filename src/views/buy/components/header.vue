@@ -46,6 +46,13 @@
         </template>
       </div>
     </div>
+    <div class="outside-box" style="background:#1D1F21">
+      <div class="index-center-content header-nav">
+        <div class="nav-item" :class="{active:activeIndex === index}"
+          v-for="(item, index) in navList" :key="item.index"
+          @click="navChange(item, index)">{{item.title}}</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -56,7 +63,38 @@ export default {
     return {
       active: '',
       loginStatus: false, // 登录状态
-      userInfo: {}
+      userInfo: {},
+      navList: [
+        {
+          title: '首页',
+          path: '/'
+        },
+        {
+          title: '热门资讯',
+          path: '/index/information'
+        },
+        {
+          title: '农特商城',
+          path: '/buy'
+        },
+        {
+          title: '精品民宿',
+          path: '/index/homestay'
+        },
+        {
+          title: '电商培训',
+          path: 'https://xueyuan.maijia.com/m/search/37'
+        },
+        {
+          title: '招商引资',
+          path: '/index/cooperation'
+        },
+        {
+          title: '关于我们',
+          path: '/index/us'
+        }
+      ],
+      activeIndex: 0
     }
   },
   computed: {
@@ -66,7 +104,21 @@ export default {
   },
   methods: {
     init() {
-      console.log(this.token)
+      // 判断是否路由选中
+      const path = this.$route.path
+      if (path === '/') {
+        this.activeIndex = 0
+      } else {
+        for (let i = 0; i < this.navList.length; i++) {
+          const newPath = this.navList[i].path
+          if (newPath !== '/') {
+            if (path.indexOf(this.navList[i].path) !== -1) {
+              this.activeIndex = i
+              return
+            }
+          }
+        }
+      }
       // 没有登录信息，终止函数
       if (this.token === undefined) {
         this.loginStatus = false
@@ -80,6 +132,18 @@ export default {
       this.$store.dispatch('LogOut').then(() => {
         location.reload()// In order to re-instantiate the vue-router object to avoid bugs
       })
+    },
+    navChange(item, index) {
+      if (index === 4) {
+        window.open('https://xueyuan.maijia.com/m/search/37', '_blank')
+      } else {
+        this.activeIndex = index
+        this.$router.push(
+          {
+            path: item.path
+          }
+        )
+      }
     }
   },
   mounted() {
@@ -166,12 +230,14 @@ export default {
         float: left;
         margin-right: 25px;
         padding: 0 20px;
+        cursor: pointer;
     }
     .nav-item:hover {
         background: #3b6713;
     }
     .nav-item.active {
         background: #3b6713;
+        color: #fff;
     }
     .header-menu {
       float: right;

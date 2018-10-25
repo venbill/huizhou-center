@@ -22,9 +22,9 @@
         </div>
         <div class="outside-box" style="background:#1D1F21">
             <div class="index-center-content header-nav">
-                <router-link v-for="(item, index) in navList" :key="item.index" :to="item.path">
-                    <div class="nav-item" :class="{active:activeIndex === index}" @click="navChange(index)">{{item.title}}</div>
-                </router-link>
+              <div class="nav-item" :class="{active:activeIndex === index}"
+               v-for="(item, index) in navList" :key="item.index"
+               @click="navChange(item, index)">{{item.title}}</div>
             </div>
         </div>
     </div>
@@ -55,7 +55,7 @@ export default {
         },
         {
           title: '电商培训',
-          path: '/index/shop'
+          path: 'https://xueyuan.maijia.com/m/search/37'
         },
         {
           title: '招商引资',
@@ -76,23 +76,39 @@ export default {
   },
   methods: {
     init() {
+      // 判断是否路由选中
+      const path = this.$route.path
+      if (path === '/') {
+        this.activeIndex = 0
+      } else {
+        for (let i = 0; i < this.navList.length; i++) {
+          const newPath = this.navList[i].path
+          if (newPath !== '/') {
+            if (path.indexOf(this.navList[i].path) !== -1) {
+              this.activeIndex = i
+              return
+            }
+          }
+        }
+      }
       // 没有登录信息，终止函数
       if (this.token === undefined) {
         this.loginStatus = false
       } else {
         this.loginStatus = true
       }
-      // 判断是否路由选中
-      const path = this.$route.path
-      for (let i = 0; i < this.navList.length; i++) {
-        if (path.indexOf(this.navList[i].path) !== -1) {
-          this.activeIndex = i
-          return
-        }
-      }
     },
-    navChange(index) {
-      this.activeIndex = index
+    navChange(item, index) {
+      if (index === 4) {
+        window.open('https://xueyuan.maijia.com/m/search/37', '_blank')
+      } else {
+        this.activeIndex = index
+        this.$router.push(
+          {
+            path: item.path
+          }
+        )
+      }
     },
     // 退出
     logout() {
@@ -151,12 +167,15 @@ export default {
         float: left;
         margin-right: 25px;
         padding: 0 20px;
+        cursor: pointer;
     }
     .nav-item:hover {
         background: #3b6713;
+        cursor: pointer;
     }
     .nav-item.active {
         background: #3b6713;
+        color: #fff;
     }
 </style>
 

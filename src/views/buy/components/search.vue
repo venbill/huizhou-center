@@ -1,9 +1,8 @@
 <template>
   <div class="b-search">
     <div class="b-search-content">
-      <!-- <div class="b-search-logo" :style="{backgroundImage:'url(' + logoUrl + ')'}"> -->
-
-      </div>
+      <!-- <div class="b-search-logo" :style="{backgroundImage:'url(' + logoUrl + ')'}">
+      </div> -->
       <div class="b-search-main">
         <div class="b-search-input">
           <el-input v-model="formSearch.search" class="select-b-search"></el-input>
@@ -104,14 +103,15 @@ export default {
           })
           window.open(routeData.href, '_blank')
         } else {
-          this_.$router.push(
-            {
-              path: '/buy/search',
-              query: {
-                keyword: this_.formSearch.search
-              }
-            }
-          )
+          this.$emit('search', this_.formSearch.search)
+          // this_.$router.push(
+          //   {
+          //     path: '/buy/search',
+          //     query: {
+          //       keyword: this_.formSearch.search
+          //     }
+          //   }
+          // )
         }
       }
     }
@@ -144,9 +144,10 @@ export default {
   .b-search-main {
     width: 550px;
     height: 75px;
-    margin: 15px 0 0 112px;
+    margin: 15px auto 0;
+    /* margin: 15px 0 0 112px; */
     overflow: hidden;
-    float: left;
+    /* float: left; */
   }
   .select-b-search {
     width: 450px;

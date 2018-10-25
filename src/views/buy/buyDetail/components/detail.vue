@@ -81,7 +81,7 @@
               </p>
             </div>
             <div class="detail-imgBox">
-              <img :src="item" v-for="item in shopInfo.pictures" :key="item.index" style="display:block;margin:0 auto;max-width:60%">
+              <img :src="item" v-for="item in shopInfo.detailPictures" :key="item.index" style="display:block;margin:0 auto;max-width:60%">
             </div>
             <div class="shop-assessment">
               <el-tabs style="width:100%;" v-model="commentTab" type="card" @tab-click="commentClick">
@@ -210,6 +210,7 @@ export default {
       // 获取商品详情
       goodDetail(this.goodId).then(function(data) {
         if (data.data.code === 200) {
+          this_.shopPrice = data.data.data.price
           this_.shopInfo = data.data.data
           // 图片处理
           if (this_.shopInfo.pictures.length > 0) {
@@ -523,15 +524,11 @@ export default {
     shopNumber(val) {
       if (this.shopPriceUnit !== '') {
         this.shopPrice = (this.shopPriceUnit * val).toFixed(2)
-      } else {
-        this.shopPrice = ''
       }
     },
     shopPriceUnit(val) {
       if (val !== '') {
         this.shopPrice = (this.shopNumber * val).toFixed(2)
-      } else {
-        this.shopPrice = ''
       }
     }
   }

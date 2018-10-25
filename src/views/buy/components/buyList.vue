@@ -15,7 +15,7 @@
         </div>
         <div class="carouselContent">
           <div class="r-item">
-            <card-link :body="item.goods" :height="270" :width="190" :imgHeight="190" :imgWidth="190"></card-link>
+            <card-link :body="item.goods" :height="270" :width="176" :imgHeight="176" :imgWidth="176"></card-link>
             <!-- <router-link v-for="child in item.goods" :key="child.index" :to="{path:'/buy/detail',query: {id: child.id}}" target="_blank">
               <el-card class="r-card">
                 <img :src="child.picture" class="image" style="height:190px;width:190px;margin:0 auto;background:silver">

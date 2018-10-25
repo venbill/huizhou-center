@@ -26,7 +26,7 @@
             <div class="b-content-list" v-if="contentStatus && typeIndex !== -1">
               <div class="b-list-sub">
                 <span class="item" v-for="sub in navList[typeIndex].smallTypes" :key="sub.index">
-                  <router-link :to="{path:'/buy/search',query: {id: sub.id, keyword:sub.smallTypeName}}" target="_blank">{{sub.smallTypeName}}</router-link>
+                  <router-link :to="{path:'/buy/search',query: {typeId: sub.bigTypeId, keyword:sub.smallTypeName}}" target="_blank">{{sub.smallTypeName}}</router-link>
                 </span>
               </div>
             </div>

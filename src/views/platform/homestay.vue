@@ -24,39 +24,54 @@
             <el-row :gutter=30>
               <el-col :span=12>
                 <el-row>
-                  <img class="city-pic" style="padding:0; width:100%;height:180px;position: relative; " src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3458997372,3027303078&fm=26&gp=0.jpg" />
-                  <div class="city-title">岩寺镇</div>
+                  <router-link to="/index/homestay/search">
+                    <img class="city-pic" style="padding:0; width:100%;height:180px;position: relative; " src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3458997372,3027303078&fm=26&gp=0.jpg" />
+                    <div class="city-title">岩寺镇</div>
+                  </router-link>
                 </el-row>
+                </router-link>
                 <el-row style="padding-top:20px;" :gutter=20>
                   <el-col :span=12>
+                    <router-link to="/index/homestay/search">
                       <img style="padding:0; width:100%;height:320px" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536990875860&di=689ea005143810e0827b2592e1235f3b&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dpixel_huitu%252C0%252C0%252C294%252C40%2Fsign%3D00c470ddb81c8701c2bbbaa64e07fb43%2F503d269759ee3d6d7b4c49f248166d224f4ade05.jpg" />
                       <div class="city-title">西溪南镇</div>
+                    </router-link>
                   </el-col>
                   <el-col :span=12>
+                    <router-link to="/index/homestay/search">
                       <img style="padding:0; width:100%;height:320px" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536990788898&di=1bb920c75884ded44e4f33d942edc03c&imgtype=0&src=http%3A%2F%2Fpic33.photophoto.cn%2F20141014%2F0033033928525746_b.jpg" />
                       <div class="city-title">潜口镇</div>
+                    </router-link>
                   </el-col>
                 </el-row>
               </el-col>
               <el-col :span=12>
                 <el-row :gutter=20>
                     <el-col :span=12>
+                      <router-link to="/index/homestay/search">
                         <img style="padding:0; width:100%;height:250px" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536992119600&di=a39b643193df66cfa619dcfb42386fcc&imgtype=0&src=http%3A%2F%2Fpic.baike.soso.com%2Fp%2F20140508%2F20140508095858-142540531.jpg" />
                         <div class="city-title">呈坎镇</div>
+                      </router-link>
                     </el-col>
                     <el-col :span=12>
+                      <router-link to="/index/homestay/search">
                         <img style="padding:0; width:100%;height:250px" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537586867&di=bb53ef181ff36646527383f2a88ca9c8&imgtype=jpg&er=1&src=http%3A%2F%2Fimg1.qunarzz.com%2Fp%2Ftts9%2F1507%2F7e%2F62f02f20065c60.jpg" />
                         <div class="city-title">杨村乡</div>
+                      </router-link>
                     </el-col>
                 </el-row>
                 <el-row style="padding-top:20px;" :gutter=20>
                     <el-col :span=12>
+                      <router-link to="/index/homestay/search">
                         <img style="padding:0; width:100%;height:250px" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536992257584&di=63ae472d3f5b6a2ee8da8ac471c7c454&imgtype=0&src=http%3A%2F%2Fimage.lxw365.com%2Fimg%2Fba%2F54%2Fba54d7f73e3233451626cf7bf1d76756.jpg" />
                         <div class="city-title">富溪乡</div>
+                      </router-link>
                     </el-col>
                     <el-col :span=12>
+                      <router-link to="/index/homestay/search">
                         <img style="padding:0; width:100%;height:250px" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1537586931&di=068366232707404cfe381fc36b6e6bfd&imgtype=jpg&er=1&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd53f8794a4c27d1ec963a35911d5ad6edcc438e1.jpg" />
                         <div class="city-title">洽舍乡</div>
+                      </router-link>
                     </el-col>
                 </el-row>
               </el-col>

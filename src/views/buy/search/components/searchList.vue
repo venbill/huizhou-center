@@ -65,6 +65,7 @@ export default {
   data() {
     return {
       searchText: '',
+      typeId: '',
       goodsList: {
         pageTotal: 1000,
         pageNo: 1,
@@ -113,12 +114,29 @@ export default {
       })
     },
     // 分页查询
-    getTable() {
+    getTable(val) {
       const this_ = this
-      const params = {
-        content: this.searchText,
-        pageNo: this.goodsList.pageNo,
-        pageSize: this.goodsList.pageSize
+      let params
+      if (val) {
+        params = {
+          content: val,
+          pageNo: this.goodsList.pageNo,
+          pageSize: this.goodsList.pageSize
+        }
+      } else {
+        if (this.typeId === '') {
+          params = {
+            content: this.searchText,
+            pageNo: this.goodsList.pageNo,
+            pageSize: this.goodsList.pageSize
+          }
+        } else {
+          params = {
+            smallTypeId: this.typeId,
+            pageNo: this.goodsList.pageNo,
+            pageSize: this.goodsList.pageSize
+          }
+        }
       }
       searchGoods(params).then(function(data) {
         if (data.data.code === 200) {
@@ -136,7 +154,13 @@ export default {
   },
 
   mounted() {
-    this.searchText = this.$route.query.keyword
+    const typeId = this.$route.query.typeId
+    if (typeId === undefined) {
+      this.searchText = this.$route.query.keyword
+    } else {
+      this.searchText = ''
+      this.typeId = typeId
+    }
     this.init()
   }
 }

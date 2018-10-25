@@ -18,11 +18,11 @@
             </el-row>
             <el-row style="margin-top:10px;">
               <el-popover placement="bottom" trigger="click" popper-class="chooseBox">
-                <div class="popover-item" v-for="(item, index) in placeOptions" :key="item.index" @click="areaSelect(item)">{{item.areaName}}</div>
+                <div class="popover-item" v-for="item in placeOptions" :key="item.index" @click="areaSelect(item)">{{item.areaName}}</div>
                 <el-button slot="reference">选择地区</el-button>
               </el-popover>
               <el-popover placement="bottom" trigger="click" popper-class="chooseBox">
-                <div class="popover-item" v-for="(item, index) in typeOptions" :key="item.index" @click="typeSelect(item)">{{item.label}}</div>
+                <div class="popover-item" v-for="item in typeOptions" :key="item.index" @click="typeSelect(item)">{{item.label}}</div>
                 <el-button slot="reference">选择类型</el-button>
               </el-popover>
               <el-popover placement="bottom" trigger="click" popper-class="priceBox">
