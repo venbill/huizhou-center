@@ -78,6 +78,29 @@ export default {
     init() {
       // 判断是否路由选中
       const path = this.$route.path
+      this.routeFocus(path)
+      // 没有登录信息，终止函数
+      if (this.token === undefined) {
+        this.loginStatus = false
+      } else {
+        this.loginStatus = true
+      }
+    },
+    // 标签点击
+    navChange(item, index) {
+      if (index === 4) {
+        window.open('https://xueyuan.maijia.com/m/search/37', '_blank')
+      } else {
+        this.activeIndex = index
+        this.$router.push(
+          {
+            path: item.path
+          }
+        )
+      }
+    },
+    // 判断路由是否选中
+    routeFocus(path) {
       if (path === '/') {
         this.activeIndex = 0
       } else {
@@ -90,24 +113,6 @@ export default {
             }
           }
         }
-      }
-      // 没有登录信息，终止函数
-      if (this.token === undefined) {
-        this.loginStatus = false
-      } else {
-        this.loginStatus = true
-      }
-    },
-    navChange(item, index) {
-      if (index === 4) {
-        window.open('https://xueyuan.maijia.com/m/search/37', '_blank')
-      } else {
-        this.activeIndex = index
-        this.$router.push(
-          {
-            path: item.path
-          }
-        )
       }
     },
     // 退出

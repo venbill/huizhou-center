@@ -121,9 +121,9 @@
             <div class="module-title">
               <span class="module-title-item">公告</span>
               <div class="float-right">
-                <!-- <router-link to="/index/information" target="_blank"> -->
+                <router-link :to="{path:'/index/information', query:{index:3}}">
                   <span class="text-more">查看更多 ></span>
-                <!-- </router-link> -->
+                </router-link>
               </div>
             </div>
             <div class="information-list">

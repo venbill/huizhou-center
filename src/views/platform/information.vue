@@ -96,6 +96,12 @@ export default {
   },
   methods: {
     init() {
+      const newIndex = this.$route.query.index
+      if (newIndex !== undefined) {
+        this.newsIndex = newIndex
+        this.newsInfo.type = this.news[newIndex].type
+        this.headerIndex(this.$route.path)
+      }
       this.getNews()
     },
     // 分页查询资讯
@@ -109,7 +115,6 @@ export default {
       }
       getNews(params).then(function(data) {
         if (data.data.code === 200) {
-          console.log(data.data.data)
           this_.tableLoading = false
           this_.newsInfo.table = data.data.data.results
           this_.newsInfo.paginationTotal = data.data.data.total
@@ -145,6 +150,10 @@ export default {
           return val
         }
       }
+    },
+    // 返回父组件路由路径
+    headerIndex(path) {
+      this.$emit('headerIndex', path)
     }
   },
   mounted() {
