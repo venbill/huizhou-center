@@ -29,60 +29,59 @@ import Layout from '@/views/layout/Layout'
 export const constantRouterMap = [
 
   {
-    path: '/index',
-    redirect: '/index/home',
+    path: '/',
+    redirect: '/',
     component: () =>
             import('@/views/platform/index'),
-    children: [
-      { // 首页
-        path: '/index/home',
-        component: () =>
-            import('@/views/platform/home')
-      },
+    children: [{ // 首页
+      path: '/',
+      component: () =>
+                    import('@/views/platform/home')
+    },
       // 民宿
-      {
-        path: '/index/homestay',
-        component: () =>
-                import('@/views/platform/homestay'),
-        hidden: true
-      },
-      {
-        path: '/index/homestay/search',
-        component: () =>
-                import('@/views/platform/homestay-search'),
-        hidden: true
-      },
-      {
-        path: '/index/homestay/detail',
-        component: () =>
-                import('@/views/platform/homestay-detail'),
-        hidden: true
-      },
-      { // 电商
-        path: '/index/shop',
-        component: () =>
-            import('@/views/platform/onlineRetailers')
-      },
-      { // 资讯
-        path: '/index/information',
-        component: () =>
-            import('@/views/platform/information')
-      },
-      { // 资讯详情
-        path: '/index/information/detail',
-        component: () =>
-            import('@/views/platform/informationDetail')
-      },
-      { // 招商引资
-        path: '/index/cooperation',
-        component: () =>
-            import('@/views/platform/cooperation')
-      },
-      { // 关于
-        path: '/index/us',
-        component: () =>
-            import('@/views/platform/us')
-      }
+    {
+      path: '/index/homestay',
+      component: () =>
+                    import('@/views/platform/homestay'),
+      hidden: true
+    },
+    {
+      path: '/index/homestay/search',
+      component: () =>
+                    import('@/views/platform/homestay-search'),
+      hidden: true
+    },
+    {
+      path: '/index/homestay/detail',
+      component: () =>
+                    import('@/views/platform/homestay-detail'),
+      hidden: true
+    },
+    { // 电商
+      path: '/index/shop',
+      component: () =>
+                    import('@/views/platform/onlineRetailers')
+    },
+    { // 资讯
+      path: '/index/information',
+      component: () =>
+                    import('@/views/platform/information')
+    },
+    { // 资讯详情
+      path: '/index/information/detail',
+      component: () =>
+                    import('@/views/platform/informationDetail')
+    },
+    { // 招商引资
+      path: '/index/cooperation',
+      component: () =>
+                    import('@/views/platform/cooperation')
+    },
+    { // 关于
+      path: '/index/us',
+      component: () =>
+                    import('@/views/platform/us')
+    }
     ],
     hidden: true
   },

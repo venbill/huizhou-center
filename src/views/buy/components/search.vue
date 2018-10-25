@@ -1,7 +1,7 @@
 <template>
   <div class="b-search">
     <div class="b-search-content">
-      <div class="b-search-logo" :style="{backgroundImage:'url(' + logoUrl + ')'}">
+      <!-- <div class="b-search-logo" :style="{backgroundImage:'url(' + logoUrl + ')'}"> -->
 
       </div>
       <div class="b-search-main">

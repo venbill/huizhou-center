@@ -13,7 +13,7 @@
               <router-link to="/login" class="link-text">登录</router-link>
               /
               <router-link to="/regist" class="link-text">注册</router-link>
-              <router-link to="/index" class="link-text">回到首页</router-link>
+              <router-link to="/" class="link-text">回到首页</router-link>
           </div>
         </template>
         <template v-else>

@@ -39,7 +39,7 @@ export default {
       navList: [
         {
           title: '首页',
-          path: '/index/home'
+          path: '/'
         },
         {
           title: '热门资讯',
