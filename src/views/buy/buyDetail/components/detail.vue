@@ -153,6 +153,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import Category from '@/views/buy/components/category'
 import { goodDetail, goodComments, getShopTypeList, getShop, addGoods, getGoodsNum } from '@/api/buy/buy'
 export default {
@@ -352,6 +353,7 @@ export default {
     },
     // 加入购物车
     addShoppingCart() {
+      return
       const this_ = this
       this.addGoodsLoading = true
       // 获取属性名称
@@ -449,7 +451,7 @@ export default {
     },
     // 购买
     Buy() {
-      console.log(this.shopInfo)
+      return
       // 获取属性名称
       const arr = []
       this.shopInfo.selectAttributeDetailList.forEach(function(e) {

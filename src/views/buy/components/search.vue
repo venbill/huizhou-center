@@ -25,11 +25,11 @@
           </span>
         </div>
       </div>
-      <div class="b-search-shoppingCart">
+      <!-- <div class="b-search-shoppingCart">
         <i class="iconfont">&#xe600;</i>
         <router-link to="/buy/pay" target="_blank">我的购物车</router-link>
         <span class="shoppingCat-count">{{goodsNum}}</span>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
