@@ -422,6 +422,10 @@ export default {
     width: 624px;
     margin: 0 auto;
   }
+  .information-img img {
+    width: 100%;
+    height: auto;
+  }
   .service, .notice {
     width: 482px;
     float: right;

@@ -89,74 +89,86 @@ export const constantRouterMap = [
   // 电商
   { // 首页
     path: '/buy',
-    component: () =>
-            import('@/views/buy/index'),
+    // component: () =>
+    //         import('@/views/buy/index'),
+    component: resolve => require(['@/views/buy/index'], resolve),
     hidden: true
   },
   { // 搜索
     path: '/buy/search',
-    component: () =>
-            import('@/views/buy/search/index'),
+    // component: () =>
+    //         import('@/views/buy/search/index'),
+    component: resolve => require(['@/views/buy/search/index'], resolve),
     hidden: true
   },
   { // 详情
     path: '/buy/detail',
-    component: () =>
-            import('@/views/buy/buyDetail/index'),
+    // component: () =>
+    //         import('@/views/buy/buyDetail/index'),
+    component: resolve => require(['@/views/buy/buyDetail/index'], resolve),
     hidden: true
   },
   { // 购物车
     path: '/buy/shoppingCart',
-    component: () =>
-            import('@/views/buy/shoppingCart/index'),
+    // component: () =>
+    //         import('@/views/buy/shoppingCart/index'),
+    component: resolve => require(['@/views/buy/shoppingCart/index'], resolve),
     hidden: true
   },
   { // 订单
     path: '/buy/order',
-    component: () =>
-            import('@/views/buy/myOrder/index'),
+    // component: () =>
+    //         import('@/views/buy/myOrder/index'),
+    component: resolve => require(['@/views/buy/myOrder/index'], resolve),
     hidden: true
   },
   { // 订单评价
     path: '/buy/comment',
-    component: () =>
-            import('@/views/buy/myOrder/components/comment'),
+    // component: () =>
+    //         import('@/views/buy/myOrder/components/comment'),
+    component: resolve => require(['@/views/buy/myOrder/components/comment'], resolve),
     hidden: true
   },
   { // 选商品付款
     path: '/buy/pay',
-    component: () =>
-            import('@/views/buy/pay/index'),
+    // component: () =>
+    //         import('@/views/buy/pay/index'),
+    component: resolve => require(['@/views/buy/pay/index'], resolve),
     hidden: true
   },
   { // 付款确认
     path: '/buy/pay/pay_confirm',
-    component: () =>
-            import('@/views/buy/pay/payConfirm/index'),
+    // component: () =>
+    //         import('@/views/buy/pay/payConfirm/index'),
+    component: resolve => require(['@/views/buy/pay/payConfirm/index'], resolve),
     hidden: true
   },
   { // 支付
     path: '/buy/pay/payment',
-    component: () =>
-            import('@/views/buy/pay/payment/index'),
+    // component: () =>
+    //         import('@/views/buy/pay/payment/index'),
+    component: resolve => require(['@/views/buy/pay/payment/index'], resolve),
     hidden: true
   },
   { // 管理收货地址
     path: '/buy/address',
-    component: () =>
-            import('@/views/buy/address/index'),
+    // component: () =>
+    //         import('@/views/buy/address/index'),
+    component: resolve => require(['@/views/buy/address/index'], resolve),
     hidden: true
   },
   { // 消息提醒
     path: '/buy/my_news',
-    component: () =>
-            import('@/views/buy/news/index'),
+    // component: () =>
+    //         import('@/views/buy/news/index'),
+    component: resolve => require(['@/views/buy/news/index'], resolve),
     hidden: true
   },
   { // 我的店铺
     path: '/buy/my_shop',
-    component: () =>
-            import('@/views/buy/myShop/index'),
+    // component: () =>
+    //         import('@/views/buy/myShop/index'),
+    component: resolve => require(['@/views/buy/myShop/index'], resolve),
     hidden: true
   },
 
@@ -165,6 +177,7 @@ export const constantRouterMap = [
     path: '/login',
     component: () =>
             import('@/views/login/login'),
+    // component: resolve => require(['@/views/login/login'], resolve),
     hidden: true
   },
   // 注册
@@ -172,6 +185,7 @@ export const constantRouterMap = [
     path: '/regist',
     component: () =>
             import('@/views/regist/regist'),
+    // component: resolve => require(['@/views/regist/regist'], resolve),
     hidden: true
   },
   // 忘记密码
