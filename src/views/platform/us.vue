@@ -74,12 +74,12 @@ export default {
       var map = new AMap.Map('map-us', {
         resizeEnable: false,
         zoom: 16, // 级别
-        center: [118.332412, 29.827258] // 中心坐标
+        center: [118.333084,29.82785] // 中心坐标
       })
       // 定义标记点
       var marker = new AMap.Marker({
         icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png',
-        position: [118.332412, 29.827258]
+        position: [118.333084,29.82785]
       })
       AMap.plugin(['AMap.ToolBar', 'AMap.Scale', 'AMap.Driving'], function() {
         map.addControl(new AMap.ToolBar())
