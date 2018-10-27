@@ -67,7 +67,7 @@ export default {
       keywords: '',
       news: [
         {
-          title: '本地资讯',
+          title: '热门资讯',
           type: 1
         },
         {

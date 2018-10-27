@@ -9,7 +9,7 @@
               </router-link>
               <div style="padding: 10px 10px 4px;font-size:12px;">
                 <router-link :to="{path:'/buy/detail', query:{id:child.id}}" target="_blank">
-                  <span class="r-card-text text-link-normal block" :title="child.name">{{child.name}}</span>
+                  <span class="r-card-text text-link-normal" :title="child.name">{{child.name}}</span>
                 </router-link>
                 <span class="r-b-charge block">{{child.minPrice | pieceFormat}}</span>
               </div>
@@ -66,6 +66,7 @@ export default {
     return {
       searchText: '',
       typeId: '',
+      typeStatus: false, // true:大分类，false:小分类
       goodsList: {
         pageTotal: 1000,
         pageNo: 1,
@@ -131,10 +132,18 @@ export default {
             pageSize: this.goodsList.pageSize
           }
         } else {
-          params = {
-            smallTypeId: this.typeId,
-            pageNo: this.goodsList.pageNo,
-            pageSize: this.goodsList.pageSize
+          if (this.typeStatus) {
+            params = {
+              bigTypeId: this.typeId,
+              pageNo: this.goodsList.pageNo,
+              pageSize: this.goodsList.pageSize
+            }
+          } else {
+            params = {
+              smallTypeId: this.typeId,
+              pageNo: this.goodsList.pageNo,
+              pageSize: this.goodsList.pageSize
+            }
           }
         }
       }
@@ -154,12 +163,19 @@ export default {
   },
 
   mounted() {
-    const typeId = this.$route.query.typeId
-    if (typeId === undefined) {
+    const bigTypeId = this.$route.query.bigTypeId
+    const smallTypeId = this.$route.query.smallTypeId
+    if (bigTypeId === undefined && smallTypeId === undefined) {
       this.searchText = this.$route.query.keyword
     } else {
       this.searchText = ''
-      this.typeId = typeId
+      if (bigTypeId !== undefined) {
+        this.typeStatus = true
+        this.typeId = bigTypeId
+      } else if (smallTypeId !== undefined) {
+        this.typeStatus = false
+        this.typeId = smallTypeId
+      }
     }
     this.init()
   }
@@ -196,7 +212,7 @@ export default {
 .r-card-text {
   display: inline-block;
   line-height: 1.4;
-  height: 32px;
+  height: 40px;
   overflow: hidden;
 }
 .r-b-charge {

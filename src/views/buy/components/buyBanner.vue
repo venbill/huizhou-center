@@ -1,7 +1,7 @@
 <template>
   <div class="b-banner">
     <div class="b-banner-main">
-      <div class="b-banner-header">
+      <!-- <div class="b-banner-header">
         <div class="products">
           <i class="iconfont" style="margin-right:4px;">&#xe6b8;</i>
           商品分类
@@ -11,11 +11,15 @@
               {{item.title}}
           </div>
         </router-link>
-      </div>
+      </div> -->
       <div class="b-banner-content">
         <div class="b-content-nav">
+          <div class="products">
+            <i class="iconfont" style="margin-right:4px;">&#xe6b8;</i>
+            商品分类
+          </div>
           <div class="listContent" @mouseenter="contentShow" @mouseleave="contentHide">
-            <router-link v-for="(item, index) in navList" :key="item.index" :to="{path:'/buy/search',query: {id: item.id,keyword:item.bigTypeName}}" target="_blank">
+            <router-link v-for="(item, index) in navList" :key="item.index" :to="{path:'/buy/search',query: {bigTypeId: item.id,keyword:item.bigTypeName}}" target="_blank">
               <div class="type-item" :class="{active: typeIndex === index}" @mouseenter="typeIndexChange(index)">
                 <i class="iconfont" v-html="item.icon" style="margin-right:4px;"></i>
                 <span class="typeTitle">
@@ -26,13 +30,13 @@
             <div class="b-content-list" v-if="contentStatus && typeIndex !== -1">
               <div class="b-list-sub">
                 <span class="item" v-for="sub in navList[typeIndex].smallTypes" :key="sub.index">
-                  <router-link :to="{path:'/buy/search',query: {typeId: sub.bigTypeId, keyword:sub.smallTypeName}}" target="_blank">{{sub.smallTypeName}}</router-link>
+                  <router-link :to="{path:'/buy/search',query: {smallTypeId: sub.id, keyword:sub.smallTypeName}}" target="_blank">{{sub.smallTypeName}}</router-link>
                 </span>
               </div>
             </div>
           </div>
         </div>
-        <el-carousel trigger="click" height="510px" class="b-content-img">
+        <el-carousel trigger="click" height="590px" class="b-content-img">
           <el-carousel-item v-for="item in imgList" :key="item.index">
             <a :href="'http://' + item.href" target="_blank">
               <img :src="item.url">
@@ -118,11 +122,11 @@ export default {
   }
   .b-banner-main {
     width: 1200px;
-    height: 550px;
+    height: 590px;
     margin: 0 auto;
     background: #ee4644;
   }
-  .b-banner-header {
+  /* .b-banner-header {
     height: 40px;
     line-height: 40px;
     color: #fff;
@@ -140,17 +144,24 @@ export default {
     margin-right: 10px;
     padding: 0 10px;
     font-size: 14px;
+  } */
+  .products {
+    width: 170px;
+    padding: 0 15px;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
   }
-  .b-banner-header .item:hover {
+  /* .b-banner-header .item:hover {
     background: rgba(000, 000, 000, 0.3);
-  }
+  } */
   .b-content-nav, .products {
-    font-size: 16px;
+    font-size: 18px;
     background: rgba(000, 000, 000, 0.3);
   }
   .b-content-nav {
     width: 200px;
-    height: 510px;
+    height: 590px;
     overflow-y: hidden;
     float: left;
     background: rgba(000, 000, 000, 0.3);
@@ -158,7 +169,7 @@ export default {
   .b-content-nav .listContent .type-item {
     height: 34px;
     line-height: 34px;
-    font-size: 13px;
+    font-size: 14px;
     color: #fff;
     padding: 0 36px;
   }
@@ -177,10 +188,10 @@ export default {
     position: absolute;
     z-index: 999;
     width: 1000px;
-    height: 510px;
+    height: 590px;
     top: 0;
     left: 200px;
-    font-size: 12px;
+    font-size: 14px;
     overflow: hidden;
     background: rgba(210,209,208, 0.9)
   }
@@ -203,7 +214,7 @@ export default {
   }
   .b-list-sub {
     width: 100%;
-    padding: 10px;
+    padding: 20px;
     word-break: break-all;
     overflow: hidden;
   }
@@ -216,12 +227,16 @@ export default {
   }
   .b-content-img {
     width: 1000px;
-    height: 510px;
+    height: 590px;
     float: left;
+  }
+  .b-content-img img {
+    width: 100%;
+    height: 100%;
   }
   .b-imgList {
     float: left;
-    height: 510px;
+    height: 590px;
     width: 190px;
     margin-left: 10px;
     background: transparent;

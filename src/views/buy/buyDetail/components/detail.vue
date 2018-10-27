@@ -154,6 +154,7 @@
 
 <script>
 /* eslint-disable */
+import { mapGetters } from 'vuex'
 import Category from '@/views/buy/components/category'
 import { goodDetail, goodComments, getShopTypeList, getShop, addGoods, getGoodsNum } from '@/api/buy/buy'
 export default {
@@ -171,6 +172,7 @@ export default {
         minPrice: '',
         maxPrice: ''
       },
+      loginStatus: false,
       goodId: '', // 商品Id
       shopInfo: {}, // 商品详情
       shopDetail: {}, // 店铺信息
@@ -199,6 +201,11 @@ export default {
       addGoodsLoading: false
     }
   },
+  computed: {
+    ...mapGetters([
+      'token'
+    ])
+  },
   methods: {
     // 表头回调函数
     headerBg: function(row) {
@@ -220,12 +227,14 @@ export default {
           // 选中属性处理
           this_.chooseItem = []
           const arr = this_.shopInfo.selectAttributeDetailList
-          for (let i = 0; i < arr.length; i++) {
-            this_.chooseItem.push(0)
-            const child = arr[i].attributeValues
-            for (let k = 0; k < child.length; k++) {
-              if (child[k].isDefaultSelect && child[k].isEnableSelect) {
-                this_.chooseItem[i] = child[k].id
+          if (arr) {
+            for (let i = 0; i < arr.length; i++) {
+              this_.chooseItem.push(0)
+              const child = arr[i].attributeValues
+              for (let k = 0; k < child.length; k++) {
+                if (child[k].isDefaultSelect && child[k].isEnableSelect) {
+                  this_.chooseItem[i] = child[k].id
+                }
               }
             }
           }
@@ -241,6 +250,12 @@ export default {
 
       // 获取商品评论
       this.getComments()
+      // 没有登录信息，终止函数
+      if (this.token === undefined) {
+        this.loginStatus = false
+      } else {
+        this.loginStatus = true
+      }
     },
     // 获取店铺信息
     getShop() {
@@ -343,51 +358,65 @@ export default {
       // 获取价格
       const priceItem = this.chooseItem.join(',')
       const priceArr = this.shopInfo.enableSelectGroupList
-      for (let i = 0; i < priceArr.length; i++) {
-        if (priceArr[i].attributeValueIds === priceItem) {
-          this.shopPriceUnit = priceArr[i].price
-          return
-        } else {
-          this.shopPriceUnit = ''
+      if (priceArr) {
+        for (let i = 0; i < priceArr.length; i++) {
+          if (priceArr[i].attributeValueIds === priceItem) {
+            this.shopPriceUnit = priceArr[i].price
+            return
+          } else {
+            this.shopPriceUnit = ''
+          }
         }
       }
     },
     // 加入购物车
     addShoppingCart() {
-      return
+      if (!this.loginStatus) {
+        this.$confirm('您还没有登录，请先登录', '提示', {
+          confirmButtonText: '登录',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push('/login')
+        }).catch(() => {     
+        });
+        return
+      }
       const this_ = this
       this.addGoodsLoading = true
       // 获取属性名称
       const arr = []
-      this.shopInfo.selectAttributeDetailList.forEach(function(e) {
-        arr.push(e.keyName)
-      })
+      if (this.shopInfo.selectAttributeDetailList) {
+        this.shopInfo.selectAttributeDetailList.forEach(function(e) {
+          arr.push(e.keyName)
+        })
+      }
       // 判断属性值是否都选中，选中的值存入商品属性数组中
-      // this.shopAttr = ''
-      // for (let i = 0; i < this.chooseItem.length; i++) {
-      //   if (this.chooseItem[i] <= 0) {
-      //     const message = '请选择' + arr[i]
-      //     this.$message(message)
-      //     return
-      //   } else {
-      //     const attrParam = this.shopInfo.selectAttributeDetailList[i] // 商品可选属性
-      //     const attrName = arr[i] // 商品属性名
-      //     let attrValue = '' // 商品选中属性值
-      //     const attrChild = attrParam.attributeValues // 商品属性数组
+      this.shopAttr = ''
+      for (let i = 0; i < this.chooseItem.length; i++) {
+        if (this.chooseItem[i] <= 0) {
+          const message = '请选择' + arr[i]
+          this.$message(message)
+          return
+        } else {
+          const attrParam = this.shopInfo.selectAttributeDetailList[i] // 商品可选属性
+          const attrName = arr[i] // 商品属性名
+          let attrValue = '' // 商品选中属性值
+          const attrChild = attrParam.attributeValues // 商品属性数组
 
-      //     for (let k = 0; k < attrChild.length; k++) {
-      //       if (this.chooseItem[i] === attrChild[k].id) {
-      //         attrValue = attrChild[k].value
-      //       }
-      //     }
-      //     this.shopAttr = this.shopAttr + ',' + attrValue
-      //     // const attrInfo = {
-      //     //   attrName: attrName,
-      //     //   attrValue: attrValue
-      //     // }
-      //     // this.shopAttr.push(attrInfo)
-      //   }
-      // }
+          for (let k = 0; k < attrChild.length; k++) {
+            if (this.chooseItem[i] === attrChild[k].id) {
+              attrValue = attrChild[k].value
+            }
+          }
+          this.shopAttr = this.shopAttr + ',' + attrValue
+          // const attrInfo = {
+          //   attrName: attrName,
+          //   attrValue: attrValue
+          // }
+          // this.shopAttr.push(attrInfo)
+        }
+      }
       // 判断是否选择数量
       if (!this.shopNumber) {
         return
@@ -452,12 +481,24 @@ export default {
     },
     // 购买
     Buy() {
-      return
+      if (!this.loginStatus) {
+        this.$confirm('您还没有登录，请先登录', '提示', {
+          confirmButtonText: '登录',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push('/login')
+        }).catch(() => {     
+        });
+        return
+      }
       // 获取属性名称
       const arr = []
-      this.shopInfo.selectAttributeDetailList.forEach(function(e) {
-        arr.push(e.keyName)
-      })
+      if (this.shopInfo.selectAttributeDetailList) {
+        this.shopInfo.selectAttributeDetailList.forEach(function(e) {
+          arr.push(e.keyName)
+        })
+      }
       // 判断属性值是否都选中，选中的值存入商品属性数组中
       let attrValue = ''
       for (let i = 0; i < this.chooseItem.length; i++) {
@@ -487,10 +528,14 @@ export default {
       let price = ''
       const selectList = this.shopInfo.enableSelectGroupList
       const selectValues = this.chooseItem.join(',')
-      for (let i = 0; i < selectList.length; i++) {
-        if (selectList[i].attributeValueIds === selectValues) {
-          price = selectList[i].price
+      if (selectList) {
+        for (let i = 0; i < selectList.length; i++) {
+          if (selectList[i].attributeValueIds === selectValues) {
+            price = selectList[i].price
+          }
         }
+      } else {
+        price = this.shopInfo.price
       }
       // 定义选中参数
       const attrInfo = [{

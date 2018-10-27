@@ -57,6 +57,12 @@ export const constantRouterMap = [
                     import('@/views/platform/homestay-detail'),
       hidden: true
     },
+    {
+      path: '/index/homestay/order',
+      component: () =>
+                    import('@/views/platform/homestay-order'),
+      hidden: true
+    },
     { // 电商
       path: '/index/shop',
       component: () =>

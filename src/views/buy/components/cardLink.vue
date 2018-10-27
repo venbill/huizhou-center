@@ -6,7 +6,7 @@
       </router-link>
       <div style="padding: 4px 10px;font-size:12px;">
         <router-link :to="{path:'/buy/detail', query:{id:child.id}}" target="_blank">
-          <span class="r-card-text text-link-normal block" :title="child.name">{{child.name}}</span>
+          <span class="r-card-text text-link-normal" :title="child.name">{{child.name}}</span>
         </router-link>
         <span class="r-b-charge block">{{child.minPrice | pieceFormat}}</span>
       </div>
@@ -58,7 +58,7 @@ img{
 .r-card-text {
   display: inline-block;
   line-height: 1.4;
-  height: 32px;
+  height: 40px;
   overflow: hidden;
 }
 .r-b-charge {

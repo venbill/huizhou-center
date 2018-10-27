@@ -7,10 +7,14 @@
           <img src="/static/images/index/banner.png"/>
         </el-carousel-item>
         <el-carousel-item>
-          <img src="/static/images/index/banner.png" />
+          <a href="https://xueyuan.maijia.com/m/search/37" target="_blank">
+            <img src="/static/images/index/banner.png" />
+          </a>
         </el-carousel-item>
         <el-carousel-item>
-          <img src="/static/images/index/banner.png" />
+          <router-link :to="{path:'/index/information/detail', query:{id: 17}}" target="_blank">
+            <img src="/static/images/index/banner.png" />
+          </router-link>
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -56,7 +60,7 @@
                 <template v-if="informationList.length > 0">
                   <ul class="infor-list-item">
                     <li v-for="item in informationList" :key="item.index">
-                      <span class="text-ellipsis inline-block" style="width: 400px;" :title="item.title">
+                      <span class="text-ellipsis inline-block" style="width: 400px;float:left;" :title="item.title">
                         <router-link :to="{path:'/index/information/detail', query:{id: item.id}}" target="_blank" class="link-underline">
                           {{item.title}}
                         </router-link>
@@ -78,7 +82,7 @@
                 <template v-if="newsList.length > 0">
                   <ul class="infor-list-item">
                     <li v-for="item in newsList" :key="item.index">
-                      <span class="text-ellipsis inline-block" style="width: 400px;" :title="item.title">
+                      <span class="text-ellipsis inline-block" style="width: 400px;float:left;" :title="item.title">
                         <router-link :to="{path:'/index/information/detail', query:{id: item.id}}" target="_blank" class="link-underline">
                           {{item.title}}
                         </router-link>
@@ -104,16 +108,16 @@
             </div>
             <div class="service-img">
               <div class="img-item" style="margin-right: 2px;">
-                <!-- <router-link :to="{path:'/index/information/detail', query:{id: 1}}" target="_blank"> -->
+                <a href='http://www.ekey365.com/index.php?c=article&a=type&tid=38&from=groupmessage&isappinstalled=0' target="_blank">
                   <img src="/static/images/index/enterprise.png">
                   <p class="img-title">企业孵化</p>
-                <!-- </router-link> -->
+                </a>
               </div>
               <div class="img-item">
-                <router-link to="https://xueyuan.maijia.com/m/search/37" target="_blank">
+                <a href="https://xueyuan.maijia.com/m/search/37" target="_blank">
                   <img src="/static/images/index/online_retailers.png">
                   <p class="img-title">电商培训</p>
-                </router-link>
+                </a>
               </div>
             </div>
           </div>
@@ -130,7 +134,7 @@
               <template v-if="noticeList.length > 0">
                 <ul class="notice-list-item">
                   <li v-for="item in noticeList" :key="item.index">
-                    <span class="text-ellipsis inline-block" style="width: 400px;" :title="item.title">
+                    <span class="text-ellipsis inline-block" style="width:300px;float:left;" :title="item.title">
                       <router-link :to="{path:'/index/information/detail', query:{id: item.id}}" target="_blank" class="link-underline">
                         {{item.title}}
                       </router-link>
@@ -151,9 +155,9 @@
           <span class="mien-title-text">中心风采</span>
         </div>
         <el-carousel indicator-position="outside" height="180px">
-          <el-carousel-item>
-            <div class="mien-img-item" v-for="item in mienList" :key="item.index">
-              <img :src="item.url"/>
+          <el-carousel-item v-for="item in centerImg" :key="item.index">
+            <div class="mien-img-item" v-for="child in item" :key="child.index">
+              <img :src="child.url"/>
             </div>
           </el-carousel-item>
         </el-carousel>
@@ -168,18 +172,18 @@
         </div>
         <template v-if="subIndex === 0">
           <el-carousel indicator-position="outside" height="180px">
-            <el-carousel-item>
-              <div class="mien-img-item" v-for="item in farmProduceList" :key="item.index">
-                <img :src="item.url"/>
+            <el-carousel-item v-for="item in farmProduceList" :key="item.index">
+              <div class="mien-img-item" v-for="child in item" :key="child.index">
+                <img :src="child.url"/>
               </div>
             </el-carousel-item>
           </el-carousel>
         </template>
         <template v-else-if="subIndex === 1">
           <el-carousel indicator-position="outside" height="180px">
-            <el-carousel-item>
-              <div class="mien-img-item" v-for="item in homestayList" :key="item.index">
-                <img :src="item.url"/>
+            <el-carousel-item v-for="item in homestayList" :key="item.index">
+              <div class="mien-img-item" v-for="child in item" :key="child.index">
+                <img :src="child.url"/>
               </div>
             </el-carousel-item>
           </el-carousel>
@@ -209,47 +213,122 @@ export default {
       informationList: [], // 资讯列表
       newsList: [], // 新闻列表
       noticeList: [], // 公告列表
-      mienList: [
-        {
-          url: '/static/images/index/1.png'
-        },
-        {
-          url: '/static/images/index/2.png'
-        },
-        {
-          url: '/static/images/index/3.png'
-        },
-        {
-          url: '/static/images/index/4.png'
-        }
+      centerImg: [
+        [
+          {
+            url: '/static/images/center/1.jpg'
+          },
+          {
+            url: '/static/images/center/2.jpg'
+          },
+          {
+            url: '/static/images/center/3.jpg'
+          },
+          {
+            url: '/static/images/center/4.jpg'
+          }
+        ],
+        [
+          {
+            url: '/static/images/center/5.jpg'
+          },
+          {
+            url: '/static/images/center/6.jpg'
+          },
+          {
+            url: '/static/images/center/7.jpg'
+          },
+          {
+            url: '/static/images/center/8.jpg'
+          }
+        ],
+        [
+          {
+            url: '/static/images/center/9.jpg'
+          },
+          {
+            url: '/static/images/center/10.jpg'
+          },
+          {
+            url: '/static/images/center/11.jpg'
+          },
+          {
+            url: '/static/images/center/12.jpg'
+          }
+        ]
       ], // 中心风采图片列表
       farmProduceList: [
-        {
-          url: '/static/images/index/1.png'
-        },
-        {
-          url: '/static/images/index/2.png'
-        },
-        {
-          url: '/static/images/index/3.png'
-        },
-        {
-          url: '/static/images/index/4.png'
-        }
+        [
+          {
+            url: '/static/images/farm/1.jpg'
+          },
+          {
+            url: '/static/images/farm/2.jpg'
+          },
+          {
+            url: '/static/images/farm/3.jpg'
+          },
+          {
+            url: '/static/images/farm/4.jpg'
+          }
+        ],
+        [
+          {
+            url: '/static/images/farm/5.jpg'
+          },
+          {
+            url: '/static/images/farm/6.jpg'
+          }
+        ]
       ], // 农产品图片列表
       homestayList: [
-        {
-          url: '/static/images/index/4.png'
-        },
-        {
-          url: '/static/images/index/3.png'
-        },
-        {
-          url: '/static/images/index/2.png'
-        },
-        {
-          url: '/static/images/index/1.png'
-        }
+        [
+          {
+            url: '/static/images/homestay/1.jpg'
+          },
+          {
+            url: '/static/images/homestay/2.jpg'
+          },
+          {
+            url: '/static/images/homestay/3.jpg'
+          },
+          {
+            url: '/static/images/homestay/4.jpg'
+          }
+        ],
+        [
+          {
+            url: '/static/images/homestay/5.jpg'
+          },
+          {
+            url: '/static/images/homestay/6.jpg'
+          },
+          {
+            url: '/static/images/homestay/7.jpg'
+          },
+          {
+            url: '/static/images/homestay/8.jpg'
+          }
+        ],
+        [
+          {
+            url: '/static/images/homestay/9.jpg'
+          },
+          {
+            url: '/static/images/homestay/10.jpg'
+          },
+          {
+            url: '/static/images/homestay/11.png'
+          },
+          {
+            url: '/static/images/homestay/12.png'
+          }
+        ],
+        [
+          {
+            url: '/static/images/homestay/13.jpg'
+          }
+        ]
       ], // 民宿图片列表
       subIndex: 0, // 地方特色子标题索引
       subTitle: [
@@ -421,6 +500,7 @@ export default {
     height: 250px;
     width: 624px;
     margin: 0 auto;
+    overflow: hidden;
   }
   .information-img img {
     width: 100%;

@@ -1,12 +1,9 @@
 <template>
     <div class="list-content">
       <div class="detail-comment center-content border-box">
-        <!-- <div class="shop-category">
-          <category></category>
-        </div> -->
         <div class="order-comment">
           <div class="order-search bg-paleRed">
-            <h3 class="weight-normal inline-block" style="color:#fff;margin:0">我的商城订单</h3>
+            <h3 class="weight-normal inline-block" style="color:#fff;margin:0">我的民宿订单</h3>
             <el-button type="text" class="search-button">搜索</el-button>
             <el-input size="mini" class="medium-input" style="font-size:12px;float:right;" v-model="keywords" placeholder="商品名称/商品编号/订单编号"></el-input>
           </div>
@@ -88,11 +85,7 @@
 </template>
 
 <script>
-import Category from '../../components/category'
 export default {
-  components: {
-    Category
-  },
   data() {
     return {
       buyRules: {

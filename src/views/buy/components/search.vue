@@ -24,11 +24,11 @@
           </span>
         </div>
       </div>
-      <!-- <div class="b-search-shoppingCart">
+      <div class="b-search-shoppingCart">
         <i class="iconfont">&#xe600;</i>
-        <router-link to="/buy/pay" target="_blank">我的购物车</router-link>
+        <span class="text-link">我的购物车</span>
         <span class="shoppingCat-count">{{goodsNum}}</span>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -144,10 +144,9 @@ export default {
   .b-search-main {
     width: 550px;
     height: 75px;
-    margin: 15px auto 0;
-    /* margin: 15px 0 0 112px; */
+    margin: 15px 0 0 112px;
     overflow: hidden;
-    /* float: left; */
+    float: left;
   }
   .select-b-search {
     width: 450px;

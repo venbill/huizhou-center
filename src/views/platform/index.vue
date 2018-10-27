@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import HomeHeader from './layout/Header'
+import HomeHeader from '@/views/buy/components/header'
 import HomeFoot from './layout/Footer'
 export default {
   components: {

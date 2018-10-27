@@ -19,14 +19,12 @@
         <template v-else>
           <div class="header-menu">
             <el-menu mode="horizontal">
-              <el-menu-item index="3"><router-link to="/buy/order">我的订单</router-link></el-menu-item>
-              <!-- <el-submenu index="1">
+              <!-- <el-menu-item index="3"><router-link to="/buy/order">我的订单</router-link></el-menu-item> -->
+              <el-submenu index="1">
                 <template slot="title">我的订单</template>
-                <el-menu-item index="1-1"><router-link to="/login">批发进货</router-link></el-menu-item>
-                <el-menu-item index="1-2"><router-link to="/login">已买到的货品</router-link></el-menu-item>
-                <el-menu-item index="1-3"><router-link to="/login">优惠券</router-link></el-menu-item>
-                <el-menu-item index="1-4"><router-link to="/login">店铺动态</router-link></el-menu-item>
-              </el-submenu> -->
+                <el-menu-item index="1-1"><router-link to="/buy/order">商城订单</router-link></el-menu-item>
+                <el-menu-item index="1-2"><router-link to="/index/homestay/order">民宿订单</router-link></el-menu-item>
+              </el-submenu>
               <!-- <el-submenu index="2">
                 <template slot="title">我的商城</template>
                 <el-menu-item index="2-1"><router-link to="/login">批发进货</router-link></el-menu-item>
@@ -106,6 +104,22 @@ export default {
     init() {
       // 判断是否路由选中
       const path = this.$route.path
+      this.routeFocus(path)
+      // 没有登录信息，终止函数
+      if (this.token === undefined) {
+        this.loginStatus = false
+      } else {
+        this.loginStatus = true
+      }
+    },
+    // 退出
+    logout() {
+      this.$store.dispatch('LogOut').then(() => {
+        location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+      })
+    },
+    // 判断路由是否选中
+    routeFocus(path) {
       if (path === '/') {
         this.activeIndex = 0
       } else {
@@ -119,19 +133,6 @@ export default {
           }
         }
       }
-      // 没有登录信息，终止函数
-      if (this.token === undefined) {
-        this.loginStatus = false
-      } else {
-        this.loginStatus = true
-      }
-      console.log(this.loginStatus)
-    },
-    // 退出
-    logout() {
-      this.$store.dispatch('LogOut').then(() => {
-        location.reload()// In order to re-instantiate the vue-router object to avoid bugs
-      })
     },
     navChange(item, index) {
       if (index === 4) {
@@ -156,8 +157,6 @@ export default {
 
 <style scoped>
   .b-header{
-    height: 35px;
-    line-height: 34px;
     width: 100%;
     font-size: 12px;
     background: #F3F2F0;
@@ -265,6 +264,10 @@ export default {
     line-height: 44px;
     padding: 0 20px;
   }
+   .header-menu .el-menu--horizontal > .el-submenu .el-submenu__title {
+    height: 48px;
+    line-height: 44px;
+   }
   .header-menu .el-menu {
     float: left;
   }

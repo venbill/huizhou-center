@@ -2,7 +2,6 @@
     <div class="address-content">
       <buy-header></buy-header>
       <buy-search></buy-search>
-      <nav-title></nav-title>
       <div class="bg-white center-content border-box" style="margin:20px auto;padding:0 20px;">
         <template>
           <!--收货地址-->
@@ -89,14 +88,13 @@
 <script>
 import BuyHeader from '../../components/header'
 import BuySearch from '../../components/search'
-import NavTitle from '../../components/navTitle'
 import ReceAddress from '../../components/address'
 import TitleBox from '../../components/titleBox'
 import TypeChoose from '../../components/typeChoose'
 import { createOrder } from '@/api/buy/buy'
 export default {
   components: {
-    BuyHeader, BuySearch, ReceAddress, NavTitle, TitleBox, TypeChoose
+    BuyHeader, BuySearch, ReceAddress, TitleBox, TypeChoose
   },
   data() {
     return {

@@ -361,7 +361,15 @@ export default {
   },
 
   mounted() {
-    this.homeSearch.searchWord = this.$route.query.keyword
+    if (this.$route.query.keyword !== undefined) {
+      this.homeSearch.searchWord = this.$route.query.keyword
+    }
+    if (this.$route.query.id !== undefined) {
+      this.homeSearch.scenicSpotId = this.$route.query.id
+    }
+    if (this.$route.query.areaName !== undefined) {
+      this.homeSearch.scenicSpotName = this.$route.query.areaName
+    }
     this.init()
   }
 }
