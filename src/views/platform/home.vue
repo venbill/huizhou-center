@@ -1,19 +1,21 @@
 <template>
   <div class="layout-main">
     <!--banner轮播-->
-    <div class="index-center-content">
+    <div>
       <el-carousel height="400px">
         <el-carousel-item>
-          <img src="/static/images/index/banner.png"/>
+          <router-link :to="{path:'/buy/search',query: {bigTypeId: 6,keyword:'扶贫产品'}}" target="_blank">
+            <img src="/static/images/index/banner1.png"/>
+          </router-link>
         </el-carousel-item>
         <el-carousel-item>
           <a href="https://xueyuan.maijia.com/m/search/37" target="_blank">
-            <img src="/static/images/index/banner.png" />
+            <img src="/static/images/index/banner2.png" />
           </a>
         </el-carousel-item>
         <el-carousel-item>
           <router-link :to="{path:'/index/information/detail', query:{id: 17}}" target="_blank">
-            <img src="/static/images/index/banner.png" />
+            <img src="/static/images/index/banner3.png" />
           </router-link>
         </el-carousel-item>
       </el-carousel>
