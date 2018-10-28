@@ -2,7 +2,7 @@
     <div class="pay-content">
       <buy-header></buy-header>
       <buy-search></buy-search>
-      <nav-title></nav-title>
+      <!-- <nav-title></nav-title> -->
       <div class="payment-main center-content border-box">
         <div class="payment-title">收银台</div>
         <div class="payment-info">

@@ -2,7 +2,7 @@
     <div class="search-content">
       <buy-header></buy-header>
       <buy-search :is_blank='false' v-on:search="search"></buy-search>
-      <nav-title></nav-title>
+      <!-- <nav-title></nav-title> -->
       <search-list ref="searchList"></search-list>
     </div>
 </template>

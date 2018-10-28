@@ -2,7 +2,7 @@
     <div class="myNews-content">
       <buy-header></buy-header>
       <buy-search></buy-search>
-      <nav-title></nav-title>
+      <!-- <nav-title></nav-title> -->
       <my-news></my-news>
     </div>
 </template>

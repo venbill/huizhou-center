@@ -2,7 +2,7 @@
     <div class="myOrder-content">
       <buy-header></buy-header>
       <buy-search></buy-search>
-      <nav-title></nav-title>
+      <!-- <nav-title></nav-title> -->
       <div class="list-content center-content">
         <div class="detail-main center-content bg-white border-box">
           <div class="detail-img">
