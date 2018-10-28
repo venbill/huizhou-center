@@ -1,10 +1,11 @@
+/* eslint-disable */
 import Vue from 'vue'
 
 import 'normalize.css/normalize.css'// A modern alternative to CSS resets
 
 import Element from 'element-ui'
 import '../static/iconfont/iconfont.css'
-import 'element-ui/lib/theme-chalk/index.css'
+// import 'element-ui/lib/theme-chalk/index.css'
 
 import '@/styles/index.scss' // global css
 
@@ -21,9 +22,9 @@ import './mock' // simulation data
 import * as filters from './filters' // global filters
 
 Vue.prototype.$http = axios
-Vue.use(Element, {
-  size: 'medium' // set element-ui default size
-})
+// Vue.use(Element, {
+//   size: 'medium' // set element-ui default size
+// })
 
 // register global utility filters.
 Object.keys(filters).forEach(key => {

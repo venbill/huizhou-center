@@ -13,7 +13,7 @@
         <span class="svg-container svg-container_login">
           <i class="iconfont">&#xe623;</i>
         </span>
-        <el-input name="username" size="medium" type="text" maxlength="11" v-model="loginForm.username" autoComplete="on" placeholder="用户名"/>
+        <el-input name="username" size="medium" type="text" maxlength="11" v-model="loginForm.username" autoComplete="on" placeholder="手机号码"/>
       </el-form-item>
 
       <el-form-item prop="password">
@@ -66,11 +66,11 @@ export default {
     return {
       companyCodeNum: 5,
       loginForm: {
-        username: 'admin',
-        password: '123456'
+        username: '',
+        password: ''
       },
       loginRules: {
-        username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+        username: [{ required: true, message: '请输入手机号码', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       },
       passwordType: 'password',

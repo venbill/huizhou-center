@@ -273,14 +273,6 @@ export default {
           {
             url: '/static/images/farm/4.jpg'
           }
-        ],
-        [
-          {
-            url: '/static/images/farm/5.jpg'
-          },
-          {
-            url: '/static/images/farm/6.jpg'
-          }
         ]
       ], // 农产品图片列表
       homestayList: [
@@ -324,11 +316,6 @@ export default {
           },
           {
             url: '/static/images/homestay/12.png'
-          }
-        ],
-        [
-          {
-            url: '/static/images/homestay/13.jpg'
           }
         ]
       ], // 民宿图片列表
