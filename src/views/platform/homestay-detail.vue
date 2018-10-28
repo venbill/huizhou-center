@@ -258,6 +258,7 @@ border-radius:25px;" :src="item.houseKeeper.picture" />
                     start-placeholder="开始日期" 
                     end-placeholder="结束日期"
                     :picker-options="pickerOptions"
+                    :default-time="['12:00:00', '12:59:59']"
                     @change="timeChange">
                 </el-date-picker>
             </el-form-item>
@@ -278,7 +279,8 @@ border-radius:25px;" :src="item.houseKeeper.picture" />
 
 <script>
 import util from '@/utils/util'
-import { homestayDetai, homestayComments } from '@/api/platform/homestay.js'
+import { mapGetters } from 'vuex'
+import { homestayDetai, homestayComments, createOrder } from '@/api/platform/homestay'
 export default {
   data() {
     var timeCheck = (rule, value, callback) => {
@@ -332,9 +334,14 @@ export default {
         paginationTotal: 0,
         body: []
       }, // 评价
-      loading: false
-
+      loading: false,
+      loginStatus: false // 登录状态
     }
+  },
+  computed: {
+    ...mapGetters([
+      'token'
+    ])
   },
   methods: {
     // 表头回调函数
@@ -354,6 +361,13 @@ export default {
         }
       })
       this.getComments()
+      // 没有登录信息，终止函数
+      if (this.token === undefined) {
+        this.loginStatus = false
+      } else {
+        this.loginStatus = true
+      }
+      console.log(this.token)
     },
     // 分页查询评论
     getComments() {
@@ -392,7 +406,34 @@ export default {
     },
     // 预定
     Book() {
-      this.dayNum(this.bookForm.time)
+      const this_ = this
+      // const price = this.totalPrice() // 总价
+      //   let start = this.bookForm.time[0]
+      //   let end = this.bookForm.time[1]
+      //   if (typeof (start) === 'object') {
+      //     start = start.getTime()
+      //   }
+      //   if (typeof (end) === 'object') {
+      //     end = end.getTime()
+      //   }
+      const params = {
+        homestayId: this.homeId,
+        inTime: this.bookForm.time[0],
+        outTime: this.bookForm.time[1],
+        personNum: this.bookForm.personNum
+      }
+      createOrder(params).then(function(data) {
+        if (data.data.code === 200) {
+          this_.$router.push(
+            {
+              path: '/index/homestay/payment',
+              query: {
+                id: data.data.data.orderId
+              }
+            }
+          )
+        }
+      })
     },
     // 计算日期相差天数
     dayNum(time) {
@@ -424,7 +465,7 @@ export default {
     },
     handleChange(value) {
       this.$nextTick(function() {
-        console.log(value)
+
       })
     }
   },

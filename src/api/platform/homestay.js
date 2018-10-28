@@ -44,3 +44,40 @@ export function getScenicSpotList() {
   })
 }
 
+export function createOrder(params) {
+  return request({
+    url: '/homestay/order/create',
+    data: params,
+    method: 'post'
+  })
+}
+
+export function getOrderStatus(id) {
+  return request({
+    url: '/homestay/checkPayStatus/' + id,
+    method: 'get'
+  })
+}
+
+export function orderDetail(id) {
+  return request({
+    url: '/homestay/order/detail/' + id,
+    method: 'get'
+  })
+}
+
+export function getOrderList(params) {
+  return request({
+    url: '/homestay/getUserHomestayOrderByStatus',
+    params,
+    method: 'get'
+  })
+}
+
+export function orderPay(id) {
+  return request({
+    url: '/homestay/order/pay/' + id,
+    method: 'post'
+  })
+}
+

@@ -41,8 +41,11 @@
         style="width:100%" class="btn-red"
         @click.native.prevent="forget">确定</el-button>
       <div class="form-foot">
+        <router-link to='/'>
+          <span class="text-link">返回首页</span>
+        </router-link>
         <router-link to='/regist'>
-          <span class="text-link">免费注册</span>
+          <span class="text-link" style="margin-left:10px">免费注册</span>
         </router-link>
         <router-link to='/login' style="margin-left:10px">
           <span class="text-link">返回登录</span>

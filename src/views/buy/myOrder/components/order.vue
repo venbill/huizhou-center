@@ -7,78 +7,70 @@
         <div class="order-comment">
           <div class="order-search bg-paleRed">
             <h3 class="weight-normal inline-block" style="color:#fff;margin:0">我的商城订单</h3>
-            <el-button type="text" class="search-button">搜索</el-button>
-            <el-input size="mini" class="medium-input" style="font-size:12px;float:right;" v-model="keywords" placeholder="商品名称/商品编号/订单编号"></el-input>
+            <!-- <el-button type="text" class="search-button">搜索</el-button>
+            <el-input size="mini" class="medium-input" style="font-size:12px;float:right;" v-model="keywords" placeholder="商品名称/商品编号/订单编号"></el-input> -->
           </div>
           <el-tabs v-model="activeTab" type="border-card" @tab-click="handleClick">
+            <div class="order-type">
+              <el-button class="typeItem" :class="{active:typeIndex === item.type}" v-for="item in orderType" :key="item.index" @click="typeChange(item.type)">{{item.title}}</el-button>
+            </div>
             <div class="order-title">
-              <div class="title-item" style="width:378px">订单信息</div>
-              <div class="title-item" style="width:120px">收货人</div>
-              <div class="title-item" style="width:120px">订单金额</div>
-              <div class="title-item" style="width:120px">订单时间</div>
-              <div class="title-item" style="width:120px">订单状态</div>
-              <div class="title-item" style="width:120px">订单操作</div>
+              <div class="title-item" style="width:526px">订单信息</div>
+              <!-- <div class="title-item" style="width:168px">收货人</div> -->
+              <div class="title-item" style="width:168px">订单金额</div>
+              <div class="title-item" style="width:168px">订单时间</div>
+              <div class="title-item" style="width:168px">订单状态</div>
+              <div class="title-item" style="width:167px">订单操作</div>
             </div>
             <el-tab-pane label="我的订单" name="first">
-              <div class="order-info" v-for="sub in 4" :key="sub.index">
+              <div class="order-info" v-for="sub in orderInfo.table" :key="sub.index">
                 <div class="info-title">
-                  <span style="margin-right:30px">2018-10-11</span>
+                  <span style="margin-right:30px">{{getName_date(sub.createTime)}}</span>
                   <span style="margin-right:30px">
                     订单号：
-                    <span style="color:#000">12345678</span>
+                    <span style="color:#000">{{sub.orderId}}</span>
                   </span>
-                  <span class="text-link" style="color:red">魅族旗舰店</span>
+                  <span style="color:red">{{sub.shopName}}</span>
                   <span style="float:right">
                     客服电话：
-                    <span style="color:#000">1234567890</span>
+                    <span style="color:#000">{{sub.serviceTel}}</span>
                   </span>
                 </div>
                 <div class="info-detail">
                   <div class="detail-goods info-item">
-                    <div class="goods-item" v-for="item in 2" :key="item.index">
-                      <img src="" class="inline-block" style="height:62px;width:62px;background:silver;float:left;">
+                    <div class="goods-item">
+                      <img :src="sub.picture" class="inline-block" style="height:62px;width:62px;background:silver;float:left;">
                       <div class="goods-name inline-block">
-                        阿拉山口多年来的撒旦个花露水的快感和 阿拉山口多年来的撒旦个花露水的快感和
+                        {{sub.goodsName}}
                       </div>
-                      <div class="goods-count inline-block float-left">X1</div>
+                      <div class="goods-count inline-block float-left" style="margin-left: 80px;">X{{sub.buyNo}}</div>
                     </div>
                   </div>
-                  <div class="detail-people info-item">王京</div>
+                  <!-- <div class="detail-people info-item">王京</div> -->
                   <div class="detail-piece info-item">
-                    <p>123</p>
-                    <p>货到付款</p>
+                    <p>{{sub.price}}</p>
+                    <!-- <p>货到付款</p> -->
                   </div>
-                  <div class="detail-time info-item">2018-4-5</div>
-                  <div class="detail-status info-item">状态</div>
+                  <div class="detail-time info-item">{{getName_date(sub.createTime)}}</div>
+                  <div class="detail-status info-item">{{typeText(sub.status)}}</div>
                   <div class="detail-handle info-item">
-                    <p style="margin-bottom:30px">剩余15分</p>
-                    <p class="text-link">立即支付</p>
-                    <p class="text-link">取消订单</p>
-                    <p>评价</p>
+                    <!-- <p style="margin-bottom:30px">剩余15分</p> -->
+                    <template v-if="sub.status === 2">
+                      <p class="text-link" @click="toPay(sub.orderId)">立即支付</p>
+                      <!-- <p class="text-link">取消订单</p> -->
+                      <!-- <p>评价</p> -->
+                    </template>
                   </div>
                 </div>
               </div>
             </el-tab-pane>
-            <el-tab-pane class="" label="待付款" name="second">
-              
-            </el-tab-pane>
-            <el-tab-pane label="代发货" name="third">
-              
-            </el-tab-pane>
-            <el-tab-pane label="代收货" name="fourth">
-              
-            </el-tab-pane>
-            <el-tab-pane label="交易完成" name="five">
-              
-            </el-tab-pane>
-            <el-tab-pane label="订单信息" name="six">
-              
-            </el-tab-pane>
             <div class="info-page">
               <el-pagination
+                background
                 layout="prev, pager, next"
-                :page-size="10"
-                :total="100">
+                :page-size="orderInfo.pageSize"
+                @current-change="pageChange"
+                :total="orderInfo.paginationTotal">
               </el-pagination>
             </div>
           </el-tabs>
@@ -88,6 +80,8 @@
 </template>
 
 <script>
+import util from '@/utils/util'
+import { getOrderList } from '@/api/buy/buy'
 import Category from '../../components/category'
 export default {
   components: {
@@ -95,56 +89,41 @@ export default {
   },
   data() {
     return {
-      buyRules: {
-
-      },
+      orderType: [
+        {
+          title: '全部订单',
+          type: 0
+        },
+        {
+          title: '待支付',
+          type: 2
+        },
+        {
+          title: '待发货',
+          type: 3
+        },
+        {
+          title: '待收货',
+          type: 4
+        },
+        {
+          title: '已完成',
+          type: 6
+        },
+        {
+          title: '待评价',
+          type: 5
+        }
+      ],
       keywords: '',
       activeTab: 'first',
-      commentTab: 'first',
-      allData: {
-        paginationTotal: 100,
-        star: 4,
-        table: [
-          {
-            appraisal: '所有心得',
-            satisfaction: 4,
-            information: '所有购买信息',
-            commentator: '所有评论者'
-          }
-        ]
-      },
-      goodData: {
-        paginationTotal: 100,
-        table: [
-          {
-            appraisal: '好评心得',
-            satisfaction: '好评满意程度',
-            information: '好评购买信息',
-            commentator: '好评评论者'
-          }
-        ]
-      },
-      middleData: {
-        paginationTotal: 100,
-        table: [
-          {
-            appraisal: '中评心得',
-            satisfaction: '中评满意程度',
-            information: '中评购买信息',
-            commentator: '中评评论者'
-          }
-        ]
-      },
-      badData: {
-        paginationTotal: 100,
-        table: [
-          {
-            appraisal: '差评心得',
-            satisfaction: '差评满意程度',
-            information: '差评购买信息',
-            commentator: '差评评论者'
-          }
-        ]
+      typeIndex: 0,
+      orderInfo: {
+        paginationTotal: 0,
+        pageNo: 1,
+        pageSize: 10,
+        status: 0,
+        table: []
       },
       tableLoading: false
     }
@@ -154,22 +133,89 @@ export default {
     headerBg: function(row) {
       return { 'background': '#f5f7fa', 'color': '#1F2D3D' }
     },
+    init() {
+      this.getOrderList()
+    },
+    // 获取订单列表
+    getOrderList() {
+      const this_ = this
+      const params = {
+        pageNo: this.orderInfo.pageNo,
+        pageSize: this.orderInfo.pageSize,
+        status: this.orderInfo.status
+      }
+      getOrderList(params).then(function(data) {
+        if (data.data.code === 200) {
+          this_.orderInfo.table = data.data.data.results
+          this_.orderInfo.paginationTotal = data.data.data.total
+        }
+      })
+    },
+    // 日期时间处理
+    getName_date(date) {
+      if (date) {
+        return util.formatDate.format(new Date(date), 'yyyy-MM-dd')
+      }
+    },
+    // 类型处理
+    typeText(val) {
+      for (let i = 0; i < this.orderType.length; i++) {
+        if (val === this.orderType[i].type) {
+          return this.orderType[i].title
+        }
+      }
+    },
+    // 类型切换
+    typeChange(val) {
+      console.log(val)
+      this.orderInfo.status = val
+      this.typeIndex = val
+      this.getOrderList()
+    },
+    // 跳转支付
+    toPay(id) {
+      this.$router.push(
+        {
+          path: '/buy/pay/payment',
+          query: {
+            id: id
+          }
+        }
+      )
+    },
     handleClick() {
       console.log(this.activeTab)
     },
     commentClick() {
 
     },
-    pageChange() {}
+    pageChange(val) {
+      this.orderInfo.pageNo = val
+      this.getOrderList()
+    }
   },
 
-  mounted() {}
+  mounted() {
+    this.init()
+  }
 }
 </script>
 
 <style scoped>
 .list-content {
   width: 100%;
+}
+.order-type {
+  padding: 20px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #ddd;
+}
+.typeItem {
+  margin: 0 10px;
+}
+.typeItem.active {
+  background: #d1201e;
+  color: #fff;
 }
 .center-content .item{
   font-size: 14px;

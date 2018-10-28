@@ -49,7 +49,10 @@
         style="width:100%" class="btn-red" :loading="loading"
         @click.native.prevent="regist">注册</el-button>
       <div class="form-foot">
-        <router-link to='/login'>
+        <router-link to='/'>
+          <span class="text-link">返回首页</span>
+        </router-link>
+        <router-link to='/login' style="margin-left:10px">
           <span class="text-link">返回登录</span>
         </router-link>
       </div>

@@ -24,9 +24,9 @@
           </span>
         </div>
       </div>
-      <div class="b-search-shoppingCart">
+      <div class="b-search-shoppingCart" v-if="loginStatus">
         <i class="iconfont">&#xe600;</i>
-        <span class="text-link">我的购物车</span>
+        <router-link to="/buy/pay">我的购物车</router-link>
         <span class="shoppingCat-count">{{goodsNum}}</span>
       </div>
     </div>
@@ -51,7 +51,8 @@ export default {
       },
       hotSearch: [],
       logoUrl: '../../../../static/images/logo.png',
-      goodsNum: 0
+      goodsNum: 0,
+      loginStatus: false
     }
   },
   computed: {
@@ -70,8 +71,14 @@ export default {
           this_.hotSearch = data.data.data
         }
       })
-      // 获取购物车数量
-      this.getGoodsNum()
+      // 没有登录信息，终止函数
+      if (this.token === undefined) {
+        this.loginStatus = false
+      } else {
+        this.loginStatus = true
+        // 获取购物车数量
+        this.getGoodsNum()
+      }
     },
     // 获取购物车数量
     getGoodsNum() {

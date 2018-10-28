@@ -63,6 +63,12 @@ export const constantRouterMap = [
                     import('@/views/platform/homestay-order'),
       hidden: true
     },
+    {
+      path: '/index/homestay/payment',
+      component: () =>
+                    import('@/views/platform/payment'),
+      hidden: true
+    },
     { // 电商
       path: '/index/shop',
       component: () =>

@@ -1,18 +1,13 @@
 <template>
     <div class="pay-content">
-      <buy-header></buy-header>
-      <buy-search></buy-search>
-      <nav-title></nav-title>
       <div class="payment-main center-content border-box">
         <div class="payment-title">收银台</div>
         <div class="payment-info">
           <div class="info-item">
             <p>订单编号：<span>{{orderId}}</span></p>
-          </div>
-          <div class="info-item" style="display:flex;align-items:center;">
             <p>
               <span>应付金额：</span>
-              <span class="text-red weight-bold" style="font-size:24px">{{shouldPay | pieceFormat}}</span>
+              <span class="text-red weight-bold" style="font-size:24px">{{orderInfo.totalPrice | pieceFormat}}</span>
             </p>
           </div>
         </div>
@@ -29,7 +24,7 @@
             </div>
             <div v-else style="display:flex;height:410px;align-items:center;justify-content: center">
               <span style="margin:0 4px">{{yzmText}}</span>
-              <router-link to="/buy" style="color:red" class="text-link-normal">我的订单</router-link>
+              <router-link to="/index/homestay/search" style="color:red" class="text-link-normal">精品民宿</router-link>
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -38,20 +33,20 @@
 </template>
 
 <script>
-import BuyHeader from '@/views/buy/components/header'
-import BuySearch from '@/views/buy/components/search'
-import NavTitle from '@/views/buy/components/navTitle'
-import { orderDetail, doWechatPay, getOrderStatus } from '@/api/buy/buy'
+import { orderDetail, getOrderStatus, orderPay } from '@/api/platform/homestay'
 import util from '@/utils/util'
 import QRCode from 'qrcodejs2'
 export default {
-  components: {
-    BuyHeader, BuySearch, NavTitle
-  },
   data() {
     return {
       orderId: '', // 订单Id
       shouldPay: 0, // 应付金额
+      orderInfo: {
+        totalPrice: 0,
+        inTime: '',
+        outTime: '',
+        homestayName: ''
+      }, // 订单详情
       codeUrl: '', // 支付链接
       time: 4,
       yzmText: '3秒后返回',
@@ -69,14 +64,15 @@ export default {
     init() {
       const this_ = this
       this.orderId = this.$route.query.id
+      console.log(this.orderId)
       // 获取订单详情
       orderDetail(this.orderId).then(function(data) {
         if (data.data.code === 200) {
-          this_.shouldPay = data.data.data.totalMoney
+          this_.orderInfo = data.data.data
         }
       })
-      // 生成微信支付二维码
-      doWechatPay(this.orderId).then(function(data) {
+      // // 生成微信支付二维码
+      orderPay(this.orderId).then(function(data) {
         if (data.data.code === 200) {
           this_.codeUrl = data.data.code_url
           this_.qrcode(this_.codeUrl)
@@ -99,8 +95,7 @@ export default {
       return qrcode
     },
     // 查询订单支付状态
-    getOrderStatus() { // 订单状态 1;订单取消 2待支付 3待发货 4待收货 5待评价 6订单完成 7退货
-      console.log(111111)
+    getOrderStatus() { // 订单状态 1;订单取消 2待支付 3待入住  5待评价 6订单完成 7退款
       const this_ = this
       getOrderStatus(this.orderId).then(function(data) {
         if (data.data.code === 200) {
@@ -128,10 +123,16 @@ export default {
         this.yzmStatus = false
         this.$router.replace(
           {
-            path: '/buy/order',
+            path: '/index/homestay/search',
             replace: true
           }
         )
+      }
+    },
+    // 日期时间处理
+    getName_date(date) {
+      if (date) {
+        return util.formatDate.format(new Date(date), 'yyyy.MM.dd hh:mm:ss')
       }
     }
   },

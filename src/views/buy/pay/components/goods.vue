@@ -71,7 +71,7 @@
           <el-button class="btn-red" @click="toPayConfirm"
            style="float:right;height:100%;width:200px;margin-left:20px;font-size:18px">去付款</el-button>
           <span style="float:right">
-            共有
+            共选中
             <span class="text-red" style="font-size:18px">{{goodsNum}}</span>
             款产品，总计（不含运费）
             <span class="text-red" style="font-size:22px;margin-left:20px">{{totalCount | pieceFormat}}</span>
@@ -109,7 +109,7 @@ export default {
         paginationTotal: 0,
         goodsList: []
       }, // 购物车商品列表
-      totalCount: '', // 所有选中商品总价
+      totalCount: 0, // 所有选中商品总价
       goodsNum: 0, // 选中商品数量
       shoppingCartNum: '', // 购物车数量
       checkGoods: [], // 所有商品是否选中的状态列表

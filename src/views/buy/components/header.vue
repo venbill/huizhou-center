@@ -13,7 +13,7 @@
               <router-link to="/login" class="link-text">登录</router-link>
               /
               <router-link to="/regist" class="link-text">注册</router-link>
-              <router-link to="/" class="link-text">回到首页</router-link>
+              <span class="link-text" @click="toHome">回到首页</span>
           </div>
         </template>
         <template v-else>
@@ -22,8 +22,8 @@
               <!-- <el-menu-item index="3"><router-link to="/buy/order">我的订单</router-link></el-menu-item> -->
               <el-submenu index="1">
                 <template slot="title">我的订单</template>
-                <el-menu-item index="1-1"><router-link to="/buy/order">商城订单</router-link></el-menu-item>
-                <el-menu-item index="1-2"><router-link to="/index/homestay/order">民宿订单</router-link></el-menu-item>
+                <el-menu-item index="1-1" @click=toShop>商城订单</el-menu-item>
+                <el-menu-item index="1-2" @click=toHomestay>民宿订单</el-menu-item>
               </el-submenu>
               <!-- <el-submenu index="2">
                 <template slot="title">我的商城</template>
@@ -38,7 +38,7 @@
               <!-- <el-menu-item index="3"><router-link to="/login">客户服务</router-link></el-menu-item> -->
               <!-- <el-menu-item index="3"><router-link to="/login">帮助中心</router-link></el-menu-item> -->
             </el-menu>
-            <router-link to="/index" class="link-text">回到首页</router-link>
+            <span class="link-text" @click="toHome">回到首页</span>
             <span class="link-text" style="margin-left: 10px;" @click="logout">退出</span>
           </div>
         </template>
@@ -118,6 +118,12 @@ export default {
         location.reload()// In order to re-instantiate the vue-router object to avoid bugs
       })
     },
+    // 回到首页
+    toHome() {
+      this.$router.push('/')
+      const path = this.$route.path
+      this.routeFocus(path)
+    },
     // 判断路由是否选中
     routeFocus(path) {
       if (path === '/') {
@@ -144,6 +150,24 @@ export default {
             path: item.path
           }
         )
+      }
+    },
+    // 跳转民宿订单
+    toHomestay() {
+      if (this.loginStatus) {
+        const routeData = this.$router.resolve({
+          path: '/index/homestay/order'
+        })
+        window.open(routeData.href, '_blank')
+      }
+    },
+    // 跳转商城订单
+    toShop() {
+      if (this.loginStatus) {
+        const routeData = this.$router.resolve({
+          path: '/buy/order'
+        })
+        window.open(routeData.href, '_blank')
       }
     }
   },

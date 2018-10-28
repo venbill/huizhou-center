@@ -58,7 +58,7 @@ img{
 .r-card-text {
   display: inline-block;
   line-height: 1.4;
-  height: 40px;
+  height: 34px;
   overflow: hidden;
 }
 .r-b-charge {

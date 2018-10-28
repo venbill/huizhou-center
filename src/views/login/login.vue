@@ -33,6 +33,11 @@
         @click.native.prevent="handleLogin">登录</el-button>
       <div class="form-foot">
         <span class="text-link">
+          <router-link to="/">
+            返回首页
+          </router-link>
+        </span>
+        <span class="text-link" style="margin-left:10px">
           <router-link to="/forget">
             忘记密码
           </router-link>
