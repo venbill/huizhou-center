@@ -1,6 +1,5 @@
 <template>
     <div class="address-content">
-      <buy-header></buy-header>
       <buy-search></buy-search>
       <div class="bg-white center-content border-box" style="margin:20px auto;padding:0 20px;">
         <template>
@@ -19,10 +18,10 @@
             <el-table-column prop="goodsName" label="商品名称">
               <template slot-scope="scope">
                 <div class="goods-box">
-                  <router-link :to="{path:'/buy/detail',query:{id:scope.row.goodsId}}" target="_blank" style="height:40px;width:40px;margin-right:10px">
+                  <router-link :to="{path:'/buy/detail',query:{id:scope.row.goodsId}}" style="height:40px;width:40px;margin-right:10px">
                     <img :src="scope.row.picture">
                   </router-link>
-                  <router-link :to="{path:'/buy/detail',query:{id:scope.row.goodsId}}" target="_blank" class="text-link-normal">
+                  <router-link :to="{path:'/buy/detail',query:{id:scope.row.goodsId}}" class="text-link-normal">
                     <span>{{scope.row.goodsName}}</span>
                   </router-link>
                 </div>

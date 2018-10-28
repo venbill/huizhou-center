@@ -1,6 +1,5 @@
 <template>
     <div class="pay-content">
-      <buy-header></buy-header>
       <buy-search></buy-search>
       <!-- <nav-title></nav-title> -->
       <div class="payment-main center-content border-box">
@@ -128,7 +127,7 @@ export default {
         this.yzmStatus = false
         this.$router.replace(
           {
-            path: '/buy/order',
+            path: '/buy',
             replace: true
           }
         )

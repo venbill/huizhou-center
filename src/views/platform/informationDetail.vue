@@ -41,7 +41,6 @@ export default {
       const id = this.$route.query.id
       newsDetail(id).then(function(data) {
         if (data.data.code === 200) {
-          console.log(data)
           this_.newsDetail = data.data.data
         }
       })

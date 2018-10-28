@@ -102,9 +102,6 @@ export default {
   },
   methods: {
     init() {
-      // 判断是否路由选中
-      const path = this.$route.path
-      this.routeFocus(path)
       // 没有登录信息，终止函数
       if (this.token === undefined) {
         this.loginStatus = false
@@ -124,7 +121,7 @@ export default {
       const path = this.$route.path
       this.routeFocus(path)
     },
-    // 判断路由是否选中
+    // 判断路由选中
     routeFocus(path) {
       if (path === '/') {
         this.activeIndex = 0
@@ -155,19 +152,21 @@ export default {
     // 跳转民宿订单
     toHomestay() {
       if (this.loginStatus) {
-        const routeData = this.$router.resolve({
-          path: '/index/homestay/order'
-        })
-        window.open(routeData.href, '_blank')
+        // const routeData = this.$router.resolve({
+        //   path: '/index/homestay/order'
+        // })
+        // window.open(routeData.href)
+        this.$router.push('/index/homestay/order')
       }
     },
     // 跳转商城订单
     toShop() {
       if (this.loginStatus) {
-        const routeData = this.$router.resolve({
-          path: '/buy/order'
-        })
-        window.open(routeData.href, '_blank')
+        // const routeData = this.$router.resolve({
+        //   path: '/buy/order'
+        // })
+        // window.open(routeData.href, '_blank')
+        this.$router.push('/buy/order')
       }
     }
   },
@@ -175,6 +174,12 @@ export default {
     this.init()
     // this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
     // console.log(this.userInfo)
+  },
+  watch: {
+    // 监听,当路由发生变化的时候执行
+    $route(to, from) {
+      this.routeFocus(to.path)
+    }
   }
 }
 </script>

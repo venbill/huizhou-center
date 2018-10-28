@@ -4,11 +4,11 @@
         <div class="no-data text-silver">
           <template v-if="goodsList.body.length > 0">
             <el-card class="r-card search-list inline-block" style="width:160px" v-for="child in goodsList.body" :key="child.index">
-              <router-link :to="{path:'/buy/detail', query:{id:child.id}}" target="_blank">
+              <router-link :to="{path:'/buy/detail', query:{id:child.id}}">
                 <img :src="child.picture" class="block" style="height:140px;width:140px;margin:0 auto;background:silver">
               </router-link>
               <div style="padding: 10px 10px 4px;font-size:12px;">
-                <router-link :to="{path:'/buy/detail', query:{id:child.id}}" target="_blank">
+                <router-link :to="{path:'/buy/detail', query:{id:child.id}}">
                   <span class="r-card-text text-link-normal" :title="child.name">{{child.name}}</span>
                 </router-link>
                 <span class="r-b-charge block">{{child.minPrice | pieceFormat}}</span>
@@ -40,11 +40,11 @@
           <div class="hotGoods-content">
             <card-link :body="hotGoods" :width="160" :imgHeight="140" :imgWidth="140"></card-link>
             <!-- <el-card class="r-card goods-list inline-block" style="width:160px" v-for="child in hotGoods" :key="child.index">
-              <router-link :to="{path:'/buy/detail', query:{id:child.id}}" target="_blank">
+              <router-link :to="{path:'/buy/detail', query:{id:child.id}}">
                 <img :src="child.picture" class="block" style="height:140px;width:140px;margin:0 auto;background:silver">
               </router-link>
               <div style="padding: 4px 10px;font-size:12px;">
-                <router-link :to="{path:'/buy/detail', query:{id:child.id}}" target="_blank">
+                <router-link :to="{path:'/buy/detail', query:{id:child.id}}">
                   <span class="r-card-text text-link-normal block" :title="child.name">{{child.name}}</span>
                 </router-link>
                 <span class="r-b-charge block">{{child.minPrice | pieceFormat}}</span>

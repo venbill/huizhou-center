@@ -20,7 +20,7 @@
         </div>
         <div class="b-search-history">
           <span class="item" v-for="item in hotSearch" :key="item.id">
-            <router-link :to="{path:'/buy/search', query:{id:item.id,keyword:item.content}}" target="_blank">{{item.content}}</router-link>
+            <router-link :to="{path:'/buy/search', query:{id:item.id,keyword:item.content}}">{{item.content}}</router-link>
           </span>
         </div>
       </div>

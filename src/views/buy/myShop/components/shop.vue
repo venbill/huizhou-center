@@ -12,11 +12,11 @@
         <div class="order-comment">
           <div class="goods-list">
             <div class="list-item" v-for="item in goodsData.body" :key="item.index">
-              <router-link :to="{path:'/buy/detail', query:{id:item.id}}" target="_blank">
+              <router-link :to="{path:'/buy/detail', query:{id:item.id}}">
                 <img :src="item.picture" class="block" style="height:220px;width:220px;">
               </router-link>
               <p class="text-link-normal" style="font-size:14px;margin:10px 0">
-                <router-link :to="{path:'/buy/detail', query:{id:item.id}}" target="_blank">
+                <router-link :to="{path:'/buy/detail', query:{id:item.id}}">
                   {{item.name}}
                 </router-link>
               </p>

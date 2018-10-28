@@ -17,18 +17,20 @@
 
             </el-row>
             <el-row style="margin-top:10px;">
-              <el-popover placement="bottom" trigger="click" popper-class="chooseBox">
-                <div class="popover-item" v-for="item in placeOptions" :key="item.index" @click="areaSelect(item)">{{item.areaName}}</div>
-                <el-button slot="reference">选择地区</el-button>
-              </el-popover>
-              <el-popover placement="bottom" trigger="click" popper-class="chooseBox">
-                <div class="popover-item" v-for="item in typeOptions" :key="item.index" @click="typeSelect(item)">{{item.label}}</div>
-                <el-button slot="reference">选择类型</el-button>
-              </el-popover>
-              <el-popover placement="bottom" trigger="click" popper-class="priceBox">
-                <el-slider v-model="homeSearch.homestayPrice" range :min="100" :step="100" :max="5000" @change="priceChange"></el-slider>
-                <el-button slot="reference">价格</el-button>
-              </el-popover>
+              <el-menu mode="horizontal" class="chooseMenu" :default-active="activeIndex" @select="handleSelect">
+                <el-submenu index="0">
+                  <template slot="title">选择地区</template>
+                  <el-menu-item :index="0 + '-' + child.id" v-for="child in placeOptions" :key="child.sub">{{child.areaName}}</el-menu-item>
+                </el-submenu>
+                <el-submenu index="1">
+                  <template slot="title">选择类型</template>
+                  <el-menu-item :index="1 + '-' + child.value" v-for="child in typeOptions" :key="child.sub">{{child.label}}</el-menu-item>
+                </el-submenu>
+                <el-submenu index="2">
+                  <template slot="title">价格</template>
+                  <el-slider v-model="homeSearch.homestayPrice" range :min="100" :step="100" :max="5000" @change="priceChange"></el-slider>
+                </el-submenu>
+              </el-menu>
             </el-row>
 
             <el-row style="font-size:14px;color:#333;padding: 10px 10px 0">
@@ -47,71 +49,6 @@
                 </el-date-picker>
                 <el-button slot="reference">选择日期</el-button>
               </el-popover> -->
-
-            <!-- <el-row style="padding-top:10px;">
-                <el-button @click="showSelect(1)" plain>选择地区</el-button>
-                <el-button @click="showSelect(2)" plain>选择类型</el-button>
-                <el-button @click="showSelect(3)" plain>价格</el-button>
-                <el-button @click="showSelect(4)" plain>选择日期</el-button>
-
-            </el-row>
-
-            <div v-show="showSelectArea>0" style="position:fixed;right:10px;top: 10px; position: relative;opacity: 0.8; width:50%;z-index:100;border-style:solid;border-width:2px;border-color:#FFBFBF">
-                <el-row style="padding:40px 40px;">
-                    <el-col v-show="showSelectArea==1" :span=18>
-                        <el-select v-model="condition.place" placeholder="请选择">
-                            <el-option v-for="item in placeOptions" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </el-col>
-
-                    <el-col v-show="showSelectArea==2" :span=18>
-
-                        <el-select v-model="condition.type" placeholder="请选择">
-                            <el-option v-for="item in typeOptions" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </el-col>
-
-                    <el-col v-show="showSelectArea==3" :span=18>
-                        <el-row>
-
-                            <el-col :span=24>
-                                <el-slider v-model="priceRange" range :min="100" :step="100" :max="5000">
-                                </el-slider>
-                            </el-col>
-
-                        </el-row>
-                        <el-row>
-                            <el-col style=" line-height:30px; font-size:13px;color:#909399;display: inline-block;vertical-align: middle;" :span=6>
-                                ¥{{priceRange[0]}} - ¥{{priceRange[1]}}
-                            </el-col>
-                        </el-row>
-                    </el-col>
-
-                    <el-col v-show="showSelectArea==4" :span=18>
-
-                        <el-row>
-                            <el-col :span=18>
-                                <div  class="block">
-                                    {{value6}}
-                                    <el-date-picker focus v-model="daterange" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
-                                    </el-date-picker>
-                                </div>
-
-                            </el-col>
-
-                        </el-row>
-                    </el-col>
-
-                    <el-col :span=6 style="text-align:right">
-                        <i @click="showSelect(0)"  class="el-icon-success icon-red"></i>
-                        <i @click="showSelect(0)" class="el-icon-error icon-red"></i>
-
-                    </el-col>
-                </el-row>
-
-            </div> -->
         </div>
 
     </div>
@@ -265,6 +202,7 @@ export default {
         paginationTotal: 0,
         body: []
       },
+      activeIndex: '',
       recommend: [] // 推荐
 
     }
@@ -280,6 +218,30 @@ export default {
       this.getScenicSpotList()
       this.homestaySearch()
       this.homestayList()
+    },
+    handleSelect(key, keyPath) {
+      const arr = key.split('-')
+      const index = Number(arr[0])
+      const sub = Number(arr[1])
+      const area = this.placeOptions
+      const type = this.typeOptions
+      if (index === 0) {
+        for (let i = 0; i < area.length; i++) {
+          if (area[i].id === sub) {
+            this.homeSearch.scenicSpotId = area[i].id
+            this.homeSearch.scenicSpotName = area[i].areaName
+            return
+          }
+        }
+      } else if (index === 1) {
+        for (let i = 0; i < type.length; i++) {
+          if (type[i].value === sub) {
+            this.homeSearch.wholeHouse = type[i].value
+            this.homeSearch.wholeHouseName = type[i].label
+            return
+          }
+        }
+      }
     },
     // 推荐
     homestayList() {
@@ -406,5 +368,8 @@ img{
 }
 .popover-item:hover{
   background: #eee;
+}
+.chooseMenu .el-menu--horizontal>.el-submenu.is-active .el-submenu__title {
+  border-bottom-color: transparent;
 }
 </style>

@@ -49,8 +49,8 @@
                             </el-submenu>
                         </el-submenu>
                         <el-menu-item index="3">电商</el-menu-item>
-                        <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">资讯</a></el-menu-item>
-                        <el-menu-item index="5"><a href="https://www.ele.me" target="_blank">关于</a></el-menu-item>
+                        <el-menu-item index="4"><a href="https://www.ele.me">资讯</a></el-menu-item>
+                        <el-menu-item index="5"><a href="https://www.ele.me">关于</a></el-menu-item>
                     </el-menu>
                 </el-col>
             </el-row>

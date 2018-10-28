@@ -33,154 +33,154 @@ export const constantRouterMap = [
     redirect: '/',
     component: () =>
             import('@/views/platform/index'),
-    children: [{ // 首页
-      path: '/',
-      component: () =>
+    children: [
+      { // 首页
+        path: '/',
+        component: () =>
                     import('@/views/platform/home')
-    },
+      },
       // 民宿
-    {
-      path: '/index/homestay',
-      component: () =>
+      {
+        path: '/index/homestay',
+        component: () =>
                     import('@/views/platform/homestay'),
-      hidden: true
-    },
-    {
-      path: '/index/homestay/search',
-      component: () =>
+        hidden: true
+      },
+      {
+        path: '/index/homestay/search',
+        component: () =>
                     import('@/views/platform/homestay-search'),
-      hidden: true
-    },
-    {
-      path: '/index/homestay/detail',
-      component: () =>
+        hidden: true
+      },
+      {
+        path: '/index/homestay/detail',
+        component: () =>
                     import('@/views/platform/homestay-detail'),
-      hidden: true
-    },
-    {
-      path: '/index/homestay/order',
-      component: () =>
+        hidden: true
+      },
+      {
+        path: '/index/homestay/order',
+        component: () =>
                     import('@/views/platform/homestay-order'),
-      hidden: true
-    },
-    {
-      path: '/index/homestay/payment',
-      component: () =>
+        hidden: true
+      },
+      {
+        path: '/index/homestay/payment',
+        component: () =>
                     import('@/views/platform/payment'),
-      hidden: true
-    },
-    { // 电商
-      path: '/index/shop',
-      component: () =>
+        hidden: true
+      },
+      { // 电商
+        path: '/index/shop',
+        component: () =>
                     import('@/views/platform/onlineRetailers')
-    },
-    { // 资讯
-      path: '/index/information',
-      component: () =>
+      },
+      { // 资讯
+        path: '/index/information',
+        component: () =>
                     import('@/views/platform/information')
-    },
-    { // 资讯详情
-      path: '/index/information/detail',
-      component: () =>
+      },
+      { // 资讯详情
+        path: '/index/information/detail',
+        component: () =>
                     import('@/views/platform/informationDetail')
-    },
-    { // 招商引资
-      path: '/index/cooperation',
-      component: () =>
+      },
+      { // 招商引资
+        path: '/index/cooperation',
+        component: () =>
                     import('@/views/platform/cooperation')
-    },
-    { // 关于
-      path: '/index/us',
-      component: () =>
+      },
+      { // 关于
+        path: '/index/us',
+        component: () =>
                     import('@/views/platform/us')
-    }
+      },
+      // 电商
+      { // 首页
+        path: '/buy',
+        // component: () =>
+        //         import('@/views/buy/index'),
+        component: resolve => require(['@/views/buy/index'], resolve),
+        hidden: true
+      },
+      { // 搜索
+        path: '/buy/search',
+        // component: () =>
+        //         import('@/views/buy/search/index'),
+        component: resolve => require(['@/views/buy/search/index'], resolve),
+        hidden: true
+      },
+      { // 详情
+        path: '/buy/detail',
+        // component: () =>
+        //         import('@/views/buy/buyDetail/index'),
+        component: resolve => require(['@/views/buy/buyDetail/index'], resolve),
+        hidden: true
+      },
+      { // 购物车
+        path: '/buy/shoppingCart',
+        // component: () =>
+        //         import('@/views/buy/shoppingCart/index'),
+        component: resolve => require(['@/views/buy/shoppingCart/index'], resolve),
+        hidden: true
+      },
+      { // 订单
+        path: '/buy/order',
+        // component: () =>
+        //         import('@/views/buy/myOrder/index'),
+        component: resolve => require(['@/views/buy/myOrder/index'], resolve),
+        hidden: true
+      },
+      { // 订单评价
+        path: '/buy/comment',
+        // component: () =>
+        //         import('@/views/buy/myOrder/components/comment'),
+        component: resolve => require(['@/views/buy/myOrder/components/comment'], resolve),
+        hidden: true
+      },
+      { // 选商品付款
+        path: '/buy/pay',
+        // component: () =>
+        //         import('@/views/buy/pay/index'),
+        component: resolve => require(['@/views/buy/pay/index'], resolve),
+        hidden: true
+      },
+      { // 付款确认
+        path: '/buy/pay/pay_confirm',
+        // component: () =>
+        //         import('@/views/buy/pay/payConfirm/index'),
+        component: resolve => require(['@/views/buy/pay/payConfirm/index'], resolve),
+        hidden: true
+      },
+      { // 支付
+        path: '/buy/pay/payment',
+        // component: () =>
+        //         import('@/views/buy/pay/payment/index'),
+        component: resolve => require(['@/views/buy/pay/payment/index'], resolve),
+        hidden: true
+      },
+      { // 管理收货地址
+        path: '/buy/address',
+        // component: () =>
+        //         import('@/views/buy/address/index'),
+        component: resolve => require(['@/views/buy/address/index'], resolve),
+        hidden: true
+      },
+      { // 消息提醒
+        path: '/buy/my_news',
+        // component: () =>
+        //         import('@/views/buy/news/index'),
+        component: resolve => require(['@/views/buy/news/index'], resolve),
+        hidden: true
+      },
+      { // 我的店铺
+        path: '/buy/my_shop',
+        // component: () =>
+        //         import('@/views/buy/myShop/index'),
+        component: resolve => require(['@/views/buy/myShop/index'], resolve),
+        hidden: true
+      }
     ],
-    hidden: true
-  },
-
-  // 电商
-  { // 首页
-    path: '/buy',
-    // component: () =>
-    //         import('@/views/buy/index'),
-    component: resolve => require(['@/views/buy/index'], resolve),
-    hidden: true
-  },
-  { // 搜索
-    path: '/buy/search',
-    // component: () =>
-    //         import('@/views/buy/search/index'),
-    component: resolve => require(['@/views/buy/search/index'], resolve),
-    hidden: true
-  },
-  { // 详情
-    path: '/buy/detail',
-    // component: () =>
-    //         import('@/views/buy/buyDetail/index'),
-    component: resolve => require(['@/views/buy/buyDetail/index'], resolve),
-    hidden: true
-  },
-  { // 购物车
-    path: '/buy/shoppingCart',
-    // component: () =>
-    //         import('@/views/buy/shoppingCart/index'),
-    component: resolve => require(['@/views/buy/shoppingCart/index'], resolve),
-    hidden: true
-  },
-  { // 订单
-    path: '/buy/order',
-    // component: () =>
-    //         import('@/views/buy/myOrder/index'),
-    component: resolve => require(['@/views/buy/myOrder/index'], resolve),
-    hidden: true
-  },
-  { // 订单评价
-    path: '/buy/comment',
-    // component: () =>
-    //         import('@/views/buy/myOrder/components/comment'),
-    component: resolve => require(['@/views/buy/myOrder/components/comment'], resolve),
-    hidden: true
-  },
-  { // 选商品付款
-    path: '/buy/pay',
-    // component: () =>
-    //         import('@/views/buy/pay/index'),
-    component: resolve => require(['@/views/buy/pay/index'], resolve),
-    hidden: true
-  },
-  { // 付款确认
-    path: '/buy/pay/pay_confirm',
-    // component: () =>
-    //         import('@/views/buy/pay/payConfirm/index'),
-    component: resolve => require(['@/views/buy/pay/payConfirm/index'], resolve),
-    hidden: true
-  },
-  { // 支付
-    path: '/buy/pay/payment',
-    // component: () =>
-    //         import('@/views/buy/pay/payment/index'),
-    component: resolve => require(['@/views/buy/pay/payment/index'], resolve),
-    hidden: true
-  },
-  { // 管理收货地址
-    path: '/buy/address',
-    // component: () =>
-    //         import('@/views/buy/address/index'),
-    component: resolve => require(['@/views/buy/address/index'], resolve),
-    hidden: true
-  },
-  { // 消息提醒
-    path: '/buy/my_news',
-    // component: () =>
-    //         import('@/views/buy/news/index'),
-    component: resolve => require(['@/views/buy/news/index'], resolve),
-    hidden: true
-  },
-  { // 我的店铺
-    path: '/buy/my_shop',
-    // component: () =>
-    //         import('@/views/buy/myShop/index'),
-    component: resolve => require(['@/views/buy/myShop/index'], resolve),
     hidden: true
   },
 

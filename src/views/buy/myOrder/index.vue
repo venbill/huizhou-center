@@ -1,6 +1,5 @@
 <template>
     <div class="myOrder-content">
-      <buy-header></buy-header>
       <buy-search></buy-search>
       <my-order></my-order>
     </div>

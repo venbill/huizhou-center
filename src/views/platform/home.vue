@@ -4,17 +4,17 @@
     <div>
       <el-carousel height="400px">
         <el-carousel-item>
-          <router-link :to="{path:'/buy/search',query: {bigTypeId: 6,keyword:'扶贫产品'}}" target="_blank">
+          <router-link :to="{path:'/buy/search',query: {bigTypeId: 6,keyword:'扶贫产品'}}">
             <img src="/static/images/index/banner1.png"/>
           </router-link>
         </el-carousel-item>
         <el-carousel-item>
-          <a href="https://xueyuan.maijia.com/m/search/37" target="_blank">
+          <a href="https://xueyuan.maijia.com/m/search/37"  target="_blank">
             <img src="/static/images/index/banner2.png" />
           </a>
         </el-carousel-item>
         <el-carousel-item>
-          <router-link :to="{path:'/index/information/detail', query:{id: 17}}" target="_blank">
+          <router-link :to="{path:'/index/information/detail', query:{id: 17}}">
             <img src="/static/images/index/banner3.png" />
           </router-link>
         </el-carousel-item>
@@ -63,7 +63,7 @@
                   <ul class="infor-list-item">
                     <li v-for="item in informationList" :key="item.index">
                       <span class="text-ellipsis inline-block" style="width: 400px;float:left;" :title="item.title">
-                        <router-link :to="{path:'/index/information/detail', query:{id: item.id}}" target="_blank" class="link-underline">
+                        <router-link :to="{path:'/index/information/detail', query:{id: item.id}}" class="link-underline">
                           {{item.title}}
                         </router-link>
                       </span>
@@ -71,7 +71,7 @@
                     </li>
                   </ul>
                   <div class="information-img">
-                    <router-link :to="{path:'/index/information/detail', query:{id: informationList[0].id}}" target="_blank">
+                    <router-link :to="{path:'/index/information/detail', query:{id: informationList[0].id}}">
                       <img :src="informationList[0].headerPicture">
                     </router-link>
                   </div>
@@ -85,7 +85,7 @@
                   <ul class="infor-list-item">
                     <li v-for="item in newsList" :key="item.index">
                       <span class="text-ellipsis inline-block" style="width: 400px;float:left;" :title="item.title">
-                        <router-link :to="{path:'/index/information/detail', query:{id: item.id}}" target="_blank" class="link-underline">
+                        <router-link :to="{path:'/index/information/detail', query:{id: item.id}}" class="link-underline">
                           {{item.title}}
                         </router-link>
                       </span>
@@ -93,7 +93,7 @@
                     </li>
                   </ul>
                   <div class="information-img">
-                    <router-link :to="{path:'/index/information/detail', query:{id: newsList[0].id}}" target="_blank">
+                    <router-link :to="{path:'/index/information/detail', query:{id: newsList[0].id}}">
                       <img :src="newsList[0].headerPicture">
                     </router-link>
                   </div>
@@ -110,13 +110,13 @@
             </div>
             <div class="service-img">
               <div class="img-item" style="margin-right: 2px;">
-                <a href='http://www.ekey365.com/index.php?c=article&a=type&tid=38&from=groupmessage&isappinstalled=0' target="_blank">
+                <a href='http://www.ekey365.com/index.php?c=article&a=type&tid=38&from=groupmessage&isappinstalled=0'>
                   <img src="/static/images/index/enterprise.png">
                   <p class="img-title">企业孵化</p>
                 </a>
               </div>
               <div class="img-item">
-                <a href="https://xueyuan.maijia.com/m/search/37" target="_blank">
+                <a href="https://xueyuan.maijia.com/m/search/37">
                   <img src="/static/images/index/online_retailers.png">
                   <p class="img-title">电商培训</p>
                 </a>
@@ -137,7 +137,7 @@
                 <ul class="notice-list-item">
                   <li v-for="item in noticeList" :key="item.index">
                     <span class="text-ellipsis inline-block" style="width:300px;float:left;" :title="item.title">
-                      <router-link :to="{path:'/index/information/detail', query:{id: item.id}}" target="_blank" class="link-underline">
+                      <router-link :to="{path:'/index/information/detail', query:{id: item.id}}" class="link-underline">
                         {{item.title}}
                       </router-link>
                     </span>

@@ -2,7 +2,7 @@
   <div class="b-list">
     <div class="b-list-content">
       <div class="typeArea">
-        <router-link v-for="item in activeGoods" :key="item.index" :to="{path:'/buy/search',query: {id: item.id}}" target="_blank">
+        <router-link v-for="item in activeGoods" :key="item.index" :to="{path:'/buy/search',query: {id: item.id}}">
           <div class="item">
             <h3 style="text-align:center">{{item.activityName}}</h3>
             <img :src="item.picture" style="width:100%;">
@@ -16,7 +16,7 @@
         <div class="carouselContent">
           <div class="r-item">
             <card-link :body="item.goods" :height="270" :width="176" :imgHeight="176" :imgWidth="176"></card-link>
-            <!-- <router-link v-for="child in item.goods" :key="child.index" :to="{path:'/buy/detail',query: {id: child.id}}" target="_blank">
+            <!-- <router-link v-for="child in item.goods" :key="child.index" :to="{path:'/buy/detail',query: {id: child.id}}">
               <el-card class="r-card">
                 <img :src="child.picture" class="image" style="height:190px;width:190px;margin:0 auto;background:silver">
                 <div style="padding: 4px 10px;font-size:12px;">

@@ -99,7 +99,7 @@ export default {
         },
         {
           title: '待入住',
-          type: 2
+          type: 3
         },
         {
           title: '订单完成',

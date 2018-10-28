@@ -1,6 +1,5 @@
 <template>
     <div class="buyDetail-content">
-      <buy-header></buy-header>
       <buy-search ref="buySearch"></buy-search>
       <!-- <nav-title></nav-title> -->
       <buy-detail v-on:goodsNumber="goodsNumber"></buy-detail>

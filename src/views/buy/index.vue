@@ -1,6 +1,5 @@
 <template>
     <div class="buy-content">
-        <buy-header></buy-header>
         <buy-search :is_blank='true'></buy-search>
         <buy-banner></buy-banner>
         <buy-list></buy-list>

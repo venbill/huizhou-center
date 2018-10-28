@@ -100,7 +100,6 @@ export default {
       if (newIndex !== undefined) {
         this.newsIndex = newIndex
         this.newsInfo.type = this.news[newIndex].type
-        this.headerIndex(this.$route.path)
       }
       this.getNews()
     },
@@ -150,14 +149,20 @@ export default {
           return val
         }
       }
-    },
-    // 返回父组件路由路径
-    headerIndex(path) {
-      this.$emit('headerIndex', path)
     }
   },
   mounted() {
     this.init()
+  },
+  watch: {
+    // 监听,当路由发生变化的时候执行
+    $route(to, from) {
+      const newIndex = this.$route.query.index
+      if (newIndex !== undefined) {
+        this.newsIndex = newIndex
+        this.newsInfo.type = this.news[newIndex].type
+      }
+    }
   }
 }
 </script>

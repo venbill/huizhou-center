@@ -417,13 +417,14 @@
          this.homeSearch.searchWord = ''
        } else {
          // 新窗口打开
-         const routeData = this.$router.resolve({
-           path: '/index/homestay/search',
-           query: {
-             keyword: this_.homeSearch.searchWord
-           }
-         })
-         window.open(routeData.href, '_blank')
+         //  const routeData = this.$router.resolve({
+         //    path: '/index/homestay/search',
+         //    query: {
+         //      keyword: this_.homeSearch.searchWord
+         //    }
+         //  })
+         //  window.open(routeData.href, '_blank')
+         this.$router.push('/index/homestay/search')
        }
      },
      handleSelect(item) {

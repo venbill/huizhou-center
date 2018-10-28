@@ -1,11 +1,11 @@
 <template>
   <div class="card-body">
     <el-card class="r-card goods-list inline-block" v-for="child in body" :key="child.index" :style="{width:width + 'px', height:height + 'px'}">
-      <router-link :to="{path:'/buy/detail', query:{id:child.id}}" target="_blank">
+      <router-link :to="{path:'/buy/detail', query:{id:child.id}}">
         <img :src="child.picture" class="block" :style="{width:imgWidth + 'px', height:imgHeight + 'px'}">
       </router-link>
       <div style="padding: 4px 10px;font-size:12px;">
-        <router-link :to="{path:'/buy/detail', query:{id:child.id}}" target="_blank">
+        <router-link :to="{path:'/buy/detail', query:{id:child.id}}">
           <span class="r-card-text text-link-normal" :title="child.name">{{child.name}}</span>
         </router-link>
         <span class="r-b-charge block">{{child.minPrice | pieceFormat}}</span>

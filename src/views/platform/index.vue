@@ -1,7 +1,7 @@
 <template>
   <div class="home-main">
     <home-header ref="homeHeader"></home-header>
-    <router-view v-on:headerIndex="headerIndex"></router-view>
+    <router-view></router-view>
     <home-foot></home-foot>
   </div>
 </template>
@@ -19,9 +19,6 @@ export default {
     }
   },
   methods: {
-    headerIndex(path) {
-      this.$refs.homeHeader.routeFocus(path)
-    }
   }
 }
 </script>

@@ -1,6 +1,5 @@
 <template>
     <div class="address-content">
-      <buy-header></buy-header>
       <buy-search></buy-search>
       <!-- <nav-title></nav-title> -->
       <div class="bg-white center-content border-box" style="margin:20px auto;padding:0 20px;">

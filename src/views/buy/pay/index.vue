@@ -1,6 +1,5 @@
 <template>
     <div class="pay-content">
-      <buy-header></buy-header>
       <buy-search ref="buySearch"></buy-search>
       <goods v-on:goodsNumber="goodsNumber"></goods>
     </div>

@@ -1,6 +1,5 @@
 <template>
     <div class="buyDetail-content">
-      <buy-header></buy-header>
       <buy-search></buy-search>
       <!-- <nav-title></nav-title> -->
       <shopping-cart></shopping-cart>

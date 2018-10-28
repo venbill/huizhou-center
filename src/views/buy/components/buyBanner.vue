@@ -19,7 +19,7 @@
             商品分类
           </div>
           <div class="listContent" @mouseenter="contentShow" @mouseleave="contentHide">
-            <router-link v-for="(item, index) in navList" :key="item.index" :to="{path:'/buy/search',query: {bigTypeId: item.id,keyword:item.bigTypeName}}" target="_blank">
+            <router-link v-for="(item, index) in navList" :key="item.index" :to="{path:'/buy/search',query: {bigTypeId: item.id,keyword:item.bigTypeName}}">
               <div class="type-item" :class="{active: typeIndex === index}" @mouseenter="typeIndexChange(index)">
                 <i class="iconfont" v-html="item.icon" style="margin-right:4px;"></i>
                 <span class="typeTitle">
@@ -30,7 +30,7 @@
             <div class="b-content-list" v-if="contentStatus && typeIndex !== -1">
               <div class="b-list-sub">
                 <span class="item" v-for="sub in navList[typeIndex].smallTypes" :key="sub.index">
-                  <router-link :to="{path:'/buy/search',query: {smallTypeId: sub.id, keyword:sub.smallTypeName}}" target="_blank">{{sub.smallTypeName}}</router-link>
+                  <router-link :to="{path:'/buy/search',query: {smallTypeId: sub.id, keyword:sub.smallTypeName}}">{{sub.smallTypeName}}</router-link>
                 </span>
               </div>
             </div>
@@ -38,7 +38,7 @@
         </div>
         <el-carousel trigger="click" height="590px" class="b-content-img">
           <el-carousel-item v-for="item in imgList" :key="item.index">
-            <a :href="'http://' + item.href" target="_blank">
+            <a :href="'http://' + item.href">
               <img :src="item.url">
             </a>
           </el-carousel-item>

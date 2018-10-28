@@ -1,6 +1,5 @@
 <template>
     <div class="myShop-content">
-      <buy-header></buy-header>
       <buy-search></buy-search>
       <!-- <nav-title></nav-title> -->
       <my-shop></my-shop>
