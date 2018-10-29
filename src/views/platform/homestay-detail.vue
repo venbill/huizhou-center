@@ -361,13 +361,6 @@ export default {
         }
       })
       this.getComments()
-      // 没有登录信息，终止函数
-      if (this.token === undefined) {
-        this.loginStatus = false
-      } else {
-        this.loginStatus = true
-      }
-      console.log(this.token)
     },
     // 分页查询评论
     getComments() {
@@ -406,16 +399,18 @@ export default {
     },
     // 预定
     Book() {
+      if (!this.loginStatus) {
+        this.$confirm('您还没有登录，请先登录', '提示', {
+          confirmButtonText: '登录',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push('/login')
+        }).catch(() => {
+        })
+        return
+      }
       const this_ = this
-      // const price = this.totalPrice() // 总价
-      //   let start = this.bookForm.time[0]
-      //   let end = this.bookForm.time[1]
-      //   if (typeof (start) === 'object') {
-      //     start = start.getTime()
-      //   }
-      //   if (typeof (end) === 'object') {
-      //     end = end.getTime()
-      //   }
       const params = {
         homestayId: this.homeId,
         inTime: this.bookForm.time[0],

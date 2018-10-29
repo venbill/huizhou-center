@@ -5,17 +5,17 @@
       <el-carousel height="400px">
         <el-carousel-item>
           <router-link :to="{path:'/buy/search',query: {bigTypeId: 6,keyword:'扶贫产品'}}">
-            <img src="/static/images/index/banner1.png"/>
+            <img src="http://47.105.95.162:81/M00/00/00/rB-mAFvWZbmAYno4AAPHqIYj6qs805.png"/>
           </router-link>
         </el-carousel-item>
         <el-carousel-item>
           <a href="https://xueyuan.maijia.com/m/search/37"  target="_blank">
-            <img src="/static/images/index/banner2.png" />
+            <img src="http://47.105.95.162:81/M00/00/00/rB-mAFvWZeOAECVQAAZtwVf3CqI955.png" />
           </a>
         </el-carousel-item>
         <el-carousel-item>
           <router-link :to="{path:'/index/information/detail', query:{id: 17}}">
-            <img src="/static/images/index/banner3.png" />
+            <img src="http://47.105.95.162:81/M00/00/00/rB-mAFvWZf-AIU8dAAJ30hiiYxQ743.png" />
           </router-link>
         </el-carousel-item>
       </el-carousel>
@@ -272,6 +272,20 @@ export default {
           },
           {
             url: '/static/images/farm/4.jpg'
+          }
+        ],
+        [
+          {
+            url: '/static/images/farm/5.jpg'
+          },
+          {
+            url: '/static/images/farm/6.jpg'
+          },
+          {
+            url: '/static/images/farm/7.jpg'
+          },
+          {
+            url: '/static/images/farm/8.jpg'
           }
         ]
       ], // 农产品图片列表

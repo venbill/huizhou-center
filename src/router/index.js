@@ -36,64 +36,75 @@ export const constantRouterMap = [
     children: [
       { // 首页
         path: '/',
-        component: () =>
-                    import('@/views/platform/home')
+        // component: () =>
+        //             import('@/views/platform/home')
+        component: resolve => require(['@/views/platform/home'], resolve)
       },
       // 民宿
       {
         path: '/index/homestay',
-        component: () =>
-                    import('@/views/platform/homestay'),
+        // component: () =>
+        //             import('@/views/platform/homestay'),
+        component: resolve => require(['@/views/platform/homestay'], resolve),
         hidden: true
       },
       {
         path: '/index/homestay/search',
-        component: () =>
-                    import('@/views/platform/homestay-search'),
+        // component: () =>
+        //             import('@/views/platform/homestay-search'),
+        component: resolve => require(['@/views/platform/homestay-search'], resolve),
         hidden: true
       },
       {
         path: '/index/homestay/detail',
-        component: () =>
-                    import('@/views/platform/homestay-detail'),
+        // component: () =>
+        //             import('@/views/platform/homestay-detail'),
+        component: resolve => require(['@/views/platform/homestay-detail'], resolve),
         hidden: true
       },
       {
         path: '/index/homestay/order',
-        component: () =>
-                    import('@/views/platform/homestay-order'),
+        // component: () =>
+        //             import('@/views/platform/homestay-order'),
+        component: resolve => require(['@/views/platform/homestay-order'], resolve),
         hidden: true
       },
       {
         path: '/index/homestay/payment',
-        component: () =>
-                    import('@/views/platform/payment'),
+        // component: () =>
+        //             import('@/views/platform/payment'),
+        component: resolve => require(['@/views/platform/payment'], resolve),
         hidden: true
       },
       { // 电商
         path: '/index/shop',
-        component: () =>
-                    import('@/views/platform/onlineRetailers')
+        // component: () =>
+        //             import('@/views/platform/onlineRetailers')
+        component: resolve => require(['@/views/platform/onlineRetailers'], resolve)
       },
       { // 资讯
         path: '/index/information',
-        component: () =>
-                    import('@/views/platform/information')
+        // component: () =>
+        //             import('@/views/platform/information')
+        component: resolve => require(['@/views/platform/information'], resolve)
       },
       { // 资讯详情
         path: '/index/information/detail',
-        component: () =>
-                    import('@/views/platform/informationDetail')
+        // component: () =>
+        //             import('@/views/platform/informationDetail')
+        component: resolve => require(['@/views/platform/informationDetail'], resolve)
       },
       { // 招商引资
         path: '/index/cooperation',
-        component: () =>
-                    import('@/views/platform/cooperation')
+        // component: () =>
+        //             import('@/views/platform/cooperation')
+        component: resolve => require(['@/views/platform/cooperation'], resolve)
       },
       { // 关于
         path: '/index/us',
-        component: () =>
-                    import('@/views/platform/us')
+        // component: () =>
+        //             import('@/views/platform/us')
+        component: resolve => require(['@/views/platform/us'], resolve)
       },
       // 电商
       { // 首页

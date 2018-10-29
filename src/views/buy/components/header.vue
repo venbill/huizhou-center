@@ -102,6 +102,8 @@ export default {
   },
   methods: {
     init() {
+      const path = this.$route.path
+      this.routeFocus(path)
       // 没有登录信息，终止函数
       if (this.token === undefined) {
         this.loginStatus = false
