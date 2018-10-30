@@ -199,7 +199,11 @@ export default {
           }
           resetPass(params).then(function(data) {
             if (data.data.code === 200) {
+              this_.loading = false
               this_.registSuccess = true
+            } else {
+              console.log(data.data)
+              this_.$message.error(data.data.message)
             }
           })
           setTimeout(() => {
@@ -271,12 +275,13 @@ $light_gray:#444;
     position:absolute;
     width:120px;
     padding: 10px;
-    height: 49px;
+    height: 53px;
     text-align:center;
     top: 0;
     right: 0;
     border-radius: 0;
     border: none;
+    background: #3b6713;
   }
 }
 </style>
@@ -374,7 +379,7 @@ $light_gray:#1C5EB3;
     border-bottom: 1px solid #E9E9E9;
     .title {
       font-size: 24px;
-      color: #ee4644;
+      color: #3b6713;
       margin: 0px auto 30px auto;
       font-weight: bold;
     }

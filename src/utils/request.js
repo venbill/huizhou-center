@@ -1,7 +1,10 @@
 import axios from 'axios'
+import Vue from 'vue'
 import { Message, MessageBox } from 'element-ui'
 import store from '@/store'
 // import { getToken } from '@/utils/auth'
+
+Vue.component(Message, Message)
 
 // create an axios instance
 const service = axios.create({
@@ -38,7 +41,7 @@ service.interceptors.response.use(
     const res = response.data
 
     if (res.code !== 200) {
-      Message({
+      Vue.prototype.$message({
         message: res.msg,
         type: 'error',
         duration: 5 * 1000

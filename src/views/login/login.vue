@@ -286,7 +286,7 @@ $light_gray:#1C5EB3;
     border-bottom: 1px solid #E9E9E9;
     .title {
       font-size: 24px;
-      color: #ee4644;
+      color: #3b6713;
       margin: 0px auto 30px auto;
       font-weight: bold;
     }
