@@ -361,6 +361,12 @@ export default {
         }
       })
       this.getComments()
+      // 没有登录信息，终止函数
+      if (this.token === undefined) {
+        this.loginStatus = false
+      } else {
+        this.loginStatus = true
+      }
     },
     // 分页查询评论
     getComments() {
