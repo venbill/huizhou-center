@@ -107,7 +107,7 @@ export default {
         },
         {
           title: '带评价',
-          type: 4
+          type: 5
         },
         {
           title: '退款',

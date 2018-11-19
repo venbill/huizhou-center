@@ -6,6 +6,11 @@ import store from '@/store'
 
 Vue.component(Message, Message)
 
+Vue.component(MessageBox, MessageBox)
+
+console.log(Message)
+console.log(MessageBox)
+
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
@@ -32,11 +37,11 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(
   // response => response,
   /**
-   * 下面的注释为通过在response里，自定义code来标示请求状态
-   * 当code返回如下情况则说明权限有问题，登出并返回到登录页
-   * 如想通过xmlhttprequest来状态码标识 逻辑可写在下面error中
-   * 以下代码均为样例，请结合自生需求加以修改，若不需要，则可删除
-   */
+     * 下面的注释为通过在response里，自定义code来标示请求状态
+     * 当code返回如下情况则说明权限有问题，登出并返回到登录页
+     * 如想通过xmlhttprequest来状态码标识 逻辑可写在下面error中
+     * 以下代码均为样例，请结合自生需求加以修改，若不需要，则可删除
+     */
   response => {
     const res = response.data
 
@@ -48,9 +53,10 @@ service.interceptors.response.use(
       })
       // 400非法请求  401未授权
       if (res.code === 400 || res.code === 401) {
+        console.log('----->401 登出')
         // 请自行在引入 MessageBox
         // import { Message, MessageBox } from 'element-ui'
-        MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
+        Vue.prototype.$msgbox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
           confirmButtonText: '重新登录',
           cancelButtonText: '取消',
           type: 'warning'
