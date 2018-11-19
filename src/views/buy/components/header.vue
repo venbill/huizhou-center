@@ -19,24 +19,14 @@
         <template v-else>
           <div class="header-menu">
             <el-menu mode="horizontal">
-              <!-- <el-menu-item index="3"><router-link to="/buy/order">我的订单</router-link></el-menu-item> -->
               <el-submenu index="1">
                 <template slot="title">我的订单</template>
                 <el-menu-item index="1-1" @click=toShop>商城订单</el-menu-item>
                 <el-menu-item index="1-2" @click=toHomestay>民宿订单</el-menu-item>
               </el-submenu>
-              <!-- <el-submenu index="2">
-                <template slot="title">我的商城</template>
-                <el-menu-item index="2-1"><router-link to="/login">批发进货</router-link></el-menu-item>
-                <el-menu-item index="2-2"><router-link to="/login">已买到的货品</router-link></el-menu-item>
-                <el-menu-item index="2-3"><router-link to="/login">优惠券</router-link></el-menu-item>
-                <el-menu-item index="2-4"><router-link to="/login">店铺动态</router-link></el-menu-item>
-              </el-submenu>
-              <el-menu-item index="3"><router-link to="/login">我的云购</router-link></el-menu-item> -->
-              <!-- <el-menu-item index="3"><router-link to="/login">我的收藏</router-link></el-menu-item>
-              <el-menu-item index="3"><router-link to="/login">会员中心</router-link></el-menu-item> -->
-              <!-- <el-menu-item index="3"><router-link to="/login">客户服务</router-link></el-menu-item> -->
-              <!-- <el-menu-item index="3"><router-link to="/login">帮助中心</router-link></el-menu-item> -->
+              <el-menu-item index="2"><router-link to="/buy/address">收货地址管理</router-link></el-menu-item>
+              <el-menu-item index="3" v-if="roles.includes('admin')"><router-link to="/banner">系统管理</router-link></el-menu-item>
+              <el-menu-item index="4" v-if="roles.includes('shopkeeper')"><router-link to="/shopInfo">店铺管理</router-link></el-menu-item>
             </el-menu>
             <span class="link-text" @click="toHome">回到首页</span>
             <span class="link-text" style="margin-left: 10px;" @click="logout">退出</span>
@@ -97,7 +87,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'token'
+      'token',
+      'roles'
     ])
   },
   methods: {
@@ -113,8 +104,18 @@ export default {
     },
     // 退出
     logout() {
-      this.$store.dispatch('LogOut').then(() => {
-        location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+      const this_ = this
+      this.$confirm('确认退出？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this_.$store.dispatch('LogOut').then(() => {
+          this_.$router.replace('/')
+          location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+        })
+      }).catch(() => {
+
       })
     },
     // 回到首页
@@ -287,13 +288,16 @@ export default {
   .b-header-list .el-menu--collapse .el-menu .el-submenu, .el-menu--popup {
     min-width: 150px;
   }
-  .el-menu--horizontal {
+  .header-menu .el-menu.el-menu--horizontal {
     border-bottom: none;
   }
   .header-menu .el-menu--horizontal .el-menu-item {
     height: 48px;
     line-height: 44px;
-    padding: 0 20px;
+    padding: 0 6px;
+  }
+  .header-menu .el-submenu__title {
+    padding: 0 6px;
   }
    .header-menu .el-menu--horizontal > .el-submenu .el-submenu__title {
     height: 48px;
@@ -301,6 +305,7 @@ export default {
    }
   .header-menu .el-menu {
     float: left;
+    margin-right: 10px;
   }
 </style>
 

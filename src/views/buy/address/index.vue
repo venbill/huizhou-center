@@ -5,7 +5,7 @@
       <div class="bg-white center-content border-box" style="margin:20px auto;padding:0 20px;">
         <template>
           <!--收货地址-->
-          <title-box :title="'收货地址'">
+          <title-box :title="'收货地址管理'">
             <rece-address></rece-address>
           </title-box>
         </template>

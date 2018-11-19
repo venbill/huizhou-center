@@ -10,7 +10,7 @@
             <!-- <el-button type="text" class="search-button">搜索</el-button>
             <el-input size="mini" class="medium-input" style="font-size:12px;float:right;" v-model="keywords" placeholder="商品名称/商品编号/订单编号"></el-input> -->
           </div>
-          <el-tabs v-model="activeTab" type="border-card" @tab-click="handleClick">
+          <el-tabs v-model="activeTab" type="border-card">
             <div class="order-type">
               <el-button class="typeItem" :class="{active:typeIndex === item.type}" v-for="item in orderType" :key="item.index" @click="typeChange(item.type)">{{item.title}}</el-button>
             </div>
@@ -23,46 +23,90 @@
               <div class="title-item" style="width:167px">订单操作</div>
             </div>
             <el-tab-pane label="我的订单" name="first">
-              <div class="order-info" v-for="sub in orderInfo.table" :key="sub.index">
-                <div class="info-title">
-                  <span style="margin-right:30px">{{getName_date(sub.createTime)}}</span>
-                  <span style="margin-right:30px">
-                    订单号：
-                    <span style="color:#000">{{sub.orderId}}</span>
-                  </span>
-                  <span style="color:red">{{sub.shopName}}</span>
-                  <span style="float:right">
-                    客服电话：
-                    <span style="color:#000">{{sub.serviceTel}}</span>
-                  </span>
-                </div>
-                <div class="info-detail">
-                  <div class="detail-goods info-item">
-                    <div class="goods-item">
-                      <img :src="sub.picture" class="inline-block" style="height:62px;width:62px;background:silver;float:left;">
-                      <div class="goods-name inline-block">
-                        {{sub.goodsName}}
+              <template v-if="typeIndex === 2">
+                <div class="order-info" v-for="sub in orderInfo.table" :key="sub.index">
+                  <div class="info-title">
+                    <span style="margin-right:30px">{{getName_date(sub.createTime)}}</span>
+                    <span style="margin-right:30px">
+                      订单号：
+                      <span style="color:#000">{{sub.id}}</span>
+                    </span>
+                    <!-- <span style="color:red">{{sub.shopName}}</span> -->
+                    <!-- <span style="float:right">
+                      客服电话：
+                      <span style="color:#000">{{sub.serviceTel}}</span>
+                    </span> -->
+                  </div>
+                  <div class="info-detail">
+                    <div class="detail-goods info-item">
+                      <div class="goods-item" v-for="item in sub.buyGoodsDetailVmList" :key="item.index">
+                        <img :src="item.picture" class="inline-block" style="height:62px;width:62px;background:silver;float:left;">
+                        <div class="goods-name inline-block">
+                          {{item.goodsName}}
+                        </div>
+                        <div class="goods-count inline-block float-left" style="margin-left: 80px;">X{{item.buyNo}}</div>
                       </div>
-                      <div class="goods-count inline-block float-left" style="margin-left: 80px;">X{{sub.buyNo}}</div>
+                    </div>
+                    <!-- <div class="detail-people info-item">王京</div> -->
+                    <div class="detail-piece info-item">
+                      <p>{{sub.totalMoney}}</p>
+                      <!-- <p>货到付款</p> -->
+                    </div>
+                    <div class="detail-time info-item">{{getName_date(sub.createTime)}}</div>
+                    <div class="detail-status info-item">{{typeText(sub.status)}}</div>
+                    <div class="detail-handle info-item">
+                      <!-- <p style="margin-bottom:30px">剩余15分</p> -->
+                      <p class="text-link" @click="toPay(sub.id)">立即支付</p>
                     </div>
                   </div>
-                  <!-- <div class="detail-people info-item">王京</div> -->
-                  <div class="detail-piece info-item">
-                    <p>{{sub.price}}</p>
-                    <!-- <p>货到付款</p> -->
+                </div>
+              </template>
+              <template v-else>
+                <div class="order-info" v-for="sub in orderInfo.table" :key="sub.index">
+                  <div class="info-title">
+                    <span style="margin-right:30px">{{getName_date(sub.createTime)}}</span>
+                    <span style="margin-right:30px">
+                      订单号：
+                      <span style="color:#000">{{sub.orderId}}</span>
+                    </span>
+                    <span style="color:red">{{sub.shopName}}</span>
+                    <span style="float:right">
+                      客服电话：
+                      <span style="color:#000">{{sub.serviceTel}}</span>
+                    </span>
                   </div>
-                  <div class="detail-time info-item">{{getName_date(sub.createTime)}}</div>
-                  <div class="detail-status info-item">{{typeText(sub.status)}}</div>
-                  <div class="detail-handle info-item">
-                    <!-- <p style="margin-bottom:30px">剩余15分</p> -->
-                    <template v-if="sub.status === 2">
-                      <p class="text-link" @click="toPay(sub.orderId)">立即支付</p>
-                      <!-- <p class="text-link">取消订单</p> -->
-                      <!-- <p>评价</p> -->
-                    </template>
+                  <div class="info-detail">
+                    <div class="detail-goods info-item">
+                      <div class="goods-item">
+                        <img :src="sub.picture" class="inline-block" style="height:62px;width:62px;background:silver;float:left;">
+                        <div class="goods-name inline-block">
+                          {{sub.goodsName}}
+                        </div>
+                        <div class="goods-count inline-block float-left" style="margin-left: 80px;">X{{sub.buyNo}}</div>
+                      </div>
+                    </div>
+                    <!-- <div class="detail-people info-item">王京</div> -->
+                    <div class="detail-piece info-item">
+                      <p>{{sub.price}}</p>
+                      <!-- <p>货到付款</p> -->
+                    </div>
+                    <div class="detail-time info-item">{{getName_date(sub.createTime)}}</div>
+                    <div class="detail-status info-item">{{typeText(sub.status)}}</div>
+                    <div class="detail-handle info-item">
+                      <!-- <p style="margin-bottom:30px">剩余15分</p> -->
+                      <template v-if="sub.status === 2">
+                        <p class="text-link" @click="toPay(sub.orderId)">立即支付</p>
+                      </template>
+                      <template v-if="sub.status === 4">
+                        <p class="text-link" @click="confirmAccept(sub.detailId)">确认收货</p>
+                      </template>
+                      <template v-if="sub.status === 5">
+                        <p class="text-link" @click="commentClick(sub.detailId)">立即评价</p>
+                      </template>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </template>
             </el-tab-pane>
             <div class="info-page">
               <el-pagination
@@ -76,19 +120,52 @@
           </el-tabs>
         </div>
       </div>
+      <!--新增、编辑弹窗-->
+      <el-dialog title="评价" :visible.sync="popStatus" @close="resetForm('popForm')" width="500px">
+        <el-form :model="popData" :rules="popRules" ref="popForm" label-width="110px">
+          <el-form-item label="评分：" prop="score">
+            <el-rate class="scoreInput"
+              v-model="popData.score" show-text
+              :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
+            </el-rate>
+          </el-form-item>
+          <el-form-item label="评价内容：" prop="comment">
+            <el-input type="textarea" v-model="popData.comment" :autosize="{ minRows: 4}" resize="none"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('popForm')">提交</el-button>
+            <el-button @click="resetForm('popForm')">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
     </div>
 </template>
 
 <script>
 import util from '@/utils/util'
-import { getOrderList } from '@/api/buy/buy'
+import { getOrderList, confirmAccept, comment } from '@/api/buy/buy'
 import Category from '../../components/category'
 export default {
   components: {
     Category
   },
   data() {
+    const validateScore = (rule, value, callback) => {
+      if (value === 0) {
+        callback(new Error('请选择评分'))
+      } else {
+        callback()
+      }
+    }
     return {
+      popRules: {
+        score: [
+          { required: true, validator: validateScore }
+        ],
+        comment: [
+          { required: true, message: '请输入评价', trigger: 'blur' }
+        ]
+      },
       orderType: [
         {
           title: '全部订单',
@@ -124,6 +201,12 @@ export default {
         pageSize: 10,
         status: 0,
         table: []
+      },
+      popStatus: false,
+      popData: {
+        comment: '',
+        orderId: null,
+        score: 0
       },
       tableLoading: false
     }
@@ -167,7 +250,6 @@ export default {
     },
     // 类型切换
     typeChange(val) {
-      console.log(val)
       this.orderInfo.status = val
       this.typeIndex = val
       this.getOrderList()
@@ -183,20 +265,67 @@ export default {
         }
       )
     },
-    handleClick() {
-      console.log(this.activeTab)
+    // 评价
+    commentClick(id) {
+      this.popStatus = true
+      this.popData.orderId = id
     },
-    commentClick() {
-
+    // 提交表单
+    submitForm(formName) {
+      const this_ = this
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          const params = this_.popData
+          comment(params).then(function(data) {
+            if (data.data.code === 200) {
+              this_.$message.success('评价成功')
+              this_.resetForm('popForm')
+              this_.getOrderList()
+            }
+          })
+        } else {
+          return false
+        }
+      })
+    },
+    // 确认到货
+    confirmAccept(id) {
+      const this_ = this
+      confirmAccept(id).then(function(data) {
+        if (data.data.code === 200) {
+          this_.$message.success('操作成功')
+          this_.getOrderList()
+        }
+      })
     },
     pageChange(val) {
       this.orderInfo.pageNo = val
       this.getOrderList()
+    },
+    // 重置表单
+    resetForm(formName) {
+      this.popStatus = false
+      this.$refs[formName].resetFields()
+      this.popData = {
+        comment: '',
+        orderId: null,
+        score: 0
+      }
     }
   },
 
   mounted() {
     this.init()
+  },
+  computed: {
+    score() {
+      return this.popData.score
+    }
+  },
+  watch: {
+    score(val) {
+      this.$refs['popForm'].validateField('score')
+    }
   }
 }
 </script>
@@ -471,5 +600,8 @@ export default {
 }
 .info-page .el-pagination {
   text-align: right
+}
+.scoreInput {
+  line-height: 2.5;
 }
 </style>

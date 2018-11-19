@@ -23,3 +23,10 @@ export function leaveMessage(params) {
   })
 }
 
+export function getBanner(type) {
+  return request({
+    url: '/system/banner/' + type,
+    method: 'get'
+  })
+}
+

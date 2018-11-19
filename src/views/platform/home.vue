@@ -3,20 +3,17 @@
     <!--banner轮播-->
     <div>
       <el-carousel height="400px">
-        <el-carousel-item>
-          <router-link :to="{path:'/buy/search',query: {bigTypeId: 6,keyword:'扶贫产品'}}">
-            <img src="http://47.105.95.162:81/M00/00/00/rB-mAFvWZbmAYno4AAPHqIYj6qs805.png"/>
-          </router-link>
-        </el-carousel-item>
-        <el-carousel-item>
-          <a href="https://xueyuan.maijia.com/m/search/37"  target="_blank">
-            <img src="http://47.105.95.162:81/M00/00/00/rB-mAFvWZeOAECVQAAZtwVf3CqI955.png" />
-          </a>
-        </el-carousel-item>
-        <el-carousel-item>
-          <router-link :to="{path:'/index/information/detail', query:{id: 17}}">
-            <img src="http://47.105.95.162:81/M00/00/00/rB-mAFvWZf-AIU8dAAJ30hiiYxQ743.png" />
-          </router-link>
+        <el-carousel-item v-for="item in bannerImg" :key="item.index">
+          <template v-if="item.href.includes('http')">
+            <a :href="item.href" target="_blank">
+              <img :src="item.url"/>
+            </a>
+          </template>
+          <template v-else>
+            <router-link :to="item.href">
+              <img :src="item.url"/>
+            </router-link>
+          </template>
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -199,10 +196,11 @@
 
 <script>
 import util from '@/utils/util'
-import { getNews } from '@/api/index/index'
+import { getNews, getBanner } from '@/api/index/index'
 export default {
   data() {
     return {
+      bannerImg: [], // 轮播图片
       news: [
         {
           title: '热门资讯'
@@ -346,9 +344,19 @@ export default {
   },
   methods: {
     init() {
+      this.getBanner(1)
       this.getNews(1)
       this.getNews(2)
       this.getNews(3)
+    },
+    // 获取轮播图
+    getBanner(type) {
+      const this_ = this
+      getBanner(type).then(function(data) {
+        if (data.data.code === 200) {
+          this_.bannerImg = data.data.data
+        }
+      })
     },
     // 资讯获取 1 热门资讯 2 公告 3 热门新闻 4 热门企业 5 讲师资料 6 培训资讯
     getNews(type) {

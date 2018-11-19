@@ -81,3 +81,18 @@ export function orderPay(id) {
   })
 }
 
+export function confirmAccept(id) {
+  return request({
+    url: '/homestay/confirmFinish/' + id,
+    method: 'get'
+  })
+}
+
+export function comment(params) {
+  return request({
+    url: '/homestay/comments/comment',
+    data: params,
+    method: 'post'
+  })
+}
+

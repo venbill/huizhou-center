@@ -202,3 +202,18 @@ export function getOrderList(params) {
     method: 'get'
   })
 }
+
+export function confirmAccept(id) {
+  return request({
+    url: '/order/confirmAccept/' + id,
+    method: 'get'
+  })
+}
+
+export function comment(params) {
+  return request({
+    url: '/shop/comments/comment',
+    data: params,
+    method: 'post'
+  })
+}

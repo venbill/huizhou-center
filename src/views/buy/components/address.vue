@@ -3,7 +3,7 @@
     <div class="address-item pointer" :class="{activeAddress: activeAddress === index}"
      v-for="(item, index) in addressData" :key="item.index"
      @click="addressChoose(index, item)"
-     @mouseenter="chengeIndex(index)" @mouseleave="chengeIndex(-1)">
+     @mouseenter="chengeIndex(index, item)" @mouseleave="chengeIndex(-1)">
       <div class="address-title">
         <span class="name">{{item.acceptName}}</span>
         <el-tag class="float-right" style="margin-right:20px" type="success" v-if="item.isDefault">默认收货地址</el-tag>
@@ -17,9 +17,9 @@
       <div class="mask-box" v-if="addressIndex === index && !is_check">
         <div class="mask-title">
           <!-- <el-tag type="success" v-if="index === 0">默认收货地址</el-tag> -->
-          <i class="iconfont" title="设为默认收货地址" v-if="!item.isDefault" @click="defaultAddress(popData.id)">&#xe636;</i>
+          <i class="iconfont" title="设为默认收货地址" v-if="!item.isDefault" @click="defaultAddress(item.id)">&#xe636;</i>
           <i class="iconfont" title="修改" @click="editAddress(item)">&#xe7c9;</i>
-          <i class="iconfont" title="删除" @click="confirmDelete(popData.id)">&#xe624;</i>
+          <i class="iconfont" title="删除" @click="confirmDelete(item.id)">&#xe624;</i>
         </div>
       </div>
     </div>
@@ -78,9 +78,9 @@
         <el-form-item label="详细地址：" prop="detailAddress">
           <el-input v-model="popData.detailAddress" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="邮政编码：" prop="zipCode">
+        <!-- <el-form-item label="邮政编码：" prop="zipCode">
           <el-input v-model.number="popData.zipCode"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="收货人姓名：" prop="acceptName">
           <el-input v-model="popData.acceptName"></el-input>
         </el-form-item>
@@ -151,7 +151,7 @@ export default {
         province: '',
         city: '',
         detailAddress: '',
-        zipCode: '',
+        // zipCode: '',
         acceptName: '',
         acceptPhone: '',
         isDefault: false
@@ -260,7 +260,7 @@ export default {
         province: '',
         city: '',
         detailAddress: '',
-        zipCode: '',
+        // zipCode: '',
         acceptName: '',
         acceptPhone: '',
         isDefault: false,
@@ -289,7 +289,6 @@ export default {
           if (data.data.code === 200) {
             this_.getAddress()
             this_.resetForm('popForm')
-            this_.$message.success('删除成功')
           }
         })
       }).catch(() => {
@@ -316,16 +315,17 @@ export default {
             addAddress(params).then(function(data) {
               this_.getAddress()
               this_.resetForm('popForm')
+              this_.$message.success('新增成功')
             })
           } else {
             const params = this.popData
-            delete params.id
             delete params.provinceName
             delete params.cityName
             delete params.countyName
             editAddress(params).then(function(data) {
               this_.getAddress()
               this_.resetForm('popForm')
+              this_.$message.success('修改成功')
             })
           }
         } else {
@@ -343,7 +343,7 @@ export default {
         province: '',
         city: '',
         detailAddress: '',
-        zipCode: '',
+        // zipCode: '',
         acceptName: '',
         acceptPhone: '',
         isDefault: false,
