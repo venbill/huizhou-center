@@ -334,7 +334,7 @@ export default {
                                 type: 'success',
                                 duration: 3000
                             })
-                            this.getShopGoodsList()
+                            this.getShopOrderList()
                         } else {
                             this.$notify({
                                 title: '警告',

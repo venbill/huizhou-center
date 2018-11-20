@@ -6,8 +6,8 @@
                 <el-form :inline="true">
                    
                     <el-form-item style="padding-left:3%" label="民宿" prop="goodsId">
-                        <el-select v-model="search.goodsId" clearable placeholder="请选择民宿" >
-                            <el-option v-for="item in goodsList" :key="item.id" :label="item.goodsName" :value="item.id">
+                        <el-select v-model="search.homestayId" clearable placeholder="请选择民宿" >
+                            <el-option v-for="item in homestayList" :key="item.id" :label="item.name" :value="item.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
@@ -32,9 +32,9 @@
                         </div>
                     </el-form-item>
 
-                    <el-form-item style="padding-left:3%" label="住宿日期" class="seat">
+                    <el-form-item style="padding-left:3%" label="入住日期" class="seat">
                         <div class="block">
-                            <el-date-picker style="width:200px" v-model="dateRange" type="daterange" unlink-panels start-placeholder="开始日期" end-placeholder="结束日期" format="yyyy-MM-dd" value-format="yyyy-MM-dd" clearable @change="setDate()">
+                            <el-date-picker style="width:200px" v-model="dateRange2" type="daterange" unlink-panels start-placeholder="开始日期" end-placeholder="结束日期" format="yyyy-MM-dd" value-format="yyyy-MM-dd" clearable @change="setDate2()">
                             </el-date-picker>
                         </div>
                     </el-form-item>
@@ -68,7 +68,7 @@
                 <el-table-column align="center" label="订单号" min-width="10">
                     <template min-width="50" slot-scope="scope">
 
-                        <span>{{scope.row.orderId}}</span>
+                        <span>{{scope.row.id}}</span>
                     </template>
                 </el-table-column>
 
@@ -83,34 +83,28 @@
                 <el-table-column align="center" label="民宿名称" min-width="20">
                     <template min-width="50" slot-scope="scope">
 
-                        <span>{{scope.row.goodsName}}</span>
+                        <span>{{scope.row.homestayName}}</span>
                     </template>
                 </el-table-column>
 
                 
-                <el-table-column align="center" label="订购数量" min-width="10">
-                    <template min-width="10" slot-scope="scope">
-
-                        <span>{{scope.row.buyNo}}</span>
-                    </template>
-                </el-table-column>
-
+                
                 <el-table-column align="center" label="入住人数" min-width="10">
                     <template min-width="10" slot-scope="scope">
 
-                        <span>{{scope.row.buyNo}}</span>
+                        <span>{{scope.row.personNum}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" label="入住时间" min-width="10">
                     <template min-width="10" slot-scope="scope">
 
-                        <span>{{scope.row.buyNo}}</span>
+                        <span>{{getDate(scope.row.inTime)}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" label="退房时间" min-width="10">
                     <template min-width="10" slot-scope="scope">
 
-                        <span>{{scope.row.buyNo}}</span>
+                        <span>{{getDate(scope.row.outTime)}}</span>
                     </template>
                 </el-table-column>
 
@@ -119,7 +113,7 @@
 
                 <el-table-column align="center" label="订单金额" min-width="10">
                     <template min-width="50" slot-scope="scope">
-                        <span>{{scope.row.totalMoney}}</span>
+                        <span>{{scope.row.totalPrice}}</span>
                     </template>
                 </el-table-column>
 
@@ -131,9 +125,8 @@
                 
                 <el-table-column min-width="20" align="center" label="操作" class-name="small-padding fixed-width">
                     <template slot-scope="scope">
-                        <el-button v-if="scope.row.status>2" title="收件信息" type="primary" size="mini" @click="openAcceptInfo(scope.row.id)">收货信息</el-button>
-                        <el-button v-if="scope.row.status==3" title="发货" type="primary" size="mini"  @click="openSendExpress(scope.row.id)">发货</el-button>
-                        <el-button v-if="scope.row.status>3" title="物流信息" type="primary" size="mini"  @click="openExpressInfo(scope.row.expressNo)">物流信息</el-button>
+                        <el-button v-if="scope.row.status>2" title="入住信息" type="primary" size="mini" @click="openOrderInfo(scope.row.id)">入住信息</el-button>
+                        <el-button v-if="scope.row.status==3" title="确认入住" type="primary" size="mini"  @click="openCustomerIn(scope.row.id)">确认入住</el-button>
 
                     </template>
                 </el-table-column>
@@ -149,22 +142,28 @@
             </div>
         </el-footer>
 
-           <el-dialog title="收货信息" :visible.sync="acceptDialog" width="50%">
+           <el-dialog title="入住信息" :visible.sync="orderDialog" width="50%">
             <el-form  ref="dataForm"  label-position="left" label-width="80px">
                 <el-row :gutter="20">
                     <el-col :span="20">
 
-                        <el-form-item label="收件人" prop="goodsName">
-                            <span>{{addressInfo.acceptName}}</span>
+                        <el-form-item label="客户昵称" prop="goodsName">
+                            <span>{{orderInfo.nick}}</span>
                         </el-form-item>
                         <el-form-item label="联系电话" prop="goodsName">
-                            <span>{{addressInfo.acceptPhone}}</span>
+                            <span>{{orderInfo.phone}}</span>
                         </el-form-item>
-                        <el-form-item label="地址" prop="goodsName">
-                            <span>{{addressInfo.provinceName+' '+addressInfo.cityName+' '+addressInfo.countyName}}</span>
+                        <el-form-item label="入住人数" prop="goodsName">
+                            <span>{{orderInfo.personNo}}</span>
                         </el-form-item>
-                        <el-form-item label="详细地址" prop="goodsName">
-                            <span>{{addressInfo.detailAddress}}</span>
+                        <el-form-item label="民宿名称" prop="goodsName">
+                            <span>{{orderInfo.homestayName}}</span>
+                        </el-form-item>
+                        <el-form-item label="入住时间" prop="goodsName">
+                            <span>{{getDate(orderInfo.inTime)}}</span>
+                        </el-form-item>
+                        <el-form-item label="退房时间" prop="goodsName">
+                            <span>{{getDate(orderInfo.outTime)}}</span>
                         </el-form-item>
 
                        
@@ -175,40 +174,21 @@
 
 
            
-           <el-dialog title="快递信息" :visible.sync="expressDialog" width="50%">
-            <el-form  ref="dataForm"  label-position="left" label-width="150px">
-                <el-row :gutter="20">
-                    <el-col :span="20" v-for="(item,index) in expressInfo" :key="index">
 
-                        <el-form-item :label="item.time" prop="goodsName">
-                            {{item.status}}
-                        </el-form-item>
-                        
-
-                       
-                    </el-col>
-                </el-row>
-            </el-form>
-           </el-dialog>
-
-
-
-           <el-dialog title="收货信息" :visible.sync="sendDialog" width="50%">
+           <el-dialog title="确认客户入住" :visible.sync="customerInDialog" width="50%">
             <el-form  ref="dataForm"  label-position="left" label-width="80px">
                 <el-row :gutter="20">
                     <el-col :span="20">
 
-                        <el-form-item label="快递单号" prop="expressNo">
-                              <el-input v-model="sendExpressParam.expressNo" placeholder="请输入快递单号" ></el-input>
-                        </el-form-item>
+                       是否确认客户已入住？
 
                        
                     </el-col>
                 </el-row>
             </el-form>
              <div slot="footer" class="dialog-footer">
-                <el-button @click="sendDialog = false">取消</el-button>
-                <el-button  type="primary" @click="sendExpress">确认发货</el-button>
+                <el-button @click="customerInDialog = false">取消</el-button>
+                <el-button  type="primary" @click="customerIn">确认入住</el-button>
             </div>
            </el-dialog>
 
@@ -223,41 +203,36 @@ import util from '@/utils/util'
 import {
     getShopOrderList,
     getShopOrderDetail,
-    getShopGoodsList,
-    sendExpress,
-    getExpressInfo
-} from '@/api/shopkeeper/buyOrder'
+    getShopHomestayList,
+    customerIn
+} from '@/api/shopkeeper/homestayOrder'
 
 export default {
     name: "homestayOrder",
     data() {
         return {
 
-            acceptDialog:false,
-            addressInfo:{},
+            orderDialog:false,
+            orderInfo:{},
 
-            expressDialog:false,
-            expressInfo:[],
-
-            sendDialog:false,
-            sendExpressParam:{
-                detailId:0,
-                expressNo:''
-            },
+            customerInDialog:false,
+            orderId:0,
 
 
             totalMoney:0,
             orderNo:0,
             loading: false,
             dateRange: [],
+            dateRange2: [],
+
             search: {
-             
-                goodsId: '',
-                type: 0,
+                hoemstayId: '',
                 orderStatus: 0,
                 orderId: '',
                 createTimeStart: '',
-                createTimeEnd: ''
+                createTimeEnd: '',
+                inTimeStart:'',
+                inTimeEnd:''
             },
           
             statusOptions: [{
@@ -273,11 +248,11 @@ export default {
                     value: 2
                 },
                 {
-                    lable: '待发货',
+                    lable: '待入住',
                     value: 3
                 },
                 {
-                    lable: '待收货',
+                    lable: '入住中',
                     value: 4
                 },
                 {
@@ -290,7 +265,7 @@ export default {
                     value: 6
                 },
                 {
-                    lable: '退货',
+                    lable: '退款',
                     value: 7
                 }
 
@@ -299,7 +274,7 @@ export default {
             orderList: [],
 
 
-            goodsList: [],
+            homestayList: [],
 
             tableKey: 0,
 
@@ -319,49 +294,37 @@ export default {
     },
     methods: {
 
-        openAcceptInfo(detailId){
+        openOrderInfo(detailId){
             var _this = this
             getShopOrderDetail(detailId).then(resp=>{
                 if(resp.data.code==200){
-                    _this.acceptDialog =true
-                    _this.addressInfo = resp.data.data.address
+                    _this.orderDialog =true
+                    _this.orderInfo = resp.data.data
                 }
             })
 
         },
-        openExpressInfo(expressNo){
-            var _this = this
-            getExpressInfo(expressNo).then(resp=>{
-                if(resp.data.code==200){
-                    _this.expressDialog =true
-                    console.log(resp.data.data.messageList)
-                    _this.expressInfo = JSON.parse(resp.data.data.messageList)
-                }
-            })
-
-        },
-
-        openSendExpress(detailId){
-            this.sendDialog=true
-            this.sendExpressParam={
-                detailId:detailId,
-                expressNo:''
-            }
+       
+        openCustomerIn(orderId){
+            this.customerInDialog=true
+            this.orderId = orderId
+            
 
            
         },
-        sendExpress(){
+        customerIn(){
             
-            sendExpress(this.sendExpressParam.detailId,this.sendExpressParam.expressNo).then(resp=>{
+            customerIn(this.orderId).then(resp=>{
                  if (resp.data.code === 200) {
-                            this.sendDialog = false
+                   
+                            this.customerInDialog = false
                             this.$message({
                                 title: '成功',
-                                message: '发货成功',
+                                message: '入住成功',
                                 type: 'success',
                                 duration: 3000
                             })
-                            this.getShopGoodsList()
+                              this.getShopOrderList()
                         } else {
                             this.$notify({
                                 title: '警告',
@@ -373,12 +336,12 @@ export default {
             })
         },
 
-        getShopGoodsList() {
+        getShopHomestayList() {
                 var _this=this
-                getShopGoodsList().then(function (resp) {
+                getShopHomestayList().then(function (resp) {
 
                     if (resp.data.code === 200) {
-                        _this.goodsList = resp.data.data
+                        _this.homestayList = resp.data.data
                     }
                 })
             } ,
@@ -387,13 +350,16 @@ export default {
         getShopOrderList() {
             var _this = this
             var params = {
-                goodsId: _this.search.goodsId == '' ? 0 : _this.search.goodsId,
+                homestayId: _this.search.hoemstayId == '' ? 0 : _this.search.hoemstayId,
                 orderId: _this.search.orderId == '' ? 0 : _this.search.orderId,
                 orderStatus: _this.search.orderStatus,
                 createTimeStart: _this.search.createTimeStart,
                 createTimeEnd: _this.search.createTimeEnd,
+                inTimeStart: _this.search.inTimeStart,
+                inTimeEnd: _this.search.inTimeEnd,
                 pageNo: _this.page.pageNo,
-                pageSize: _this.page.pageSize
+                pageSize: _this.page.pageSize,
+
             }
             getShopOrderList(params).then(function (data){ 
                 if (data.data.code === 200) {
@@ -416,6 +382,15 @@ export default {
                 this.search.createTimeEnd = this.dateRange[1]
             }
         },
+    
+        setDate2() {
+            if (this.dateRange2.length == 2) {
+                this.search.inTimeStart = this.dateRange2[0]
+                this.search.inTimeEnd = this.dateRange2[1]
+            }
+        },
+
+
 
         handleCurrentChange(val) {
             this.page.pageNo = val
@@ -431,10 +406,10 @@ export default {
                         return "待支付"
                         break;
                     case 3:
-                        return "待发货"
+                        return "待入住"
                         break;
                     case 4:
-                        return "待收货"
+                        return "入住中"
                         break;
                     case 5:
                         return "待评价"
@@ -457,7 +432,7 @@ export default {
 
     mounted() {
         this.getShopOrderList()
-        this.getShopGoodsList()
+        this.getShopHomestayList()
     }
 
 }
