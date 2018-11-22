@@ -1,6 +1,7 @@
 <template>
 <div class="app-container">
     <div>
+         <img id='downImg' src='' style='display: none;' />
         <el-container>
             <div class="formSearch">
                 <el-form :inline="true">
@@ -63,6 +64,15 @@
                     </template>
                 </el-table-column>
 
+                <el-table-column align="center" label="查看二维码" min-width="10">
+                    <template slot-scope="scope">
+                        <span   @click="openPic(scope.row)" >点击查看</span>
+                        <!-- <a href="/static/images/index/logo.png" download="/static/images/index/logo.png">
+下载
+</a> -->
+                    </template>
+                </el-table-column>
+
                 <el-table-column min-width="20" align="center" label="操作" class-name="small-padding fixed-width">
                     <template slot-scope="scope">
                         <el-button title="查看详情" type="primary" size="mini" icon="el-icon-search" @click="handleDetail(scope.row)"></el-button>
@@ -100,7 +110,7 @@
                             <el-row>
                                 <el-col :span="7" style="margin-right:20px">
                                     <el-form-item label="" prop="bigType">
-                                        <el-select  v-model="goods.bigType" placeholder="大分类" @change="typeChange">
+                                        <el-select v-model="goods.bigType" placeholder="大分类" @change="typeChange">
                                             <el-option v-for="item in typeOptions" :key="item.id" :label="item.bigTypeName" :value="item.id">
                                             </el-option>
                                         </el-select>
@@ -108,7 +118,7 @@
                                 </el-col>
                                 <el-col :span="7" style="margin-right:20px">
                                     <el-form-item label="" prop="smallType">
-                                        <el-select  v-model="goods.smallType" placeholder="小分类">
+                                        <el-select v-model="goods.smallType" placeholder="小分类">
                                             <el-option v-for="item in smallTypes" :key="item.id" :label="item.smallTypeName" :value="item.id">
                                             </el-option>
                                         </el-select>
@@ -121,7 +131,7 @@
                         <el-form-item label="店铺分类" prop="description">
                             <el-row>
                                 <el-form-item label="" prop="shopType">
-                                    <el-select  v-model="goods.shopType" placeholder="店铺分类">
+                                    <el-select v-model="goods.shopType" placeholder="店铺分类">
                                         <el-option v-for="item in shopTypeList" :key="item.id" :label="item.typeName" :value="item.id">
                                         </el-option>
                                     </el-select>
@@ -159,15 +169,15 @@
                                 <el-col :span="18">
                                     <img v-if="item!=''" style="width:150px;height:100px;"  v-bind:src="item"  />
                                     <input  v-if="editable" class="uploadInput"  :id="index" ref="uploadImg" type="file" @change="fileUpload" >
-                                    <el-input  v-if="editable"  :onfocus="editable?'':'this.blur();'" v-model="detailPictureList[index]" placeholder="输入图片链接地址"></el-input>
+                                    <el-input v-if="editable" :onfocus="editable?'':'this.blur();'" v-model="detailPictureList[index]" placeholder="输入图片链接地址"></el-input>
                                 </el-col>
                                 <el-col :span="4" :offset="2">
-                                    <el-button  v-if="editable"  title="删除" type="danger" icon="el-icon-delete" size="mini" @click="deletePicture(index)"></el-button>
+                                    <el-button v-if="editable" title="删除" type="danger" icon="el-icon-delete" size="mini" @click="deletePicture(index)"></el-button>
                                 </el-col>
 
                             </el-row>
                             <div style="text-align:center">
-                                <el-button  v-if="editable"  title="添加" type="primary" icon="el-icon-plus" size="mini" @click="addPicture()"></el-button>
+                                <el-button v-if="editable" title="添加" type="primary" icon="el-icon-plus" size="mini" @click="addPicture()"></el-button>
                             </div>
 
                         </el-form-item>
@@ -216,6 +226,7 @@
         </el-dialog>
 
     </div>
+   
 </div>
 </template>
 
@@ -235,6 +246,7 @@ import {
 import {
     uploadFile
 } from '@/api/common/common'
+
 export default {
     name: 'goodsManage',
     data() {
@@ -364,6 +376,18 @@ export default {
             this.detailPictureList.push('')
         },
 
+        openPic(goods) {
+            // console.log(goods)
+            
+            // var alink = document.createElement("a");
+            // alink.href = goods.qrCode;
+            // // alink.download = goods.goodsName;
+            // alink.download = goods.qrCode
+            // alink.click();
+            
+            window.open(goods.qrCode)
+
+        },
         getGoodsList() {
 
             var _this = this
@@ -438,7 +462,7 @@ export default {
 
         handleUpdate: function (row) {
             this.goods = row
-             this.initTypeOptions(this.goods.bigType) 
+            this.initTypeOptions(this.goods.bigType)
             this.detailPictureList = this.goods.detailPictures.split(',')
             this.dialogStatus = 'update'
             this.dialogFormVisible = true
@@ -446,7 +470,6 @@ export default {
             if (fileInput != null) {
                 fileInput.value = ''
             }
-
 
             this.$nextTick(() => {
                 this.$refs['dataForm'].clearValidate()
@@ -471,28 +494,28 @@ export default {
                     if (resp.data.code == 200) {
                         console.log(resp.data.data)
                         var fileUrl = resp.data.data.fileUrl
-                        if(id.indexOf("img")>=0){
-                            if(id=="img_0"){
-                              _this.goods.picture=fileUrl
-                            }else if(id=='img_1'){
-                              _this.goods.picture1=fileUrl
-                              
-                              }else if(id=='img_2'){
-                              _this.goods.picture2=fileUrl
-                                
-                                }else if(id=='img_3'){
-                              _this.goods.picture3=fileUrl
-                                  
-                                  }else if(id=='img_4'){
-                                  _this.goods.picture4=fileUrl
+                        if (id.indexOf("img") >= 0) {
+                            if (id == "img_0") {
+                                _this.goods.picture = fileUrl
+                            } else if (id == 'img_1') {
+                                _this.goods.picture1 = fileUrl
+
+                            } else if (id == 'img_2') {
+                                _this.goods.picture2 = fileUrl
+
+                            } else if (id == 'img_3') {
+                                _this.goods.picture3 = fileUrl
+
+                            } else if (id == 'img_4') {
+                                _this.goods.picture4 = fileUrl
 
                             }
-                        }else{
-                          console.log(parseInt(id))
-                          console.log(_this.detailPictureList)
-                          // _this.detailPictureList[parseInt(id)]=fileUrl
-                          console.log(_this.detailPictureList)
-                          Vue.set(_this.detailPictureList, parseInt(id),fileUrl) 
+                        } else {
+                            console.log(parseInt(id))
+                            console.log(_this.detailPictureList)
+                            // _this.detailPictureList[parseInt(id)]=fileUrl
+                            console.log(_this.detailPictureList)
+                            Vue.set(_this.detailPictureList, parseInt(id), fileUrl)
                         }
 
                         this.$message({
@@ -547,8 +570,8 @@ export default {
             this.goods = row
 
             this.dialogStatus = 'detail'
-            this.initTypeOptions(this.goods.bigType) 
-         
+            this.initTypeOptions(this.goods.bigType)
+
             this.detailPictureList = this.goods.detailPictures.split(',')
             this.dialogFormVisible = true
         },
@@ -570,7 +593,7 @@ export default {
         updateData: function () {
             this.$refs['dataForm'].validate(valid => {
                 if (valid) {
-                  this.goods.detailPictures = this.detailPictureList.join(',')
+                    this.goods.detailPictures = this.detailPictureList.join(',')
 
                     updateGoods(this.goods).then(response => {
                         if (response.data.code === 200) {

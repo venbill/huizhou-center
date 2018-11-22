@@ -58,6 +58,15 @@
                     </template>
                 </el-table-column>
 
+                             <el-table-column align="center" label="查看二维码" min-width="10">
+                    <template slot-scope="scope">
+                        <span   @click="openPic(scope.row)" >点击查看</span>
+                        <!-- <a href="/static/images/index/logo.png" download="/static/images/index/logo.png">
+下载
+</a> -->
+                    </template>
+                </el-table-column>
+
                 <el-table-column min-width="20" align="center" label="操作" class-name="small-padding fixed-width">
                     <template slot-scope="scope">
                         <el-button title="查看详情" type="primary" size="mini" icon="el-icon-search" @click="handleDetail(scope.row)"></el-button>
@@ -355,6 +364,12 @@ export default {
         },
         addPicture() {
             this.detailPictureList.push('')
+        },
+
+         openPic(homestay) {
+            
+            window.open(homestay.qrCode)
+
         },
 
         getHomestayList() {
